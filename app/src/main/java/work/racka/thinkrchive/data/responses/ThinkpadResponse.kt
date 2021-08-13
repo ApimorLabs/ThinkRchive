@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.data.remote.responses
+package work.racka.thinkrchive.data.responses
 
 import com.squareup.moshi.Json
 
@@ -6,7 +6,8 @@ data class ThinkpadResponse(
     val model: String,
     @Json(name = "image_url")
     val imageUrl: String,
-    val date: String,
+    @Json(name = "release_date")
+    val releaseDate: String,
     val series: String,
     @Json(name = "market_price_start")
     val marketPriceStart: Int,
@@ -22,6 +23,8 @@ data class ThinkpadResponse(
     val displayRes: String,
     @Json(name = "touch_screen")
     val touchScreen: String,
+    @Json(name = "screen_size")
+    val screenSize: String,
     @Json(name = "backlit_kb")
     val backlitKb: String,
     @Json(name = "fingerprint_reader")

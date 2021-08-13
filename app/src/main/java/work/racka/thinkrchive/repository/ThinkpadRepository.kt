@@ -1,8 +1,8 @@
 package work.racka.thinkrchive.repository
 
 import dagger.hilt.android.scopes.ActivityScoped
-import work.racka.thinkrchive.data.remote.ThinkrchiveApi
-import work.racka.thinkrchive.data.remote.responses.ThinkpadResponse
+import work.racka.thinkrchive.data.api.ThinkrchiveApi
+import work.racka.thinkrchive.data.responses.ThinkpadResponse
 import work.racka.thinkrchive.utils.Resource
 import javax.inject.Inject
 

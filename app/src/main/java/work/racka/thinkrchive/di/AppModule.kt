@@ -10,7 +10,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import work.racka.thinkrchive.data.remote.ThinkrchiveApi
+import work.racka.thinkrchive.data.api.ThinkrchiveApi
 import work.racka.thinkrchive.repository.ThinkpadRepository
 import work.racka.thinkrchive.utils.Constants.BASE_URL
 import javax.inject.Singleton
@@ -32,7 +32,7 @@ object AppModule {
         .addSheet(
             sheetName = "all_laptops",
             columns = arrayOf(
-                "model", "image_url", "date", "series",	"market_price_start", "market_price_end",
+                "model", "image_url", "release_date", "series",	"market_price_start", "market_price_end",
                 "processor_platforms", "processors",	"graphics",	"max_ram", "display_res",
                 "touch_screen",	"screen_size", "backlit_kb", "fingerprint_reader", "kb_type",
                 "dual_batt", "internal_batt", "external_batt", "psref_link", "bios_version",

@@ -1,11 +1,9 @@
 package work.racka.thinkrchive.data.model
 
-import com.squareup.moshi.Json
-
 data class Thinkpad(
     val model: String,
     val imageUrl: String,
-    val date: String,
+    val releaseDate: String,
     val series: String,
     val marketPriceStart: Int,
     val marketPriceEnd: Int,
@@ -15,6 +13,7 @@ data class Thinkpad(
     val maxRam: String,
     val displayRes: String,
     val touchScreen: String,
+    val screenSize: String,
     val backlitKb: String,
     val fingerPrintReader: String,
     val kbType: String,
