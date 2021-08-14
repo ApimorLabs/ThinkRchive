@@ -31,10 +31,9 @@ class ThinkpadListViewModel @Inject constructor(
         viewModelScope.launch {
             isLoading = true
             Timber.d("loading ThinkpadList")
-            val result = thinkpadRepository.getAllThinkpads()
-            when (result) {
+            when (val result = thinkpadRepository.getAllThinkpads()) {
                 is Resource.Success -> {
-                    thinkpadList = result.data!!.asDomainModel()
+                    thinkpadList = result.data!!
                     isLoading = true
                 }
                 is Resource.Error -> {

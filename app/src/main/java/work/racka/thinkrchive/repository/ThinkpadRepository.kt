@@ -2,6 +2,8 @@ package work.racka.thinkrchive.repository
 
 import dagger.hilt.android.scopes.ActivityScoped
 import work.racka.thinkrchive.data.api.ThinkrchiveApi
+import work.racka.thinkrchive.data.dataTransferObjects.asDomainModel
+import work.racka.thinkrchive.data.model.Thinkpad
 import work.racka.thinkrchive.data.responses.ThinkpadResponse
 import work.racka.thinkrchive.utils.Resource
 import javax.inject.Inject
@@ -12,12 +14,12 @@ class ThinkpadRepository @Inject constructor(
 ){
 
     // Get all the Thinkpads from the repository
-    suspend fun getAllThinkpads(): Resource<List<ThinkpadResponse>> {
+    suspend fun getAllThinkpads(): Resource<List<Thinkpad>> {
         val response = try {
             thinkrchiveApi.getThinkpads()
         } catch (e: Exception) {
             return Resource.Error(message = "An error occurred: ${e.message}")
         }
-        return Resource.Success(data = response)
+        return Resource.Success(data = response.asDomainModel())
     }
 }
