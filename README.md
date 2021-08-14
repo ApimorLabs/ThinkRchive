@@ -3,8 +3,8 @@ An app showing all details for various Lenovo Thinkpad models. Made to try out J
 
 WORK IN PROGRESS
 GOALS:
-1. Use Retrofit
-2. Use Retrosheet (with Google Sheets as a DB)
+~~1. Use Retrofit~~
+~~2. Use Retrosheet (with Google Sheets as a DB)~~
 3. Use Coil
 4. Compose Navigation
 5. Impelement animations
