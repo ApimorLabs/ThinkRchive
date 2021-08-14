@@ -3,11 +3,14 @@ package work.racka.thinkrchive
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -27,6 +30,7 @@ import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -40,6 +44,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
 fun Greeting(viewModel: ThinkpadListViewModel = hiltViewModel()) {
     val thinkpadList by  remember {
@@ -47,8 +52,11 @@ fun Greeting(viewModel: ThinkpadListViewModel = hiltViewModel()) {
             viewModel.thinkpadList
         }
     }
-    val loadError = remember {
+    val loadError by remember {
         viewModel.loadError
+    }
+    val isLoading by remember {
+        viewModel.isLoading
     }
 
     val scrollState = rememberLazyListState()
@@ -62,10 +70,16 @@ fun Greeting(viewModel: ThinkpadListViewModel = hiltViewModel()) {
             Text(text = loadError)
             Spacer(modifier = Modifier.height(16.dp))
         }
+        item {
+            AnimatedVisibility(isLoading) {
+                CircularProgressIndicator()
+            }
+        }
     }
 
 }
 
+@ExperimentalAnimationApi
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {

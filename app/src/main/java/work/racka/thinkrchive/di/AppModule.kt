@@ -14,6 +14,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import work.racka.thinkrchive.data.api.ThinkrchiveApi
+import work.racka.thinkrchive.data.database.ThinkpadDao
 import work.racka.thinkrchive.data.database.ThinkpadDatabase
 import work.racka.thinkrchive.repository.ThinkpadRepository
 import work.racka.thinkrchive.utils.Constants.BASE_URL
@@ -54,7 +55,13 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesThinkpadRepository( thinkrchiveApi: ThinkrchiveApi) = ThinkpadRepository(thinkrchiveApi)
+    fun providesThinkpadRepository(
+        thinkrchiveApi: ThinkrchiveApi,
+        thinkpadDao: ThinkpadDao
+    ) = ThinkpadRepository(
+        thinkrchiveApi,
+        thinkpadDao
+    )
 
     @Singleton
     @Provides

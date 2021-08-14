@@ -5,9 +5,9 @@ import work.racka.thinkrchive.data.model.Thinkpad
 import work.racka.thinkrchive.data.responses.ThinkpadResponse
 
 // Converting data from API to a domain model that will be read by the UI
-fun List<ThinkpadResponse>.asDomainModel(): List<Thinkpad> {
+fun List<ThinkpadResponse>.asDatabaseModel(): Array<ThinkpadDatabaseObjects> {
     return map {
-        Thinkpad(
+        ThinkpadDatabaseObjects(
             model = it.model,
             imageUrl = it.imageUrl,
             releaseDate = it.releaseDate,
@@ -36,11 +36,11 @@ fun List<ThinkpadResponse>.asDomainModel(): List<Thinkpad> {
             otherModsLinks = it.otherModsLinks,
             biosLockIn = it.biosLockIn
         )
-    }
+    }.toTypedArray()
 }
 
 // Converts database objects to domain model object that will be displayed on the UI
-fun List<ThinkpadDatabaseObjects>.asModel(): List<Thinkpad> {
+fun List<ThinkpadDatabaseObjects>.asDomainModel(): List<Thinkpad> {
     return map {
         Thinkpad(
             model = it.model,

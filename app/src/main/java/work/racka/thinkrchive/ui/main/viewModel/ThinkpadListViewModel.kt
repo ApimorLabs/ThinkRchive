@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import work.racka.thinkrchive.data.dataTransferObjects.asDomainModel
@@ -20,27 +21,35 @@ class ThinkpadListViewModel @Inject constructor(
 ) : ViewModel() {
 
     var thinkpadList by mutableStateOf<List<Thinkpad>>(listOf())
-    var loadError by mutableStateOf("")
-    var isLoading by mutableStateOf(false)
+    var loadError = mutableStateOf("")
+    var isLoading = mutableStateOf(false)
 
     init {
-        loadThinkpadList()
+        refreshThinkpadList()
+        getThinkpadListFromDatabase()
     }
 
-    fun loadThinkpadList() {
+    fun refreshThinkpadList() {
         viewModelScope.launch {
-            isLoading = true
+            isLoading.value = true
             Timber.d("loading ThinkpadList")
-            when (val result = thinkpadRepository.getAllThinkpads()) {
+            when (val result = thinkpadRepository.getAllThinkpadsFromNetwork()) {
                 is Resource.Success -> {
-                    thinkpadList = result.data!!
-                    isLoading = true
+                    thinkpadRepository.refreshThinkpadList(result.data!!)
+                    isLoading.value = false
                 }
                 is Resource.Error -> {
-                    loadError = result.message!!
-                    isLoading = false
+                    loadError.value = result.message!!
+                    isLoading.value = false
                 }
-                else -> { }
+            }
+        }
+    }
+
+    private fun getThinkpadListFromDatabase() {
+        viewModelScope.launch {
+            thinkpadRepository.getAllThinkpads().collect {
+                thinkpadList = it.asDomainModel()
             }
         }
     }
