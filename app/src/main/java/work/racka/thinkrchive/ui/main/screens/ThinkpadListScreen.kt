@@ -1,5 +1,6 @@
 package work.racka.thinkrchive.ui.main.screens
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -15,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import work.racka.thinkrchive.ui.components.CustomSearchBar
 import work.racka.thinkrchive.ui.theme.Dimens
@@ -58,7 +60,10 @@ fun ThinkpadListScreen(modifier: Modifier = Modifier) {
 }
 
 @ExperimentalComposeUiApi
-@Preview
+@Preview(
+    uiMode = Configuration.UI_MODE_TYPE_NORMAL,
+    device = Devices.PIXEL_4
+)
 @Composable
 fun ThinkpadListScreenPreview() {
     ThinkRchiveTheme {
