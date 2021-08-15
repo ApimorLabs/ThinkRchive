@@ -3,8 +3,6 @@ package work.racka.thinkrchive.repository
 import dagger.hilt.android.scopes.ActivityScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import work.racka.thinkrchive.data.api.ThinkrchiveApi
 import work.racka.thinkrchive.data.dataTransferObjects.asDatabaseModel
@@ -18,7 +16,7 @@ import javax.inject.Inject
 class ThinkpadRepository @Inject constructor(
     private val thinkrchiveApi: ThinkrchiveApi,
     private val thinkpadDao: ThinkpadDao
-){
+) {
 
     // Get all the Thinkpads from the network
     suspend fun getAllThinkpadsFromNetwork(): Resource<List<ThinkpadResponse>> {
