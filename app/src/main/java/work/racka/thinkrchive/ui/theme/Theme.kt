@@ -64,7 +64,7 @@ fun ThinkRchiveTheme(
  * */
 private object ThinkRchiveRippleTheme: RippleTheme {
     @Composable
-    override fun defaultColor(): Color = OrangeChipSelected
+    override fun defaultColor(): Color = MaterialTheme.colors.primary
 
     @Composable
     override fun rippleAlpha(): RippleAlpha = RippleTheme.defaultRippleAlpha(

@@ -197,7 +197,7 @@ fun CustomSearchBar(
 @ExperimentalComposeUiApi
 @Preview
 @Composable
-fun CustomSearchBarPreview() {
+private fun CustomSearchBarPreview() {
     ThinkRchiveTheme {
         CustomSearchBar()
     }

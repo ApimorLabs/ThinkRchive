@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -18,15 +20,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.navigationBarsPadding
+import com.google.accompanist.insets.statusBarsPadding
+import timber.log.Timber
+import work.racka.thinkrchive.data.model.Thinkpad
 import work.racka.thinkrchive.ui.components.CustomSearchBar
+import work.racka.thinkrchive.ui.components.ThinkpadEntry
 import work.racka.thinkrchive.ui.theme.Dimens
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
+import work.racka.thinkrchive.utils.Constants
 
 @ExperimentalComposeUiApi
 @Composable
-fun ThinkpadListScreen(modifier: Modifier = Modifier) {
+fun ThinkpadListScreen(
+    modifier: Modifier = Modifier,
+    listState: LazyListState = rememberLazyListState(),
+    onEntryClick: () -> Unit = { },
+    thinkpadList: List<Thinkpad>
+) {
 
-    val scrollState = rememberLazyListState()
     val focusManager = LocalFocusManager.current
 
     var testText by remember {
@@ -38,10 +51,12 @@ fun ThinkpadListScreen(modifier: Modifier = Modifier) {
             .fillMaxSize()
     ) {
         LazyColumn(
-            state = scrollState,
+            state = listState,
             modifier = modifier
         ) {
+            Timber.d("thinkpadListScreen Contents called")
             item {
+                Spacer(modifier = Modifier.statusBarsPadding())
                 CustomSearchBar(
                     focusManager = focusManager,
                     onSearch = {
@@ -52,8 +67,22 @@ fun ThinkpadListScreen(modifier: Modifier = Modifier) {
                         horizontal = Dimens.MediumPadding.size
                     )
                 )
-                Spacer(modifier = Modifier.height(Dimens.SmallPadding.size))
-                Text(text = testText)
+            }
+            items(thinkpadList) {
+                ThinkpadEntry(
+                    thinkpad = it,
+                    onEntryClick = onEntryClick,
+                    modifier = Modifier
+                        .padding(
+                            horizontal = Dimens.MediumPadding.size,
+                            vertical = Dimens.SmallPadding.size
+                        )
+                )
+            }
+
+            // This must always stay at the bottom for navBar padding
+            item {
+                Spacer(modifier = Modifier.navigationBarsPadding())
             }
         }
     }
@@ -67,6 +96,8 @@ fun ThinkpadListScreen(modifier: Modifier = Modifier) {
 @Composable
 fun ThinkpadListScreenPreview() {
     ThinkRchiveTheme {
-        ThinkpadListScreen()
+        ThinkpadListScreen(
+            thinkpadList = Constants.ThinkpadsListPreview
+        )
     }
 }

@@ -3,6 +3,7 @@ package work.racka.thinkrchive.ui.components
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -10,15 +11,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.statusBarsPadding
 import work.racka.thinkrchive.data.model.Thinkpad
 import work.racka.thinkrchive.ui.theme.Dimens
 import work.racka.thinkrchive.ui.theme.Shapes
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
+import work.racka.thinkrchive.utils.Constants
 
 @Composable
 fun ThinkpadEntry(
@@ -37,7 +42,7 @@ fun ThinkpadEntry(
         }
     }
 
-    var isLoading by remember {
+    var imageLoading by remember {
         mutableStateOf(true)
     }
     val coilPainter = rememberImagePainter(
@@ -46,10 +51,10 @@ fun ThinkpadEntry(
             crossfade(true)
             listener(
                 onStart = {
-                    isLoading = true
+                    imageLoading = true
                 },
                 onSuccess = { _, _ ->
-                    isLoading = false
+                    imageLoading = false
                 }
             )
         }
@@ -59,28 +64,29 @@ fun ThinkpadEntry(
         contentAlignment = Alignment.CenterStart,
         modifier = modifier
             .fillMaxWidth()
-            .background(
-                color = MaterialTheme.colors.surface,
-                shape = Shapes.large
-            )
+            .clip(Shapes.large)
+            .background(color = MaterialTheme.colors.surface,)
+            .clickable { onEntryClick() }
     ) {
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Box(contentAlignment = Alignment.Center) {
-                if (isLoading) {
+                if (imageLoading) {
                     LoadingImage(
                         modifier = Modifier
-                            .size(120.dp)
-                            .padding(Dimens.MediumPadding.size)
-                    )
-                } else {
-                    Image(
-                        painter = coilPainter,
-                        contentDescription = "${thinkpad.model} Image",
-                        modifier = Modifier
-                            .size(120.dp)
+                            .size(130.dp)
                             .padding(Dimens.MediumPadding.size)
                     )
                 }
+                Image(
+                    painter = coilPainter,
+                    contentDescription = "${thinkpad.model} Image",
+                    modifier = Modifier
+                        .size(130.dp)
+                        .padding(Dimens.MediumPadding.size)
+                )
             }
             Column(
                 verticalArrangement = Arrangement.SpaceBetween,
@@ -94,16 +100,13 @@ fun ThinkpadEntry(
                 Text(
                     text = thinkpad.model,
                     style = MaterialTheme.typography.subtitle1,
+                    color = MaterialTheme.colors.onBackground,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 SubtitleText(
                     subtitleName = "Platform",
                     subtitleData = thinkpad.processorPlatforms
-                )
-                SubtitleText(
-                    subtitleName = "Current BIOS",
-                    subtitleData = thinkpad.biosVersion
                 )
                 SubtitleText(
                     subtitleName = "Market Value",
@@ -131,14 +134,14 @@ private fun SubtitleText(
     ) {
         Text(
             text = "$subtitleName:",
-            style = MaterialTheme.typography.subtitle2,
+            style = MaterialTheme.typography.body2,
             color = MaterialTheme.colors.onSurface,
             maxLines = 1
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = subtitleData,
-            style = MaterialTheme.typography.subtitle2,
+            style = MaterialTheme.typography.body2,
             color = MaterialTheme.colors.onSurface,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -154,11 +157,11 @@ private fun LoadingImage(
     val infiniteTransition = rememberInfiniteTransition()
     val alpha by infiniteTransition.animateFloat(
         initialValue = 0f,
-        targetValue = 1f,
+        targetValue = 0.3f,
         animationSpec = infiniteRepeatable(
             animation = keyframes {
                 durationMillis = 1000
-                0.7f at 500
+                0.15f at 500
             },
             repeatMode = RepeatMode.Reverse
         )
@@ -167,7 +170,7 @@ private fun LoadingImage(
     Box(
         modifier = modifier
             .background(
-                color = MaterialTheme.colors.primary
+                color = MaterialTheme.colors.onSurface
                     .copy(alpha = alpha),
                 shape = Shapes.large
             )
@@ -178,7 +181,7 @@ private fun LoadingImage(
     showBackground = true
 )
 @Composable
-fun SubtitleTextPreview() {
+private fun SubtitleTextPreview() {
     ThinkRchiveTheme {
         SubtitleText(
             subtitleName = "Market Price",
@@ -190,11 +193,16 @@ fun SubtitleTextPreview() {
 @Preview
 @Composable
 private fun ThinkpadEntryPreview() {
-    ThinkRchiveTheme {
-//        val thinkpad = Thinkpad(
-//            model = "Thinkpad T450",
-//            imageUrl =
-//        )
-//        ThinkpadEntry(thinkpad = )
+    ProvideWindowInsets {
+        ThinkRchiveTheme {
+            val thinkpad = (Constants.ThinkpadsListPreview[0]).apply {
+                ThinkpadEntry(
+                    thinkpad = this,
+                    modifier = Modifier
+                        .padding(Dimens.MediumPadding.size)
+                        .statusBarsPadding()
+                )
+            }
+        }
     }
 }
