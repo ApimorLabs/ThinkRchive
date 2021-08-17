@@ -1,13 +1,13 @@
 package work.racka.thinkrchive.data.dataTransferObjects
 
-import work.racka.thinkrchive.data.database.ThinkpadDatabaseObjects
+import work.racka.thinkrchive.data.database.ThinkpadDatabaseObject
 import work.racka.thinkrchive.data.model.Thinkpad
 import work.racka.thinkrchive.data.responses.ThinkpadResponse
 
 // Converting data from API to a domain model that will be read by the UI
-fun List<ThinkpadResponse>.asDatabaseModel(): Array<ThinkpadDatabaseObjects> {
+fun List<ThinkpadResponse>.asDatabaseModel(): Array<ThinkpadDatabaseObject> {
     return map {
-        ThinkpadDatabaseObjects(
+        ThinkpadDatabaseObject(
             model = it.model,
             imageUrl = it.imageUrl,
             releaseDate = it.releaseDate,
@@ -40,7 +40,7 @@ fun List<ThinkpadResponse>.asDatabaseModel(): Array<ThinkpadDatabaseObjects> {
 }
 
 // Converts database objects to domain model object that will be displayed on the UI
-fun List<ThinkpadDatabaseObjects>.asDomainModel(): List<Thinkpad> {
+fun List<ThinkpadDatabaseObject>.asDomainModel(): List<Thinkpad> {
     return map {
         Thinkpad(
             model = it.model,
@@ -72,4 +72,36 @@ fun List<ThinkpadDatabaseObjects>.asDomainModel(): List<Thinkpad> {
             biosLockIn = it.biosLockIn
         )
     }
+}
+
+fun ThinkpadDatabaseObject.asThinkpad(): Thinkpad {
+    return Thinkpad(
+        model = this.model,
+        imageUrl = this.imageUrl,
+        releaseDate = this.releaseDate,
+        series = this.series,
+        marketPriceStart = this.marketPriceStart,
+        marketPriceEnd = this.marketPriceEnd,
+        processorPlatforms = this.processorPlatforms,
+        processors = this.processors,
+        graphics = this.graphics,
+        maxRam = this.maxRam,
+        displayRes = this.displayRes,
+        touchScreen = this.touchScreen,
+        screenSize = this.screenSize,
+        backlitKb = this.backlitKb,
+        fingerPrintReader = this.fingerPrintReader,
+        kbType = this.kbType,
+        dualBatt = this.dualBatt,
+        internalBatt = this.internalBatt,
+        externalBatt = this.externalBatt,
+        psrefLink = this.psrefLink,
+        biosVersion = this.biosVersion,
+        knownIssues = this.knownIssues,
+        knownIssuesLinks = this.knownIssuesLinks,
+        displaysSupported = this.displaysSupported,
+        otherMods = this.otherMods,
+        otherModsLinks = this.otherModsLinks,
+        biosLockIn = this.biosLockIn
+    )
 }

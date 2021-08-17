@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import work.racka.thinkrchive.utils.Constants.THINKPAD_LIST_TABLE
 
 @Entity(tableName = THINKPAD_LIST_TABLE)
-data class ThinkpadDatabaseObjects(
+data class ThinkpadDatabaseObject(
     @PrimaryKey
     val model: String,
     val imageUrl: String,

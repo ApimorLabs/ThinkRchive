@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,6 +32,23 @@ fun ThinkpadEntry(
     modifier: Modifier = Modifier,
     thinkpad: Thinkpad
 ) {
+    //Scale animation
+    val animatedProgress = remember {
+        Animatable(initialValue = 0.7f)
+    }
+    LaunchedEffect(key1 = Unit) {
+        animatedProgress.animateTo(
+            targetValue = 1f,
+            animationSpec = tween(300, easing = LinearEasing)
+        )
+    }
+
+    val animatedModifier = modifier
+        .graphicsLayer(
+            scaleX = animatedProgress.value,
+            scaleY = animatedProgress.value
+        )
+
     val divider = " - "
     val marketPrice by remember(thinkpad) {
         derivedStateOf {
@@ -62,7 +80,7 @@ fun ThinkpadEntry(
     
     Box(
         contentAlignment = Alignment.CenterStart,
-        modifier = modifier
+        modifier = animatedModifier
             .fillMaxWidth()
             .clip(Shapes.large)
             .background(color = MaterialTheme.colors.surface,)

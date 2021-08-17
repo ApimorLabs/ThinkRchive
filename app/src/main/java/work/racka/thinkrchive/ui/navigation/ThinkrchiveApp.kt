@@ -19,8 +19,7 @@ fun ThinkrchiveApp() {
             val navController = rememberNavController()
             ThinkrchiveNavHost(
                 modifier = Modifier,
-                navController = navController,
-                thinkpadListViewModel = hiltViewModel()
+                navController = navController
             )
         }
     }

@@ -3,24 +3,21 @@ package work.racka.thinkrchive.ui.main.screens
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 import timber.log.Timber
@@ -36,15 +33,14 @@ import work.racka.thinkrchive.utils.Constants
 fun ThinkpadListScreen(
     modifier: Modifier = Modifier,
     listState: LazyListState = rememberLazyListState(),
-    onEntryClick: () -> Unit = { },
-    thinkpadList: List<Thinkpad>
+    onEntryClick: (Thinkpad) -> Unit = { },
+    onSearch: (String) -> Unit = { },
+    thinkpadList: List<Thinkpad>,
+    networkLoading: Boolean
 ) {
 
     val focusManager = LocalFocusManager.current
 
-    var testText by remember {
-        mutableStateOf("Initial")
-    }
     Surface(
         color = MaterialTheme.colors.background,
         modifier = Modifier
@@ -52,7 +48,8 @@ fun ThinkpadListScreen(
     ) {
         LazyColumn(
             state = listState,
-            modifier = modifier
+            modifier = modifier,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Timber.d("thinkpadListScreen Contents called")
             item {
@@ -60,24 +57,31 @@ fun ThinkpadListScreen(
                 CustomSearchBar(
                     focusManager = focusManager,
                     onSearch = {
-                        testText = it
+                        onSearch(it)
+                    },
+                    onDismissSearchClicked = {
+                        onSearch("")
                     },
                     modifier = Modifier.padding(
-                        vertical = Dimens.SmallPadding.size,
-                        horizontal = Dimens.MediumPadding.size
+                        vertical = Dimens.SmallPadding.size
                     )
                 )
             }
             items(thinkpadList) {
                 ThinkpadEntry(
                     thinkpad = it,
-                    onEntryClick = onEntryClick,
+                    onEntryClick = { onEntryClick(it) },
                     modifier = Modifier
                         .padding(
                             horizontal = Dimens.MediumPadding.size,
                             vertical = Dimens.SmallPadding.size
                         )
                 )
+            }
+            item {
+                if (networkLoading) {
+                    CircularProgressIndicator()
+                }
             }
 
             // This must always stay at the bottom for navBar padding
@@ -97,7 +101,8 @@ fun ThinkpadListScreen(
 fun ThinkpadListScreenPreview() {
     ThinkRchiveTheme {
         ThinkpadListScreen(
-            thinkpadList = Constants.ThinkpadsListPreview
+            thinkpadList = Constants.ThinkpadsListPreview,
+            networkLoading = false
         )
     }
 }

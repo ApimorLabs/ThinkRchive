@@ -7,7 +7,8 @@ import kotlinx.coroutines.withContext
 import work.racka.thinkrchive.data.api.ThinkrchiveApi
 import work.racka.thinkrchive.data.dataTransferObjects.asDatabaseModel
 import work.racka.thinkrchive.data.database.ThinkpadDao
-import work.racka.thinkrchive.data.database.ThinkpadDatabaseObjects
+import work.racka.thinkrchive.data.database.ThinkpadDatabaseObject
+import work.racka.thinkrchive.data.model.Thinkpad
 import work.racka.thinkrchive.data.responses.ThinkpadResponse
 import work.racka.thinkrchive.utils.Resource
 import javax.inject.Inject
@@ -29,8 +30,14 @@ class ThinkpadRepository @Inject constructor(
     }
 
     // Get all Thinkpads from the Database
-    fun getAllThinkpads(): Flow<List<ThinkpadDatabaseObjects>> {
+    fun getAllThinkpads(): Flow<List<ThinkpadDatabaseObject>> {
         return thinkpadDao.getAllThinkpads()
+    }
+
+    // Get requested Thinkpads from the Database
+    // This is the default way of getting the data from the database
+    fun queryThinkpads(query: String): Flow<List<ThinkpadDatabaseObject>> {
+        return thinkpadDao.searchDatabase("%$query%")
     }
 
     // Insert all Thinkpads obtained from the network to the database
@@ -38,5 +45,10 @@ class ThinkpadRepository @Inject constructor(
         withContext(Dispatchers.IO) {
             thinkpadDao.insertAllThinkpads(*thinkpadList.asDatabaseModel())
         }
+    }
+
+    // Get a single Thinkpad entry from the DB
+    fun getThinkpad(thinkpad: String): Flow<ThinkpadDatabaseObject> {
+        return thinkpadDao.getThinkpad(thinkpad = "%$thinkpad%")
     }
 }

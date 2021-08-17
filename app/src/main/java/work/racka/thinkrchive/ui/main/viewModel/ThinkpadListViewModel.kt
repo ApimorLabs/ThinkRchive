@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -13,6 +14,7 @@ import work.racka.thinkrchive.data.dataTransferObjects.asDomainModel
 import work.racka.thinkrchive.data.model.Thinkpad
 import work.racka.thinkrchive.repository.ThinkpadRepository
 import work.racka.thinkrchive.utils.Resource
+import work.racka.thinkrchive.utils.getChipNamesList
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,13 +22,15 @@ class ThinkpadListViewModel @Inject constructor(
     private val thinkpadRepository: ThinkpadRepository
 ) : ViewModel() {
 
+    //private val _thinkpadList
     var thinkpadList by mutableStateOf<List<Thinkpad>>(listOf())
+    var thinkpadSeriesList by mutableStateOf<List<String>>(listOf())
     var loadError = mutableStateOf("")
     var isLoading = mutableStateOf(false)
 
     init {
         refreshThinkpadList()
-        getThinkpadListFromDatabase()
+        getNewThinkpadListFromDatabase()
     }
 
     fun refreshThinkpadList() {
@@ -46,11 +50,15 @@ class ThinkpadListViewModel @Inject constructor(
         }
     }
 
-    private fun getThinkpadListFromDatabase() {
+    fun getNewThinkpadListFromDatabase(query: String = "") {
         viewModelScope.launch {
-            thinkpadRepository.getAllThinkpads().collect {
-                thinkpadList = it.asDomainModel()
-            }
+            thinkpadRepository.queryThinkpads(query)
+                .collect {
+                    thinkpadList = it.asDomainModel()
+                    if (thinkpadList.size > thinkpadSeriesList.size) {
+                        thinkpadSeriesList = thinkpadList.getChipNamesList()
+                    }
+                }
         }
     }
 }
