@@ -7,7 +7,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,8 +27,8 @@ import work.racka.thinkrchive.utils.Constants
 
 @Composable
 fun ThinkpadEntry(
-    onEntryClick: () -> Unit = {},
     modifier: Modifier = Modifier,
+    onEntryClick: () -> Unit = {},
     thinkpad: Thinkpad
 ) {
     //Scale animation
@@ -39,7 +38,7 @@ fun ThinkpadEntry(
     LaunchedEffect(key1 = Unit) {
         animatedProgress.animateTo(
             targetValue = 1f,
-            animationSpec = tween(300, easing = LinearEasing)
+            animationSpec = tween(300, easing = FastOutSlowInEasing)
         )
     }
 
@@ -77,13 +76,13 @@ fun ThinkpadEntry(
             )
         }
     )
-    
+
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier = animatedModifier
             .fillMaxWidth()
             .clip(Shapes.large)
-            .background(color = MaterialTheme.colors.surface,)
+            .background(color = MaterialTheme.colors.surface)
             .clickable { onEntryClick() }
     ) {
         Row(
@@ -170,7 +169,6 @@ private fun SubtitleText(
 @Composable
 private fun LoadingImage(
     modifier: Modifier = Modifier
-        .size(120.dp)
 ) {
     val infiniteTransition = rememberInfiniteTransition()
     val alpha by infiniteTransition.animateFloat(
@@ -213,7 +211,7 @@ private fun SubtitleTextPreview() {
 private fun ThinkpadEntryPreview() {
     ProvideWindowInsets {
         ThinkRchiveTheme {
-            val thinkpad = (Constants.ThinkpadsListPreview[0]).apply {
+            Constants.ThinkpadsListPreview[0].apply {
                 ThinkpadEntry(
                     thinkpad = this,
                     modifier = Modifier

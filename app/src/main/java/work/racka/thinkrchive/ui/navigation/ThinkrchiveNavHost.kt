@@ -11,16 +11,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import com.google.accompanist.insets.statusBarsPadding
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import timber.log.Timber
-import work.racka.thinkrchive.data.dataTransferObjects.asThinkpad
-import work.racka.thinkrchive.data.model.Thinkpad
 import work.racka.thinkrchive.ui.main.screens.ThinkpadListScreen
 import work.racka.thinkrchive.ui.main.screens.ThinkrchiveScreens
+import work.racka.thinkrchive.ui.main.states.ThinkpadDetailsScreenState
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadDetailsViewModel
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadListViewModel
-import work.racka.thinkrchive.utils.emptyThinkpad
 
 @ExperimentalComposeUiApi
 @Composable
@@ -37,26 +33,17 @@ fun ThinkrchiveNavHost(
         val thinkpadDetailsScreen = ThinkrchiveScreens.ThinkpadDetailsScreen.name
 
         composable(route = ThinkrchiveScreens.ThinkpadListScreen.name) {
-            val thinkpadListViewModel: ThinkpadListViewModel = hiltViewModel()
-            val thinkpadList by remember {
-                derivedStateOf {
-                    thinkpadListViewModel.thinkpadList
-                }
-            }
-            val loadError by remember {
-                thinkpadListViewModel.loadError
-            }
-            val isLoading by remember {
-                thinkpadListViewModel.isLoading
-            }
+            val viewModel: ThinkpadListViewModel = hiltViewModel()
+            val thinkpadListState by viewModel.uiState.collectAsState()
+
             Timber.d("thinkpadListScreen NavHost called")
 
             ThinkpadListScreen(
                 modifier = modifier,
-                thinkpadList = thinkpadList,
-                networkLoading = isLoading,
+                thinkpadList = thinkpadListState.thinkpadList,
+                networkLoading = thinkpadListState.networkLoading,
                 onSearch = { query ->
-                    thinkpadListViewModel
+                    viewModel
                         .getNewThinkpadListFromDatabase(query)
                 },
                 onEntryClick = { thinkpad ->
@@ -75,22 +62,18 @@ fun ThinkrchiveNavHost(
                 }
             )
         ) {
-            val scope = rememberCoroutineScope()
-            val thinkpadDetailsViewModel: ThinkpadDetailsViewModel = hiltViewModel()
-            val thinkpad = remember {
-                var temp: Thinkpad = emptyThinkpad()
-                scope.launch {
-                    thinkpadDetailsViewModel.thinkpad.collect {
-                        temp = it.asThinkpad()
-                    }
-                }
-                temp
-            }
 
-            Text(
-                text = thinkpad.model,
-                modifier = Modifier.statusBarsPadding()
-            )
+            val thinkpadDetailsViewModel: ThinkpadDetailsViewModel = hiltViewModel()
+            val thinkpadDetail = thinkpadDetailsViewModel.uiState.collectAsState()
+
+            if (thinkpadDetail.value is ThinkpadDetailsScreenState.ThinkpadDetail) {
+                val thinkpad =
+                    (thinkpadDetail.value as ThinkpadDetailsScreenState.ThinkpadDetail).thinkpad
+                Text(
+                    text = thinkpad.model,
+                    modifier = Modifier.statusBarsPadding()
+                )
+            }
         }
     }
 
