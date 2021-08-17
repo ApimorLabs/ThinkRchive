@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -41,8 +42,7 @@ fun ThinkpadListScreen(
 
     val focusManager = LocalFocusManager.current
 
-    Surface(
-        color = MaterialTheme.colors.background,
+    Scaffold(
         modifier = Modifier
             .fillMaxSize()
     ) {
@@ -98,7 +98,7 @@ fun ThinkpadListScreen(
     device = Devices.PIXEL_4
 )
 @Composable
-fun ThinkpadListScreenPreview() {
+private fun ThinkpadListScreenPreview() {
     ThinkRchiveTheme {
         ThinkpadListScreen(
             thinkpadList = Constants.ThinkpadsListPreview,

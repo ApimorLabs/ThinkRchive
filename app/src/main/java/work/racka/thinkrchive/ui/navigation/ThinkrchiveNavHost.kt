@@ -1,5 +1,6 @@
 package work.racka.thinkrchive.ui.navigation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -12,12 +13,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import com.google.accompanist.insets.statusBarsPadding
 import timber.log.Timber
+import work.racka.thinkrchive.ui.main.screens.ThinkpadDetailsScreen
 import work.racka.thinkrchive.ui.main.screens.ThinkpadListScreen
 import work.racka.thinkrchive.ui.main.screens.ThinkrchiveScreens
 import work.racka.thinkrchive.ui.main.states.ThinkpadDetailsScreenState
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadDetailsViewModel
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadListViewModel
 
+@ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @Composable
 fun ThinkrchiveNavHost(
@@ -69,9 +72,12 @@ fun ThinkrchiveNavHost(
             if (thinkpadDetail.value is ThinkpadDetailsScreenState.ThinkpadDetail) {
                 val thinkpad =
                     (thinkpadDetail.value as ThinkpadDetailsScreenState.ThinkpadDetail).thinkpad
-                Text(
-                    text = thinkpad.model,
-                    modifier = Modifier.statusBarsPadding()
+                ThinkpadDetailsScreen(
+                    modifier = modifier,
+                    thinkpad = thinkpad,
+                    onBackButtonPressed = {
+                        navController.popBackStack()
+                    }
                 )
             }
         }
