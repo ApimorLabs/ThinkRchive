@@ -15,7 +15,7 @@ object Constants {
             marketPriceStart = 250,
             marketPriceEnd = 500,
             processorPlatforms = "Intel 5th Gen",
-            processors = "i5-4300u",
+            processors = "i3-4030U, i5-4300U, i3-5010U, i5-5200U, i5-5300U, i7-5500U, i7-5600U",
             graphics = "Intel HD 5500",
             maxRam = "16GB (2 Slots)",
             displayRes = "1366x768, 1600x900, 1920x1080",

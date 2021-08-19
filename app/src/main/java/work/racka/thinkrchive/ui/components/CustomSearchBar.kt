@@ -17,10 +17,10 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBack
-import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material.icons.outlined.Sort
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.Sort
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -117,7 +117,7 @@ fun CustomSearchBar(
             ) {
                 if (isHintActive) {
                     Icon(
-                        imageVector = Icons.Outlined.Search,
+                        imageVector = Icons.Rounded.Search,
                         contentDescription = stringResource(id = R.string.search_icon),
                         tint = MaterialTheme.colors.onSurface,
                         modifier = Modifier
@@ -136,7 +136,7 @@ fun CustomSearchBar(
                             .padding(4.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Outlined.ArrowBack,
+                            imageVector = Icons.Rounded.ArrowBack,
                             contentDescription = stringResource(id = R.string.back_icon),
                             tint = MaterialTheme.colors.onSurface,
                             modifier = Modifier.rotate(angle)
@@ -217,7 +217,7 @@ fun CustomSearchBar(
                             .padding(4.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Outlined.Close,
+                            imageVector = Icons.Rounded.Close,
                             contentDescription = stringResource(id = R.string.clear_icon),
                             tint = MaterialTheme.colors.onSurface,
                             modifier = Modifier.rotate(angle)
@@ -235,7 +235,7 @@ fun CustomSearchBar(
                             .padding(4.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Outlined.Sort,
+                            imageVector = Icons.Rounded.Sort,
                             contentDescription = stringResource(id = R.string.option_icon),
                             tint = MaterialTheme.colors.onSurface,
                             modifier = Modifier.rotate(searchAndOptionsAngle)

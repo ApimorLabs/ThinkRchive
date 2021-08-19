@@ -2,6 +2,9 @@ package work.racka.thinkrchive.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.Image
@@ -17,6 +20,7 @@ import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,6 +37,22 @@ fun TopCardWithImage(
     imageUrl: String,
     onBackButtonPressed: () -> Unit = { }
 ) {
+
+    //Scale animation
+    val animatedProgress = remember {
+        Animatable(initialValue = 0.9f)
+    }
+    LaunchedEffect(key1 = animatedProgress) {
+        animatedProgress.animateTo(
+            targetValue = 1f,
+            animationSpec = tween(300, easing = FastOutSlowInEasing)
+        )
+    }
+
+    val animatedModifier = modifier
+        .graphicsLayer(
+            scaleX = animatedProgress.value
+        )
 
     var imageLoading by remember {
         mutableStateOf(true)
@@ -53,9 +73,8 @@ fun TopCardWithImage(
     )
 
     Box(
-        modifier = modifier
+        modifier = animatedModifier
             .fillMaxWidth()
-            .height(300.dp)
             .background(
                 color = MaterialTheme.colors.surface,
                 shape = RoundedCornerShape(

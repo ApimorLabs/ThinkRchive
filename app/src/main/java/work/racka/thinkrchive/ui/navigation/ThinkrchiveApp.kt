@@ -1,5 +1,6 @@
 package work.racka.thinkrchive.ui.navigation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -10,6 +11,7 @@ import com.google.accompanist.insets.statusBarsPadding
 import timber.log.Timber
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
 
+@ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @Composable
 fun ThinkrchiveApp() {

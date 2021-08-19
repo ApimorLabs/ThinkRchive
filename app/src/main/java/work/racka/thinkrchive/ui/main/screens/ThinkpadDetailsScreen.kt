@@ -2,7 +2,9 @@ package work.racka.thinkrchive.ui.main.screens
 
 import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -12,8 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.accompanist.insets.navigationBarsPadding
 import work.racka.thinkrchive.data.model.Thinkpad
+import work.racka.thinkrchive.ui.components.DetailsCards
 import work.racka.thinkrchive.ui.components.TopCardWithImage
+import work.racka.thinkrchive.ui.theme.Dimens
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.utils.Constants
 
@@ -23,6 +28,7 @@ fun ThinkpadDetailsScreen(
     modifier: Modifier = Modifier,
     thinkpad: Thinkpad,
     onBackButtonPressed: () -> Unit = { },
+    onExternalLinkClicked: () -> Unit = { },
     listState: LazyListState = rememberLazyListState()
 ) {
 
@@ -42,6 +48,17 @@ fun ThinkpadDetailsScreen(
                 )
             }
 
+            item {
+                DetailsCards(
+                    thinkpad = thinkpad,
+                    onExternalLinkClick = onExternalLinkClicked,
+                    modifier = Modifier
+                        .padding(Dimens.MediumPadding.size)
+                )
+            }
+
+            // Always at the bottom
+            item { Spacer(modifier = Modifier.navigationBarsPadding()) }
         }
     }
 }

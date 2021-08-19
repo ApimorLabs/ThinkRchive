@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -139,28 +140,31 @@ fun ThinkpadEntry(
 }
 
 @Composable
-private fun SubtitleText(
+fun SubtitleText(
     subtitleName: String,
-    subtitleData: String
+    subtitleData: String,
+    style: TextStyle = MaterialTheme.typography.body2,
+    maxLines: Int = 1,
+    verticalAlignment: Alignment.Vertical = Alignment.CenterVertically
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = verticalAlignment,
         horizontalArrangement = Arrangement.Start,
         modifier = Modifier
             .padding(vertical = 4.dp)
     ) {
         Text(
             text = "$subtitleName:",
-            style = MaterialTheme.typography.body2,
+            style = style,
             color = MaterialTheme.colors.onSurface,
             maxLines = 1
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = subtitleData,
-            style = MaterialTheme.typography.body2,
+            style = style,
             color = MaterialTheme.colors.onSurface,
-            maxLines = 1,
+            maxLines = maxLines,
             overflow = TextOverflow.Ellipsis
         )
     }
