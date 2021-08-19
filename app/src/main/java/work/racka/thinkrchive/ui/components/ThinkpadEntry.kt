@@ -16,6 +16,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -141,6 +142,7 @@ fun ThinkpadEntry(
 
 @Composable
 fun SubtitleText(
+    verticalPadding: Dp = 4.dp,
     subtitleName: String,
     subtitleData: String,
     style: TextStyle = MaterialTheme.typography.body2,
@@ -151,7 +153,7 @@ fun SubtitleText(
         verticalAlignment = verticalAlignment,
         horizontalArrangement = Arrangement.Start,
         modifier = Modifier
-            .padding(vertical = 4.dp)
+            .padding(vertical = verticalPadding)
     ) {
         Text(
             text = "$subtitleName:",

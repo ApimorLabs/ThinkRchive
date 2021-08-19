@@ -51,9 +51,7 @@ fun ThinkpadDetailsScreen(
             item {
                 DetailsCards(
                     thinkpad = thinkpad,
-                    onExternalLinkClick = onExternalLinkClicked,
-                    modifier = Modifier
-                        .padding(Dimens.MediumPadding.size)
+                    onExternalLinkClick = onExternalLinkClicked
                 )
             }
 

@@ -16,7 +16,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -90,7 +90,7 @@ fun TopCardWithImage(
                 .statusBarsPadding()
         ) {
             Icon(
-                imageVector = Icons.Outlined.ArrowBack,
+                imageVector = Icons.Rounded.ArrowBack,
                 contentDescription = stringResource(id = R.string.back_icon),
                 tint = MaterialTheme.colors.onSurface
             )
