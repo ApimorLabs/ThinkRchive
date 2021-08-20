@@ -5,7 +5,7 @@ object Versions {
     // Essentials
     const val material = "1.4.0"
     const val appCompat = "1.3.1"
-    const val gradlePlugin = "7.0.0"
+    const val gradlePlugin = "7.0.1"
     const val coreKtx = "1.6.0"
 
     // Compose Base

@@ -7,8 +7,8 @@ buildscript {
         maven(url = "https://www.jitpack.io")
     }
     dependencies {
-        classpath(BuildPlugins.androidGradle)
-        classpath(BuildPlugins.kotlinGradle)
+        classpath(BuildPlugins.android)
+        classpath(BuildPlugins.kotlin)
         classpath(BuildPlugins.daggerHilt)
 
         // NOTE: Do not place your application dependencies here; they belong

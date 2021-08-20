@@ -131,6 +131,7 @@ fun CustomSearchBar(
                             searchText = ""
                             keyboardController?.hide()
                             focusManager.clearFocus()
+                            isTyping = searchText.isNotBlank()
                         },
                         modifier = Modifier
                             .padding(4.dp)
@@ -212,6 +213,7 @@ fun CustomSearchBar(
                         onClick = {
                             onDismissSearchClicked()
                             searchText = ""
+                            isTyping = searchText.isNotBlank()
                         },
                         modifier = Modifier
                             .padding(4.dp)
