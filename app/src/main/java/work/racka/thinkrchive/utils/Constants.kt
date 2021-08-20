@@ -34,7 +34,8 @@ object Constants {
             displaysSupported = "AUO, LG, SAM",
             otherMods = "Other",
             otherModsLinks = "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T450/ThinkPad_T450_Spec.PDF",
-            biosLockIn = "Yes: Display"
+            biosLockIn = "Yes: Display",
+            ports = "3x USB 3.0, VGA, Mini DisplayPort, Ethernet (RJ-45), Dock connector, SD Card Reader"
         ),
         Thinkpad(
             model = "Thinkpad T450",
@@ -63,7 +64,8 @@ object Constants {
             displaysSupported = "AUO, LG, SAM",
             otherMods = "Other",
             otherModsLinks = "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T450/ThinkPad_T450_Spec.PDF",
-            biosLockIn = "Yes: Display"
+            biosLockIn = "Yes: Display",
+            ports = "3x USB 3.0, VGA, Mini DisplayPort, Ethernet (RJ-45), Dock connector, SD Card Reader"
         ),
         Thinkpad(
             model = "Thinkpad T450",
@@ -92,7 +94,8 @@ object Constants {
             displaysSupported = "AUO, LG, SAM",
             otherMods = "Other",
             otherModsLinks = "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T450/ThinkPad_T450_Spec.PDF",
-            biosLockIn = "Yes: Display"
+            biosLockIn = "Yes: Display",
+            ports = "3x USB 3.0, VGA, Mini DisplayPort, Ethernet (RJ-45), Dock connector, SD Card Reader"
         ),
         Thinkpad(
             model = "Thinkpad T450",
@@ -121,7 +124,8 @@ object Constants {
             displaysSupported = "AUO, LG, SAM",
             otherMods = "Other",
             otherModsLinks = "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T450/ThinkPad_T450_Spec.PDF",
-            biosLockIn = "Yes: Display"
+            biosLockIn = "Yes: Display",
+            ports = "3x USB 3.0, VGA, Mini DisplayPort, Ethernet (RJ-45), Dock connector, SD Card Reader"
         ),
         Thinkpad(
             model = "Thinkpad T450",
@@ -150,7 +154,8 @@ object Constants {
             displaysSupported = "AUO, LG, SAM",
             otherMods = "Other",
             otherModsLinks = "https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T450/ThinkPad_T450_Spec.PDF",
-            biosLockIn = "Yes: Display"
+            biosLockIn = "Yes: Display",
+            ports = "3x USB 3.0, VGA, Mini DisplayPort, Ethernet (RJ-45), Dock connector, SD Card Reader"
         )
     )
 }

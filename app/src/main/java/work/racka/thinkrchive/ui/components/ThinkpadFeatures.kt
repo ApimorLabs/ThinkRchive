@@ -188,6 +188,13 @@ fun ThinkpadFeatures(
                     icon = Icons.Outlined.Lock,
                     maxLines = maxLines
                 )
+                SubtitleTextWithIcon(
+                    subtitleName = "Ports",
+                    subtitleData = thinkpad.ports,
+                    style = MaterialTheme.typography.body1,
+                    icon = Icons.Outlined.SettingsInputHdmi,
+                    maxLines = maxLines
+                )
             }
 
             IconButton(

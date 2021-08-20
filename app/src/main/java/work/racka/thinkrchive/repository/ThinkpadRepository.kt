@@ -48,6 +48,6 @@ class ThinkpadRepository @Inject constructor(
 
     // Get a single Thinkpad entry from the DB
     fun getThinkpad(thinkpad: String): Flow<ThinkpadDatabaseObject> {
-        return thinkpadDao.getThinkpad(thinkpad = "%$thinkpad%")
+        return thinkpadDao.getThinkpad(thinkpad = thinkpad)
     }
 }

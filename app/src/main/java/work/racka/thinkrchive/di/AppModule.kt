@@ -43,7 +43,7 @@ object AppModule {
                 "touch_screen",	"screen_size", "backlit_kb", "fingerprint_reader", "kb_type",
                 "dual_batt", "internal_batt", "external_batt", "psref_link", "bios_version",
                 "known_issues", "known_issues_links", "displays_supported",	"other_mods",
-                "other_mods_links",	"bios_lock_in"
+                "other_mods_links",	"bios_lock_in", "ports"
             )
         )
         .build()
@@ -81,7 +81,8 @@ object AppModule {
         app,
         ThinkpadDatabase::class.java,
         THINKPAD_LIST_TABLE
-    ).build()
+    ).fallbackToDestructiveMigration()
+        .build()
 
     @Singleton
     @Provides

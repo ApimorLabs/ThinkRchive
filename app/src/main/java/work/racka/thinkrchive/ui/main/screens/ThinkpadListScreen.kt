@@ -8,15 +8,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.insets.navigationBarsPadding
@@ -37,7 +35,8 @@ fun ThinkpadListScreen(
     onEntryClick: (Thinkpad) -> Unit = { },
     onSearch: (String) -> Unit = { },
     thinkpadList: List<Thinkpad>,
-    networkLoading: Boolean
+    networkLoading: Boolean,
+    networkError: String
 ) {
 
     val focusManager = LocalFocusManager.current
@@ -83,6 +82,15 @@ fun ThinkpadListScreen(
                     CircularProgressIndicator()
                 }
             }
+            item {
+                if (networkError.isNotBlank()) {
+                    Text(
+                        text = networkError,
+                        color = MaterialTheme.colors.error,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
 
             // This must always stay at the bottom for navBar padding
             item {
@@ -102,7 +110,8 @@ private fun ThinkpadListScreenPreview() {
     ThinkRchiveTheme {
         ThinkpadListScreen(
             thinkpadList = Constants.ThinkpadsListPreview,
-            networkLoading = false
+            networkLoading = false,
+            networkError = ""
         )
     }
 }

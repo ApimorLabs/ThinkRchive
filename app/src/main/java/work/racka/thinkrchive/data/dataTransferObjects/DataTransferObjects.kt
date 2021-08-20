@@ -34,7 +34,8 @@ fun List<ThinkpadResponse>.asDatabaseModel(): Array<ThinkpadDatabaseObject> {
             displaysSupported = it.displaysSupported,
             otherMods = it.otherMods,
             otherModsLinks = it.otherModsLinks,
-            biosLockIn = it.biosLockIn
+            biosLockIn = it.biosLockIn,
+            ports = it.ports
         )
     }.toTypedArray()
 }
@@ -69,7 +70,8 @@ fun List<ThinkpadDatabaseObject>.asDomainModel(): List<Thinkpad> {
             displaysSupported = it.displaysSupported,
             otherMods = it.otherMods,
             otherModsLinks = it.otherModsLinks,
-            biosLockIn = it.biosLockIn
+            biosLockIn = it.biosLockIn,
+            ports = it.ports
         )
     }
 }
@@ -102,6 +104,7 @@ fun ThinkpadDatabaseObject.asThinkpad(): Thinkpad {
         displaysSupported = this.displaysSupported,
         otherMods = this.otherMods,
         otherModsLinks = this.otherModsLinks,
-        biosLockIn = this.biosLockIn
+        biosLockIn = this.biosLockIn,
+        ports = this.ports
     )
 }

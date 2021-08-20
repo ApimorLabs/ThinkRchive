@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [ThinkpadDatabaseObject::class],
-    version = 1
+    version = 2
 )
 abstract class ThinkpadDatabase: RoomDatabase() {
     abstract val thinkpadDao: ThinkpadDao

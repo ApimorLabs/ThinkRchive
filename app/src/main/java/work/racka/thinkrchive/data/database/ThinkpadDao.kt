@@ -24,6 +24,6 @@ interface ThinkpadDao {
     // Get a Thinkpad entry from it's name
     // We are searching the primary key so it should always match
     // only one Thinkpad model
-    @Query("SELECT * FROM $THINKPAD_LIST_TABLE WHERE model LIKE :thinkpad")
+    @Query("SELECT * FROM $THINKPAD_LIST_TABLE WHERE model = :thinkpad")
     fun getThinkpad(thinkpad: String): Flow<ThinkpadDatabaseObject>
 }

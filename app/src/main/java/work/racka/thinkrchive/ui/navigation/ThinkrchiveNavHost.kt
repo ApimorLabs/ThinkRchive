@@ -53,7 +53,8 @@ fun ThinkrchiveNavHost(
                     navController.navigate(
                         route = "$thinkpadDetailsScreen/${thinkpad.model}"
                     )
-                }
+                },
+                networkError = thinkpadListState.networkError
             )
         }
 

@@ -52,5 +52,6 @@ data class ThinkpadResponse(
     @Json(name = "other_mods_links")
     val otherModsLinks: String,
     @Json(name = "bios_lock_in")
-    val biosLockIn: String
+    val biosLockIn: String,
+    val ports: String
 )

@@ -42,7 +42,8 @@ fun emptyThinkpad(): Thinkpad = Thinkpad(
     displaysSupported = "",
     otherMods = "",
     otherModsLinks = "",
-    biosLockIn = ""
+    biosLockIn = "",
+    ports = ""
 )
 
 /**

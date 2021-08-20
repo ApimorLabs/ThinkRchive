@@ -39,5 +39,6 @@ data class Thinkpad(
     val displaysSupported: String,
     val otherMods: String,
     val otherModsLinks: String,
-    val biosLockIn: String
+    val biosLockIn: String,
+    val ports: String
 ) : Parcelable
