@@ -18,9 +18,9 @@ private val DarkColorPalette = darkColors(
     secondary = YellowDefault,
     onSecondary = YellowDefaultDarkerOn,
     secondaryVariant = YellowDefaultVariant,
-    background = DarkBackground,
+    background = Color.Black,
     onBackground = LightGrayBackground,
-    surface = DarkSurface,
+    surface = LightDark,
     onSurface = LightGrayTextDark
 )
 
@@ -32,7 +32,7 @@ private val LightColorPalette = lightColors(
     onSecondary = YellowDefaultDarkerOn,
     secondaryVariant = YellowDefaultVariant,
     background = LightGrayBackground,
-    onBackground = DarkBackground,
+    onBackground = LightDark,
     onSurface = LightGrayText
 )
 

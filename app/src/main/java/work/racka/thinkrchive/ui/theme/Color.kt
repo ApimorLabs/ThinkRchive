@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 //val Teal200 = Color(0xFF03DAC5)
 
 val LightGrayBackground = Color(0xFFF1F0F5)
-val DarkBackground = Color(0xFF121212)
+val LightDark = Color(0xFF121212)
 val DarkSurface = Color(0xFF1E1E1E)
 val LightGrayText = Color(0xFF7A7A7A)
 val OrangeChipSelected = Color(0xFFFF4B12)
