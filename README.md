@@ -8,11 +8,11 @@ GOALS:
 
 2. Use Retrosheet (with Google Sheets as a DB) ✅
 
-3. Use Coil
+3. Use Coil ✅
  
-4. Compose Navigation
+4. Compose Navigation ✅
 
-5. Impelement animations
+5. Impelement animations ✅
  
 7. Use MotionLayout
  

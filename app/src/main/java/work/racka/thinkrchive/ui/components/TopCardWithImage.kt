@@ -1,15 +1,12 @@
 package work.racka.thinkrchive.ui.components
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandHorizontally
-import androidx.compose.animation.shrinkOut
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
@@ -20,6 +17,7 @@ import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,13 +33,24 @@ import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
 fun TopCardWithImage(
     modifier: Modifier = Modifier,
     imageUrl: String,
-    onBackButtonPressed: () -> Unit = { }
+    onBackButtonPressed: () -> Unit = { },
+    listState: LazyListState
 ) {
 
     //Scale animation
     val animatedProgress = remember {
         Animatable(initialValue = 0.9f)
     }
+    val scrollDp = 300 - listState.firstVisibleItemScrollOffset
+    val animateDp by animateDpAsState(
+        targetValue = if (scrollDp < 150) 110.dp else scrollDp.dp,
+        animationSpec = tween(600, easing = LinearOutSlowInEasing)
+    )
+    val animatedElevation by animateDpAsState(
+        targetValue = if (scrollDp < 110) 10.dp else 0.dp,
+        animationSpec = tween(600, easing = LinearOutSlowInEasing)
+    )
+
     LaunchedEffect(key1 = animatedProgress) {
         animatedProgress.animateTo(
             targetValue = 1f,
@@ -75,6 +84,14 @@ fun TopCardWithImage(
     Box(
         modifier = animatedModifier
             .fillMaxWidth()
+            .height(animateDp)
+            .shadow(
+                elevation = animatedElevation,
+                shape = RoundedCornerShape(
+                    bottomEnd = 20.dp,
+                    bottomStart = 20.dp
+                )
+            )
             .background(
                 color = MaterialTheme.colors.surface,
                 shape = RoundedCornerShape(
@@ -105,8 +122,11 @@ fun TopCardWithImage(
                 painter = coilPainter,
                 contentDescription = stringResource(id = R.string.thinkpad_image),
                 modifier = Modifier
-                    .size(290.dp)
+                    .size(300.dp)
                     .padding(Dimens.MediumPadding.size)
+                    .animateContentSize(
+                        animationSpec = tween(600, easing = LinearOutSlowInEasing)
+                    )
             )
             AnimatedVisibility(
                 visible = imageLoading,
@@ -125,7 +145,8 @@ fun TopCardWithImage(
 private fun TopCardWithImagePreview() {
     ThinkRchiveTheme {
         TopCardWithImage(
-            imageUrl = "https://raw.githubusercontent.com/racka98/ThinkRchive/main/thinkpad_images/thinkpadt450.png"
+            imageUrl = "https://raw.githubusercontent.com/racka98/ThinkRchive/main/thinkpad_images/thinkpadt450.png",
+            listState = rememberLazyListState()
         )
     }
 }

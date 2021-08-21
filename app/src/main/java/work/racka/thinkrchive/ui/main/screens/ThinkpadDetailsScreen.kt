@@ -34,17 +34,25 @@ fun ThinkpadDetailsScreen(
 
     Scaffold(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        topBar = {
+            TopCardWithImage(
+                imageUrl = thinkpad.imageUrl,
+                onBackButtonPressed = onBackButtonPressed,
+                listState = listState
+            )
+        }
     ) {
         LazyColumn(
             state = listState,
             modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             item {
-                TopCardWithImage(
-                    imageUrl = thinkpad.imageUrl,
-                    onBackButtonPressed = onBackButtonPressed
+                DetailsCards(
+                    thinkpad = thinkpad,
+                    onExternalLinkClick = onExternalLinkClicked
                 )
             }
 
