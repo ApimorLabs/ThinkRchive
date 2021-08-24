@@ -10,7 +10,7 @@ object Versions {
 
     // Compose Base
     const val composeKotlin = "1.5.21"
-    const val compose = "1.0.1"
+    const val compose = "1.1.0-alpha02"
     const val composeConstraintLayout = "1.0.0-beta02"
     const val activityCompose = "1.3.1"
 
@@ -34,7 +34,7 @@ object Versions {
     const val timber = "4.7.1"
 
     // Helpers
-    const val accompanist = "0.16.0"
+    const val accompanist = "0.17.0"
     const val coilImage = "1.3.2"
 
     // Networking & JSON

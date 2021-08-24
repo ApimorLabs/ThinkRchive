@@ -4,10 +4,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.statusBarsPadding
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import timber.log.Timber
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
 
@@ -18,7 +16,7 @@ fun ThinkrchiveApp() {
     ProvideWindowInsets {
         ThinkRchiveTheme {
             Timber.d("ThinkrchiveApp called")
-            val navController = rememberNavController()
+            val navController = rememberAnimatedNavController()
             ThinkrchiveNavHost(
                 modifier = Modifier,
                 navController = navController

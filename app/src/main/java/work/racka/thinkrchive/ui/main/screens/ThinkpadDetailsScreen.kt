@@ -56,13 +56,6 @@ fun ThinkpadDetailsScreen(
                 )
             }
 
-            item {
-                DetailsCards(
-                    thinkpad = thinkpad,
-                    onExternalLinkClick = onExternalLinkClicked
-                )
-            }
-
             // Always at the bottom
             item { Spacer(modifier = Modifier.navigationBarsPadding()) }
         }

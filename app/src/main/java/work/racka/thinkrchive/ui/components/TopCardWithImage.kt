@@ -42,13 +42,13 @@ fun TopCardWithImage(
         Animatable(initialValue = 0.9f)
     }
     val scrollDp = 300 - listState.firstVisibleItemScrollOffset
-    val animateDp by animateDpAsState(
-        targetValue = if (scrollDp < 150) 110.dp else scrollDp.dp,
-        animationSpec = tween(600, easing = LinearOutSlowInEasing)
+    val animatedCardSize by animateDpAsState(
+        targetValue = if (scrollDp < 120) 110.dp else scrollDp.dp,
+        animationSpec = tween(500, easing = LinearOutSlowInEasing)
     )
     val animatedElevation by animateDpAsState(
         targetValue = if (scrollDp < 110) 10.dp else 0.dp,
-        animationSpec = tween(600, easing = LinearOutSlowInEasing)
+        animationSpec = tween(500, easing = LinearOutSlowInEasing)
     )
 
     LaunchedEffect(key1 = animatedProgress) {
@@ -84,7 +84,7 @@ fun TopCardWithImage(
     Box(
         modifier = animatedModifier
             .fillMaxWidth()
-            .height(animateDp)
+            .height(animatedCardSize)
             .shadow(
                 elevation = animatedElevation,
                 shape = RoundedCornerShape(

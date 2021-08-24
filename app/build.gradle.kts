@@ -105,6 +105,7 @@ dependencies {
 
     // Accompanist
     implementation(Deps.accompanistInsets)
+    implementation(Deps.accompanistNavigationAnimations)
 
     //Room database
     implementation(Deps.roomRuntime)
