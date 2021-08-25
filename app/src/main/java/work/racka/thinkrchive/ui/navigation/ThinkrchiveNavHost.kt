@@ -1,9 +1,7 @@
 package work.racka.thinkrchive.ui.navigation
 
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -40,36 +38,40 @@ fun ThinkrchiveNavHost(
 
         composable(
             route = ThinkrchiveScreens.ThinkpadListScreen.name,
-            enterTransition = { initial, _ ->
-                when(initial.destination.route) {
-                    ThinkrchiveScreens.ThinkpadDetailsScreen.name ->
-                        slideInHorizontally(
-                            initialOffsetX = { 1000 },
-                            animationSpec = tween(700)
-                        )
-                    else -> null
-                }
+
+            // Transition animations
+            enterTransition = { _, _ ->
+                scaleIn(
+                    initialScale = .9f,
+                    animationSpec = tween(300)
+                ) + fadeIn(
+                    animationSpec = tween(300)
+                )
             },
-            exitTransition = { _, target ->
-                when (target.destination.route) {
-                    ThinkrchiveScreens.ThinkpadDetailsScreen.name ->
-                        slideOutHorizontally(targetOffsetX = { -1000 }, animationSpec = tween(700))
-                    else -> null
-                }
+            exitTransition = { _, _ ->
+                scaleOut(
+                    targetScale = 1.1f,
+                    animationSpec = tween(300)
+                ) + fadeOut(
+                    animationSpec = tween(300)
+                )
             },
-            popEnterTransition = { initial, _ ->
-                when (initial.destination.route) {
-                    ThinkrchiveScreens.ThinkpadDetailsScreen.name ->
-                        slideInHorizontally(initialOffsetX = { -1000 }, animationSpec = tween(700))
-                    else -> null
-                }
+            // popEnter and popExit default to enterTransition & exitTransition respectively
+            popEnterTransition = { _, _ ->
+                scaleIn(
+                    initialScale = 1.1f,
+                    animationSpec = tween(300)
+                ) + fadeIn(
+                    animationSpec = tween(300)
+                )
             },
-            popExitTransition = { _, target ->
-                when (target.destination.route) {
-                    ThinkrchiveScreens.ThinkpadDetailsScreen.name ->
-                        slideOutHorizontally(targetOffsetX = { 1000 }, animationSpec = tween(700))
-                    else -> null
-                }
+            popExitTransition = { _, _ ->
+                scaleOut(
+                    targetScale = .9f,
+                    animationSpec = tween(300)
+                ) + fadeOut(
+                    animationSpec = tween(300)
+                )
             }
         ) {
             val viewModel: ThinkpadListViewModel = hiltViewModel()
@@ -101,34 +103,42 @@ fun ThinkrchiveNavHost(
                     type = NavType.StringType
                 }
             ),
-            enterTransition = { initial, _ ->
-                when (initial.destination.route) {
-                    ThinkrchiveScreens.ThinkpadListScreen.name ->
-                        slideInHorizontally(initialOffsetX = { 1000 }, animationSpec = tween(700))
-                    else -> null
-                }
+
+            // Transition animations
+            enterTransition = { _, _ ->
+                scaleIn(
+                    initialScale = .9f,
+                    animationSpec = tween(300)
+                ) + fadeIn(
+                    animationSpec = tween(300)
+                )
             },
-            exitTransition = { _, target ->
-                when (target.destination.route) {
-                    ThinkrchiveScreens.ThinkpadListScreen.name ->
-                        slideOutHorizontally(targetOffsetX = { -1000 }, animationSpec = tween(700))
-                    else -> null
-                }
+            exitTransition = { _, _ ->
+                scaleOut(
+                    targetScale = 1.1f,
+                    animationSpec = tween(300)
+                ) + fadeOut(
+                    animationSpec = tween(300)
+                )
             },
-            popEnterTransition = { initial, _ ->
-                when (initial.destination.route) {
-                    ThinkrchiveScreens.ThinkpadListScreen.name ->
-                        slideInHorizontally(initialOffsetX = { -1000 }, animationSpec = tween(700))
-                    else -> null
-                }
+            // popEnter and popExit default to enterTransition & exitTransition respectively
+            popEnterTransition = { _, _ ->
+                scaleIn(
+                    initialScale = 1.1f,
+                    animationSpec = tween(300)
+                ) + fadeIn(
+                    animationSpec = tween(300)
+                )
             },
-            popExitTransition = { _, target ->
-                when (target.destination.route) {
-                    ThinkrchiveScreens.ThinkpadListScreen.name ->
-                        slideOutHorizontally(targetOffsetX = { 1000 }, animationSpec = tween(700))
-                    else -> null
-                }
+            popExitTransition = { _, _ ->
+                scaleOut(
+                    targetScale = .9f,
+                    animationSpec = tween(300)
+                ) + fadeOut(
+                    animationSpec = tween(300)
+                )
             }
+
         ) {
 
             val thinkpadDetailsViewModel: ThinkpadDetailsViewModel = hiltViewModel()

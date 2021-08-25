@@ -71,6 +71,7 @@ dependencies {
 
     // Compose
     implementation(Deps.composeUi)
+    implementation(Deps.composeAnimation)
     implementation(Deps.composeMaterial)
     implementation(Deps.composePreview)
     implementation(Deps.composeActivity)

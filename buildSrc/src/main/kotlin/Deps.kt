@@ -21,6 +21,7 @@ object Deps {
     // Compose
     val composeUi by lazy { "androidx.compose.ui:ui:${Versions.compose}" }
     val composeMaterial by lazy { "androidx.compose.material:material:${Versions.compose}" }
+    val composeAnimation by lazy { "androidx.compose.animation:animation:${Versions.compose}" }
     val composePreview by lazy { "androidx.compose.ui:ui-tooling-preview:${Versions.compose}" }
     val composeActivity by lazy { "androidx.activity:activity-compose:${Versions.activityCompose}" }
     val composeViewModel by lazy { "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.lifecycleViewModelCompose}" }

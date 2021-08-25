@@ -47,7 +47,7 @@ fun ThinkpadDetails(
     LaunchedEffect(key1 = Unit) {
         animatedProgress.animateTo(
             targetValue = 1f,
-            animationSpec = tween(300, easing = FastOutSlowInEasing)
+            animationSpec = tween(500, easing = FastOutSlowInEasing)
         )
     }
 

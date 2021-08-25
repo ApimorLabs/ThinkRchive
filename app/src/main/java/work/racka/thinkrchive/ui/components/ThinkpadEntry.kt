@@ -35,7 +35,7 @@ fun ThinkpadEntry(
 ) {
     //Scale animation
     val animatedProgress = remember {
-        Animatable(initialValue = 0.7f)
+        Animatable(initialValue = 1.15f)
     }
     LaunchedEffect(key1 = Unit) {
         animatedProgress.animateTo(
