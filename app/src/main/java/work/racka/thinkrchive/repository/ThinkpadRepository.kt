@@ -35,8 +35,29 @@ class ThinkpadRepository @Inject constructor(
 
     // Get requested Thinkpads from the Database
     // This is the default way of getting the data from the database
+    // Depends on Sorting options
     fun queryThinkpads(query: String): Flow<List<ThinkpadDatabaseObject>> {
         return thinkpadDao.searchDatabase("%$query%")
+    }
+
+    fun getThinkpadsAlphaAscending(query: String): Flow<List<ThinkpadDatabaseObject>> {
+        return thinkpadDao.getThinkpadsAlphaAscending("%$query%")
+    }
+
+    fun getThinkpadsNewestFirst(query: String): Flow<List<ThinkpadDatabaseObject>> {
+        return thinkpadDao.getThinkpadsNewestFirst("%$query%")
+    }
+
+    fun getThinkpadsOldestFirst(query: String): Flow<List<ThinkpadDatabaseObject>> {
+        return thinkpadDao.getThinkpadsOldestFirst("%$query%")
+    }
+
+    fun getThinkpadsLowPriceFirst(query: String): Flow<List<ThinkpadDatabaseObject>> {
+        return thinkpadDao.getThinkpadsLowPriceFirst("%$query%")
+    }
+
+    fun getThinkpadsHighPriceFirst(query: String): Flow<List<ThinkpadDatabaseObject>> {
+        return thinkpadDao.getThinkpadsHighPriceFirst("%$query%")
     }
 
     // Insert all Thinkpads obtained from the network to the database

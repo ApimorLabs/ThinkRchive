@@ -1,12 +1,17 @@
 package work.racka.thinkrchive.ui.navigation
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -21,6 +26,7 @@ import work.racka.thinkrchive.ui.main.states.ThinkpadDetailsScreenState
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadDetailsViewModel
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadListViewModel
 
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @Composable
@@ -92,7 +98,12 @@ fun ThinkrchiveNavHost(
                         route = "$thinkpadDetailsScreen/${thinkpad.model}"
                     )
                 },
-                networkError = thinkpadListState.networkError
+                networkError = thinkpadListState.networkError,
+                currentSortOption = thinkpadListState.sortOption,
+                onSortOptionClicked = { sort ->
+                    viewModel.sortSelected(sort)
+                    viewModel.getNewThinkpadListFromDatabase()
+                }
             )
         }
 
@@ -143,15 +154,25 @@ fun ThinkrchiveNavHost(
 
             val thinkpadDetailsViewModel: ThinkpadDetailsViewModel = hiltViewModel()
             val thinkpadDetail = thinkpadDetailsViewModel.uiState.collectAsState()
+            val context = LocalContext.current
 
             if (thinkpadDetail.value is ThinkpadDetailsScreenState.ThinkpadDetail) {
                 val thinkpad =
                     (thinkpadDetail.value as ThinkpadDetailsScreenState.ThinkpadDetail).thinkpad
+                val intent = remember {
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(thinkpad.psrefLink)
+                    )
+                }
                 ThinkpadDetailsScreen(
                     modifier = modifier,
                     thinkpad = thinkpad,
                     onBackButtonPressed = {
                         navController.popBackStack()
+                    },
+                    onExternalLinkClicked = {
+                        context.startActivity(intent)
                     }
                 )
             }

@@ -17,6 +17,25 @@ interface ThinkpadDao {
     @Query("SELECT * FROM $THINKPAD_LIST_TABLE WHERE model LIKE :query")
     fun searchDatabase(query: String): Flow<List<ThinkpadDatabaseObject>>
 
+    @Query("SELECT * FROM $THINKPAD_LIST_TABLE WHERE model LIKE :query ORDER BY model ASC")
+    fun getThinkpadsAlphaAscending(query: String): Flow<List<ThinkpadDatabaseObject>>
+
+    @Query("SELECT * FROM $THINKPAD_LIST_TABLE " +
+            "WHERE model LIKE :query " +
+            "ORDER BY substr (releaseDate, 6, 9) DESC")
+    fun getThinkpadsNewestFirst(query: String): Flow<List<ThinkpadDatabaseObject>>
+
+    @Query("SELECT * FROM $THINKPAD_LIST_TABLE " +
+            "WHERE model LIKE :query " +
+            "ORDER BY substr (releaseDate, 6, 9) ASC")
+    fun getThinkpadsOldestFirst(query: String): Flow<List<ThinkpadDatabaseObject>>
+
+    @Query("SELECT * FROM $THINKPAD_LIST_TABLE WHERE model LIKE :query ORDER BY marketPriceStart ASC")
+    fun getThinkpadsLowPriceFirst(query: String): Flow<List<ThinkpadDatabaseObject>>
+
+    @Query("SELECT * FROM $THINKPAD_LIST_TABLE WHERE model LIKE :query ORDER BY marketPriceStart DESC")
+    fun getThinkpadsHighPriceFirst(query: String): Flow<List<ThinkpadDatabaseObject>>
+
     // Insert network data into the database upon update
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllThinkpads(vararg thinkpads: ThinkpadDatabaseObject)

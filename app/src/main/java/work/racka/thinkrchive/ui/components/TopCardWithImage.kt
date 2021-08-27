@@ -130,8 +130,8 @@ fun TopCardWithImage(
             )
             AnimatedVisibility(
                 visible = imageLoading,
-                enter = expandHorizontally(),
-                exit = shrinkOut()
+                enter = scaleIn(),
+                exit = scaleOut()
             ) {
                 CircularProgressIndicator()
             }

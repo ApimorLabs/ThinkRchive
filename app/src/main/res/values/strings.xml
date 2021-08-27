@@ -7,4 +7,6 @@
     <string name="thinkpad_image">Image of a Thinkpad laptop</string>
     <string name="external_link">Open External Link</string>
     <string name="expand_icon">Show More / Show Less</string>
+    <string name="settings_icon">Settings</string>
+    <string name="close_icon">Close</string>
 </resources>
