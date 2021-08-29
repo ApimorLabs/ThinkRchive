@@ -36,7 +36,7 @@ class ThinkpadListViewModel @Inject constructor(
         availableThinkpadSeries,
         sortOption
     ) { allThinkpads, networkLoading, networkError, availableThinkpadSeries, sortOption ->
-        ThinkpadListScreenState(
+        ThinkpadListScreenState.ThinkpadListScreen(
             thinkpadList = allThinkpads,
             networkLoading = networkLoading,
             networkError = networkError,

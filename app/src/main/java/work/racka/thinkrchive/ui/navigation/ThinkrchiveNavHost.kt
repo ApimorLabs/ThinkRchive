@@ -20,10 +20,14 @@ import com.google.accompanist.navigation.animation.composable
 import timber.log.Timber
 import work.racka.thinkrchive.ui.main.screens.ThinkpadDetailsScreen
 import work.racka.thinkrchive.ui.main.screens.ThinkpadListScreen
+import work.racka.thinkrchive.ui.main.screens.ThinkpadSettingsScreen
 import work.racka.thinkrchive.ui.main.screens.ThinkrchiveScreens
 import work.racka.thinkrchive.ui.main.states.ThinkpadDetailsScreenState
+import work.racka.thinkrchive.ui.main.states.ThinkpadListScreenState
+import work.racka.thinkrchive.ui.main.states.ThinkpadSettingsScreenState
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadDetailsViewModel
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadListViewModel
+import work.racka.thinkrchive.ui.main.viewModel.ThinkpadSettingsViewModel
 import work.racka.thinkrchive.utils.scaleInEnterTransition
 import work.racka.thinkrchive.utils.scaleInPopEnterTransition
 import work.racka.thinkrchive.utils.scaleOutExitTransition
@@ -45,6 +49,7 @@ fun ThinkrchiveNavHost(
         Timber.d("thinkpadNavHost called")
         val thinkpadDetailsScreen = ThinkrchiveScreens.ThinkpadDetailsScreen.name
 
+        // Main List Screen
         composable(
             route = ThinkrchiveScreens.ThinkpadListScreen.name,
 
@@ -65,13 +70,15 @@ fun ThinkrchiveNavHost(
         ) {
             val viewModel: ThinkpadListViewModel = hiltViewModel()
             val thinkpadListState by viewModel.uiState.collectAsState()
+            val thinkpadListScreenData =
+                thinkpadListState as ThinkpadListScreenState.ThinkpadListScreen
 
             Timber.d("thinkpadListScreen NavHost called")
 
             ThinkpadListScreen(
                 modifier = modifier,
-                thinkpadList = thinkpadListState.thinkpadList,
-                networkLoading = thinkpadListState.networkLoading,
+                thinkpadList = thinkpadListScreenData.thinkpadList,
+                networkLoading = thinkpadListScreenData.networkLoading,
                 onSearch = { query ->
                     viewModel
                         .getNewThinkpadListFromDatabase(query)
@@ -81,15 +88,21 @@ fun ThinkrchiveNavHost(
                         route = "$thinkpadDetailsScreen/${thinkpad.model}"
                     )
                 },
-                networkError = thinkpadListState.networkError,
-                currentSortOption = thinkpadListState.sortOption,
+                networkError = thinkpadListScreenData.networkError,
+                currentSortOption = thinkpadListScreenData.sortOption,
                 onSortOptionClicked = { sort ->
                     viewModel.sortSelected(sort)
                     viewModel.getNewThinkpadListFromDatabase()
+                },
+                onSettingsClicked = {
+                    navController.navigate(
+                        route = ThinkrchiveScreens.ThinkpadSettingsScreen.name
+                    )
                 }
             )
         }
 
+        // Details Screen
         composable(
             route = "$thinkpadDetailsScreen/{thinkpad}",
             arguments = listOf(
@@ -97,22 +110,18 @@ fun ThinkrchiveNavHost(
                     type = NavType.StringType
                 }
             ),
-
-            // Transition animations
             enterTransition = { _, _ ->
                 scaleInEnterTransition()
             },
             exitTransition = { _, _ ->
                 scaleOutExitTransition()
             },
-            // popEnter and popExit default to enterTransition & exitTransition respectively
             popEnterTransition = { _, _ ->
                 scaleInPopEnterTransition()
             },
             popExitTransition = { _, _ ->
                 scaleOutPopExitTransition()
             }
-
         ) {
 
             val thinkpadDetailsViewModel: ThinkpadDetailsViewModel = hiltViewModel()
@@ -139,6 +148,38 @@ fun ThinkrchiveNavHost(
                     }
                 )
             }
+        }
+
+
+        // Settings Screen
+        composable(
+            route = ThinkrchiveScreens.ThinkpadSettingsScreen.name,
+            enterTransition = { _, _ ->
+                scaleInEnterTransition()
+            },
+            exitTransition = { _, _ ->
+                scaleOutExitTransition()
+            },
+            popEnterTransition = { _, _ ->
+                scaleInPopEnterTransition()
+            },
+            popExitTransition = { _, _ ->
+                scaleOutPopExitTransition()
+            }
+        ) {
+            val viewModel: ThinkpadSettingsViewModel = hiltViewModel()
+            val settingsScreenState by viewModel.uiState.collectAsState()
+            val settingsScreenData = settingsScreenState as ThinkpadSettingsScreenState.ThinkpadSettings
+
+            ThinkpadSettingsScreen(
+                currentTheme = settingsScreenData.themeOption,
+                onThemeOptionClicked = {
+                    viewModel.saveThemeSetting(it)
+                },
+                onBackButtonPressed = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 

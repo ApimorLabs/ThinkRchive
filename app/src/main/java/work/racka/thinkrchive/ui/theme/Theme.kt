@@ -3,6 +3,10 @@ package work.racka.thinkrchive.ui.theme
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.DarkMode
+import androidx.compose.material.icons.outlined.LightMode
+import androidx.compose.material.icons.outlined.SettingsSuggest
 import androidx.compose.material.lightColors
 import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material.ripple.RippleAlpha
@@ -10,6 +14,7 @@ import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 
 private val DarkColorPalette = darkColors(
     primary = YellowDefault,
@@ -38,13 +43,15 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun ThinkRchiveTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    theme: Int = 0,
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
+    val autColors = if (isSystemInDarkTheme()) DarkColorPalette else LightColorPalette
+
+    val colors = when (theme) {
+        1 -> LightColorPalette
+        2 -> DarkColorPalette
+        else -> autColors
     }
 
     MaterialTheme(
@@ -74,4 +81,27 @@ private object ThinkRchiveRippleTheme: RippleTheme {
         lightTheme = !isSystemInDarkTheme()
     )
 
+}
+
+// To be used to set the preferred theme inside settings
+enum class Theme(
+    val themeName: String,
+    val icon: ImageVector,
+    val themeValue: Int
+) {
+    FOLLOW_SYSTEM(
+        themeName = "Follow System Settings",
+        icon = Icons.Outlined.SettingsSuggest,
+        themeValue = 0
+    ),
+    LIGHT_THEME(
+        themeName = "Light Theme",
+        icon = Icons.Outlined.LightMode,
+        themeValue = 1
+    ),
+    DARK_THEME(
+        themeName = "Dark Theme",
+        icon = Icons.Outlined.DarkMode,
+        themeValue = 2
+    );
 }

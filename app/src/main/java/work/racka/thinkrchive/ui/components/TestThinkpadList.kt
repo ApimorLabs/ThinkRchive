@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import timber.log.Timber
+import work.racka.thinkrchive.ui.main.states.ThinkpadListScreenState
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadListViewModel
 
 @ExperimentalAnimationApi
@@ -25,20 +26,21 @@ import work.racka.thinkrchive.ui.main.viewModel.ThinkpadListViewModel
 fun TestThinkpadList(viewModel: ThinkpadListViewModel = hiltViewModel()) {
 
     val thinkpadListState by viewModel.uiState.collectAsState()
+    val thinkpadListData = thinkpadListState as ThinkpadListScreenState.ThinkpadListScreen
 
     val scrollState = rememberLazyListState()
     LazyColumn(state = scrollState) {
-        items(thinkpadListState.thinkpadList) {
+        items(thinkpadListData.thinkpadList) {
             Timber.d("items called")
             Text(text = it.model, fontSize = 20.sp, fontWeight = FontWeight.Bold)
             Text(text = "Release Data: ${it.releaseDate}")
             Text(text = "Processors: ${it.processors}")
             Text(text = "Platform: ${it.processorPlatforms}")
-            Text(text = thinkpadListState.networkError)
+            Text(text = thinkpadListData.networkError)
             Spacer(modifier = Modifier.height(16.dp))
         }
         item {
-            AnimatedVisibility(thinkpadListState.networkLoading) {
+            AnimatedVisibility(thinkpadListData.networkLoading) {
                 CircularProgressIndicator()
             }
         }

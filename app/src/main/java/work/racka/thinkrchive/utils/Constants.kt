@@ -5,6 +5,7 @@ import work.racka.thinkrchive.data.model.Thinkpad
 object Constants {
     const val BASE_URL = "https://docs.google.com/spreadsheets/d/1cFrYzzAP7i3bzSLKuBMykz3ZNUbf-YPTqRSEAwINy_E/"
     const val THINKPAD_LIST_TABLE = "thinkpad_list"
+    const val PREFERENCE_NAME = "settings_preference"
 
     val ThinkpadsListPreview = listOf(
         Thinkpad(

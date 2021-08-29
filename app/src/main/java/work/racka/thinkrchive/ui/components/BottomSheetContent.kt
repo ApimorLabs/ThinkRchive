@@ -62,6 +62,7 @@ fun ModalBottomSheet(
             TopSheetSection(
                 modifier = Modifier
                     .padding(Dimens.SmallPadding.size),
+                sheetTitle = "Sort By",
                 onCloseClicked = {
                     scope.launch {
                         sheetState.hide()
@@ -103,7 +104,7 @@ fun ModalBottomSheet(
                         )
                     )
 
-                    SortOption(
+                    SheetOption(
                         modifier = Modifier
                             .fillMaxWidth(),
                         sortOptionName = item.type,
@@ -132,7 +133,9 @@ fun ModalBottomSheet(
 fun TopSheetSection(
     modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit = { },
-    onSettingsClicked: () -> Unit = { }
+    onSettingsClicked: () -> Unit = { },
+    settingsButtonVisible: Boolean = true,
+    sheetTitle: String
 ) {
     Column(
         modifier = modifier,
@@ -163,26 +166,32 @@ fun TopSheetSection(
             }
 
             Text(
-                text = "Sort By",
+                text = sheetTitle,
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onBackground,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
 
-            IconButton(onClick = onSettingsClicked) {
-                Icon(
-                    imageVector = Icons.Outlined.Settings,
-                    contentDescription = stringResource(id = R.string.settings_icon),
-                    tint = MaterialTheme.colors.onBackground
-                )
+
+            IconButton(
+                onClick = onSettingsClicked,
+                enabled = settingsButtonVisible
+            ) {
+                if (settingsButtonVisible) {
+                    Icon(
+                        imageVector = Icons.Outlined.Settings,
+                        contentDescription = stringResource(id = R.string.settings_icon),
+                        tint = MaterialTheme.colors.onBackground
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun SortOption(
+fun SheetOption(
     modifier: Modifier = Modifier,
     sortOptionName: String,
     style: TextStyle = TextStyle(
@@ -237,7 +246,7 @@ private fun UpdatesAndAbout(
     onAboutClicked: () -> Unit = { }
 ) {
     Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.End,
         modifier = modifier
             .fillMaxWidth()
     ) {
@@ -312,6 +321,6 @@ fun BottomSheetPreview() {
 @Composable
 fun SortOptionPreview() {
     ThinkRchiveTheme {
-        SortOption(sortOptionName = "Alphabetical", icon = Icons.Outlined.SortByAlpha)
+        SheetOption(sortOptionName = "Alphabetical", icon = Icons.Outlined.SortByAlpha)
     }
 }
