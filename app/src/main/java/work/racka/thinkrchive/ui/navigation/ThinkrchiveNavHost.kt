@@ -2,8 +2,7 @@ package work.racka.thinkrchive.ui.navigation
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.animation.*
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -25,6 +24,10 @@ import work.racka.thinkrchive.ui.main.screens.ThinkrchiveScreens
 import work.racka.thinkrchive.ui.main.states.ThinkpadDetailsScreenState
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadDetailsViewModel
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadListViewModel
+import work.racka.thinkrchive.utils.scaleInEnterTransition
+import work.racka.thinkrchive.utils.scaleInPopEnterTransition
+import work.racka.thinkrchive.utils.scaleOutExitTransition
+import work.racka.thinkrchive.utils.scaleOutPopExitTransition
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
@@ -47,37 +50,17 @@ fun ThinkrchiveNavHost(
 
             // Transition animations
             enterTransition = { _, _ ->
-                scaleIn(
-                    initialScale = .9f,
-                    animationSpec = tween(300)
-                ) + fadeIn(
-                    animationSpec = tween(300)
-                )
+                scaleInEnterTransition()
             },
             exitTransition = { _, _ ->
-                scaleOut(
-                    targetScale = 1.1f,
-                    animationSpec = tween(300)
-                ) + fadeOut(
-                    animationSpec = tween(300)
-                )
+                scaleOutExitTransition()
             },
             // popEnter and popExit default to enterTransition & exitTransition respectively
             popEnterTransition = { _, _ ->
-                scaleIn(
-                    initialScale = 1.1f,
-                    animationSpec = tween(300)
-                ) + fadeIn(
-                    animationSpec = tween(300)
-                )
+                scaleInPopEnterTransition()
             },
             popExitTransition = { _, _ ->
-                scaleOut(
-                    targetScale = .9f,
-                    animationSpec = tween(300)
-                ) + fadeOut(
-                    animationSpec = tween(300)
-                )
+                scaleOutPopExitTransition()
             }
         ) {
             val viewModel: ThinkpadListViewModel = hiltViewModel()
@@ -117,37 +100,17 @@ fun ThinkrchiveNavHost(
 
             // Transition animations
             enterTransition = { _, _ ->
-                scaleIn(
-                    initialScale = .9f,
-                    animationSpec = tween(300)
-                ) + fadeIn(
-                    animationSpec = tween(300)
-                )
+                scaleInEnterTransition()
             },
             exitTransition = { _, _ ->
-                scaleOut(
-                    targetScale = 1.1f,
-                    animationSpec = tween(300)
-                ) + fadeOut(
-                    animationSpec = tween(300)
-                )
+                scaleOutExitTransition()
             },
             // popEnter and popExit default to enterTransition & exitTransition respectively
             popEnterTransition = { _, _ ->
-                scaleIn(
-                    initialScale = 1.1f,
-                    animationSpec = tween(300)
-                ) + fadeIn(
-                    animationSpec = tween(300)
-                )
+                scaleInPopEnterTransition()
             },
             popExitTransition = { _, _ ->
-                scaleOut(
-                    targetScale = .9f,
-                    animationSpec = tween(300)
-                ) + fadeOut(
-                    animationSpec = tween(300)
-                )
+                scaleOutPopExitTransition()
             }
 
         ) {

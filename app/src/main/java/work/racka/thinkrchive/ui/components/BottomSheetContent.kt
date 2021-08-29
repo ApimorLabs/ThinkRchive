@@ -237,7 +237,7 @@ private fun UpdatesAndAbout(
     onAboutClicked: () -> Unit = { }
 ) {
     Row(
-        horizontalArrangement = Arrangement.End,
+        horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
             .fillMaxWidth()
     ) {
@@ -250,7 +250,7 @@ private fun UpdatesAndAbout(
             Icon(
                 imageVector = Icons.Outlined.SecurityUpdate,
                 contentDescription = null,
-                tint = MaterialTheme.colors.onSurface
+                tint = MaterialTheme.colors.onPrimary
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
@@ -275,7 +275,8 @@ private fun UpdatesAndAbout(
         ) {
             Icon(
                 imageVector = Icons.Outlined.Info,
-                contentDescription = null
+                contentDescription = null,
+                tint = MaterialTheme.colors.onPrimary
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(

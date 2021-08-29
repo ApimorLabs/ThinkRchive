@@ -44,4 +44,7 @@ object Versions {
 
     // Database
     const val room = "2.3.0"
+
+    // DataStore
+    const val dataStore = "1.0.0"
 }

@@ -108,12 +108,15 @@ dependencies {
     implementation(Deps.accompanistInsets)
     implementation(Deps.accompanistNavigationAnimations)
 
-    //Room database
+    // Room database
     implementation(Deps.roomRuntime)
     implementation(Deps.roomKtx)
     kapt(Deps.roomCompiler)
 
-    //Room test
+    // Room test
     testImplementation(Deps.roomTest)
+
+    // Preferences DataStore
+    implementation(Deps.prefDataStore)
 
 }

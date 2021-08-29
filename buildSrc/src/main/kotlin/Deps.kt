@@ -59,4 +59,7 @@ object Deps {
     val roomKtx by lazy { "androidx.room:room-ktx:${Versions.room}" }
     val roomTest by lazy { "androidx.room:room-testing:${Versions.room}" }
 
+    // Preferences DataStore
+    val prefDataStore by lazy { "androidx.datastore:datastore-preferences:${Versions.dataStore}" }
+
 }
