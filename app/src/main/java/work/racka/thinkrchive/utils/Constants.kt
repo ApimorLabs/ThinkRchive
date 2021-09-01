@@ -6,6 +6,8 @@ object Constants {
     const val BASE_URL = "https://docs.google.com/spreadsheets/d/1cFrYzzAP7i3bzSLKuBMykz3ZNUbf-YPTqRSEAwINy_E/"
     const val THINKPAD_LIST_TABLE = "thinkpad_list"
     const val PREFERENCE_NAME = "settings_preference"
+    const val THEME_OPTIONS = "Theme Options"
+    const val SORT_OPTIONS = "Default Sort Option"
 
     val ThinkpadsListPreview = listOf(
         Thinkpad(

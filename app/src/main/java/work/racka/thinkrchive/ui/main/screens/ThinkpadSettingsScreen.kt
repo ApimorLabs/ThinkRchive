@@ -8,7 +8,10 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,12 +19,12 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import work.racka.thinkrchive.ui.components.SettingsEntry
-import work.racka.thinkrchive.ui.components.SettingsEntryBottomSheet
-import work.racka.thinkrchive.ui.components.TopCollapsingToolbar
+import work.racka.thinkrchive.ui.components.*
 import work.racka.thinkrchive.ui.theme.Dimens
 import work.racka.thinkrchive.ui.theme.Theme
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
+import work.racka.thinkrchive.utils.Constants
+import work.racka.thinkrchive.utils.Sort
 
 @ExperimentalMaterialApi
 @Composable
@@ -29,40 +32,51 @@ fun ThinkpadSettingsScreen(
     modifier: Modifier = Modifier,
     listState: LazyListState = rememberLazyListState(),
     onThemeOptionClicked: (Int) -> Unit = { },
+    onSortOptionClicked: (Int) -> Unit = { },
     onBackButtonPressed: () -> Unit = { },
-    currentTheme: Int
+    currentTheme: Int,
+    currentSortOption: Int
 ) {
 
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden
     )
+    val settingsEntryName = rememberSaveable {
+        mutableStateOf("")
+    }
 
-    Scaffold(
-        modifier = Modifier
-            .fillMaxSize(),
-        topBar = {
-            TopCollapsingToolbar(
-                toolbarHeading = "Settings",
-                listState = listState,
-                onBackButtonPressed = onBackButtonPressed
+    ModalBottomSheetLayout(
+        sheetContent = {
+            SettingEntrySheet(
+                sheetState = sheetState,
+                scope = scope,
+                settingsEntryName = settingsEntryName.value,
+                currentSortOption = currentSortOption,
+                currentTheme = currentTheme,
+                onSortOptionClicked = {
+                    onSortOptionClicked(it)
+                },
+                onThemeOptionClicked = {
+                    onThemeOptionClicked(it)
+                }
             )
-        }
+
+        },
+        sheetState = sheetState,
+        sheetElevation = 0.dp,
+        sheetBackgroundColor = Color.Transparent
     ) {
-        ModalBottomSheetLayout(
-            sheetContent = {
-                SettingsEntryBottomSheet(
-                    sheetState = sheetState,
-                    scope = scope,
-                    currentTheme = currentTheme,
-                    onThemeOptionClicked = {
-                        onThemeOptionClicked(it)
-                    }
+        Scaffold(
+            modifier = Modifier
+                .fillMaxSize(),
+            topBar = {
+                TopCollapsingToolbar(
+                    toolbarHeading = "Settings",
+                    listState = listState,
+                    onBackButtonPressed = onBackButtonPressed
                 )
-            },
-            sheetState = sheetState,
-            sheetElevation = 0.dp,
-            sheetBackgroundColor = Color.Transparent
+            }
         ) {
             LazyColumn(
                 state = listState,
@@ -71,16 +85,44 @@ fun ThinkpadSettingsScreen(
             ) {
                 item {
                     val theme = when(currentTheme) {
-                        1 -> Theme.LIGHT_THEME
-                        2 -> Theme.DARK_THEME
+                        1 -> Theme.DARK_THEME
+                        2 -> Theme.LIGHT_THEME
                         else -> Theme.FOLLOW_SYSTEM
                     }
                     SettingsEntry(
-                        modifier = Modifier.padding(Dimens.MediumPadding.size),
-                        settingsEntryName = "Theme Options",
+                        modifier = Modifier.padding(
+                            vertical = Dimens.SmallPadding.size,
+                            horizontal = Dimens.MediumPadding.size
+                        ),
+                        settingsEntryName = Constants.THEME_OPTIONS,
                         currentSettingValue = theme.themeName,
                         currentSettingIcon = theme.icon,
                         onSettingsEntryClick = {
+                            settingsEntryName.value = it
+                            scope.launch {
+                                sheetState.show()
+                            }
+                        }
+                    )
+                }
+                item {
+                    val sort = when(currentSortOption) {
+                        1 -> Sort.NEW_RELEASE_FIRST
+                        2 -> Sort.OLD_RELEASE_FIRST
+                        3 -> Sort.LOW_PRICE_FIRST
+                        4 -> Sort.HIGH_PRICE_FIRST
+                        else -> Sort.ALPHABETICAL_ASC
+                    }
+                    SettingsEntry(
+                        modifier = Modifier.padding(
+                            vertical = Dimens.SmallPadding.size,
+                            horizontal = Dimens.MediumPadding.size
+                        ),
+                        settingsEntryName = Constants.SORT_OPTIONS,
+                        currentSettingValue = sort.type,
+                        currentSettingIcon = sort.icon,
+                        onSettingsEntryClick = {
+                            settingsEntryName.value = it
                             scope.launch {
                                 sheetState.show()
                             }
@@ -88,10 +130,9 @@ fun ThinkpadSettingsScreen(
                     )
                 }
             }
-
         }
-    }
 
+    }
 }
 
 @ExperimentalMaterialApi
@@ -102,6 +143,6 @@ fun ThinkpadSettingsScreen(
 @Composable
 private fun ThinkpadSettingsScreenPrev() {
     ThinkRchiveTheme {
-        ThinkpadSettingsScreen(currentTheme = 2)
+        ThinkpadSettingsScreen(currentTheme = 2, currentSortOption = 1)
     }
 }

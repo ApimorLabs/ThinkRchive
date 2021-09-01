@@ -14,18 +14,23 @@ import timber.log.Timber
 import work.racka.thinkrchive.utils.Constants
 import java.io.IOException
 
+// This is provided by Hilt for easy usage throughout the app
+// See @DataStoreModule
 @ActivityScoped
 class DataStoreRepository(
     private val context: Context
 ) {
     private object PreferenceKeys {
         val themeOption = intPreferencesKey(name = "theme_option")
+        val sortOption = intPreferencesKey(name = "sort_option")
     }
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
         name = Constants.PREFERENCE_NAME
     )
 
+    // Theme Settings
+    // See Theme enum class for data meaning
     suspend fun saveThemeSetting(value: Int) {
         context.dataStore.edit { settings ->
             settings[PreferenceKeys.themeOption] = value
@@ -40,6 +45,25 @@ class DataStoreRepository(
                 throw exception
             }
         }.map { settings ->
-            settings[PreferenceKeys.themeOption] ?: 0
+            settings[PreferenceKeys.themeOption] ?: -1
+        }
+
+    // Sort Option Settings
+    // See Sort enum class for data meaning
+    suspend fun saveSortOptionSetting(value: Int) {
+        context.dataStore.edit { settings ->
+            settings[PreferenceKeys.sortOption] = value
+        }
+    }
+
+    val readSortOptionSetting: Flow<Int> = context.dataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                Timber.d(exception.message.toString())
+            } else {
+                throw exception
+            }
+        }.map { settings ->
+            settings[PreferenceKeys.sortOption] ?: 0
         }
 }

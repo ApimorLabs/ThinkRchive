@@ -92,7 +92,7 @@ enum class Theme(
     FOLLOW_SYSTEM(
         themeName = "Follow System Settings",
         icon = Icons.Outlined.SettingsSuggest,
-        themeValue = 0
+        themeValue = -1
     ),
     LIGHT_THEME(
         themeName = "Light Theme",

@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import timber.log.Timber
-import work.racka.thinkrchive.ui.main.states.ThinkpadListScreenState
+import work.racka.thinkrchive.ui.main.screenStates.ThinkpadListScreenState
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadListViewModel
 
 @ExperimentalAnimationApi

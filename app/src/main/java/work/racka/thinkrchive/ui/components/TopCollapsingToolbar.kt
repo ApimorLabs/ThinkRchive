@@ -78,7 +78,8 @@ fun TopCollapsingToolbar(
                 )
             )
             .background(
-                color = MaterialTheme.colors.surface,
+                color = MaterialTheme.colors.surface
+                    .copy(alpha = animatedTitleAlpha),
                 shape = RoundedCornerShape(
                     bottomEnd = 20.dp,
                     bottomStart = 20.dp

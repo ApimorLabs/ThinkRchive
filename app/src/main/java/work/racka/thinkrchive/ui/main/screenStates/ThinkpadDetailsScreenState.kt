@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.ui.main.states
+package work.racka.thinkrchive.ui.main.screenStates
 
 import work.racka.thinkrchive.data.model.Thinkpad
 

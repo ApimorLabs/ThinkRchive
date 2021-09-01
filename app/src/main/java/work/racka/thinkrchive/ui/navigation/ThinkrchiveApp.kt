@@ -14,9 +14,9 @@ import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @Composable
-fun ThinkrchiveApp() {
+fun ThinkrchiveApp(themeValue: Int = 0) {
     ProvideWindowInsets {
-        ThinkRchiveTheme {
+        ThinkRchiveTheme(theme = themeValue) {
             Timber.d("ThinkrchiveApp called")
             val navController = rememberAnimatedNavController()
             ThinkrchiveNavHost(

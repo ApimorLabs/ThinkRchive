@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.ui.main.states
+package work.racka.thinkrchive.ui.main.screenStates
 
 import work.racka.thinkrchive.data.model.Thinkpad
 import work.racka.thinkrchive.utils.Sort
@@ -9,7 +9,7 @@ sealed class ThinkpadListScreenState {
         val networkLoading: Boolean = false,
         val networkError: String = "",
         val thinkpadSeriesList: List<String> = listOf(),
-        var sortOption: Sort = Sort.ALPHABETICAL_ASC
+        var sortOption: Int = 0
     ) : ThinkpadListScreenState()
     companion object {
         val Empty = ThinkpadListScreen()

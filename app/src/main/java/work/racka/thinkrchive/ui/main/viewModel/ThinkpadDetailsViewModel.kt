@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import work.racka.thinkrchive.data.dataTransferObjects.asThinkpad
 import work.racka.thinkrchive.repository.ThinkpadRepository
-import work.racka.thinkrchive.ui.main.states.ThinkpadDetailsScreenState
+import work.racka.thinkrchive.ui.main.screenStates.ThinkpadDetailsScreenState
 import javax.inject.Inject
 
 @HiltViewModel

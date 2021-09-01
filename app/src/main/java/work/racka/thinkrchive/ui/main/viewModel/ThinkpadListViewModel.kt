@@ -8,23 +8,24 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import work.racka.thinkrchive.data.dataTransferObjects.asDomainModel
 import work.racka.thinkrchive.data.model.Thinkpad
+import work.racka.thinkrchive.repository.DataStoreRepository
 import work.racka.thinkrchive.repository.ThinkpadRepository
-import work.racka.thinkrchive.ui.main.states.ThinkpadListScreenState
+import work.racka.thinkrchive.ui.main.screenStates.ThinkpadListScreenState
 import work.racka.thinkrchive.utils.Resource
-import work.racka.thinkrchive.utils.Sort
 import work.racka.thinkrchive.utils.getChipNamesList
 import javax.inject.Inject
 
 @HiltViewModel
 class ThinkpadListViewModel @Inject constructor(
-    private val thinkpadRepository: ThinkpadRepository
+    private val thinkpadRepository: ThinkpadRepository,
+    private val dataStoreRepository: DataStoreRepository
 ) : ViewModel() {
 
     private val allThinkpads = MutableStateFlow<List<Thinkpad>>(listOf())
     private val availableThinkpadSeries = MutableStateFlow<List<String>>(listOf())
     private val networkLoading = MutableStateFlow(false)
     private val networkError = MutableStateFlow("")
-    private val sortOption = MutableStateFlow(Sort.ALPHABETICAL_ASC)
+    private val sortOption = MutableStateFlow(0)
 
     // This will combine the different Flows emitted in this ViewModel into a single state
     // that will be observed by the UI.
@@ -51,7 +52,8 @@ class ThinkpadListViewModel @Inject constructor(
 
     init {
         refreshThinkpadList()
-        getNewThinkpadListFromDatabase()
+        getUserSortOption()
+        //getNewThinkpadListFromDatabase()
     }
 
     // Retrieves new data from the network and inserts it into the database
@@ -74,39 +76,50 @@ class ThinkpadListViewModel @Inject constructor(
         }
     }
 
+    // Get the user's preferred Sorting option first the load data from the database
+    private fun getUserSortOption() {
+        viewModelScope.launch {
+            dataStoreRepository.readSortOptionSetting.collect { sortValue ->
+                sortOption.value = sortValue
+                getNewThinkpadListFromDatabase()
+            }
+        }
+    }
+
     // Makes sure fresh data is taken from the database even after a network refresh
     // Also takes search query and returns only the data needed
     fun getNewThinkpadListFromDatabase(query: String = "") {
         viewModelScope.launch {
             when (sortOption.value) {
-                Sort.ALPHABETICAL_ASC -> {
+                0 -> {
                     thinkpadRepository.getThinkpadsAlphaAscending(query)
                         .collect {
                             allThinkpads.value = it.asDomainModel()
                             if (allThinkpads.value.size > availableThinkpadSeries.value.size) {
-                                availableThinkpadSeries.value = allThinkpads.value.getChipNamesList()
+                                availableThinkpadSeries.value =
+                                    allThinkpads.value.getChipNamesList()
                             }
                         }
                 }
-                Sort.NEW_RELEASE_FIRST -> {
+                1 -> {
                     thinkpadRepository.getThinkpadsNewestFirst(query)
                         .collect {
                             allThinkpads.value = it.asDomainModel()
                         }
                 }
-                Sort.OLD_RELEASE_FIRST -> {
+                2 -> {
                     thinkpadRepository.getThinkpadsOldestFirst(query)
                         .collect {
                             allThinkpads.value = it.asDomainModel()
                         }
                 }
-                Sort.LOW_PRICE_FIRST -> {
+                3 -> {
                     thinkpadRepository.getThinkpadsLowPriceFirst(query)
                         .collect {
                             allThinkpads.value = it.asDomainModel()
                         }
                 }
-                Sort.HIGH_PRICE_FIRST -> {
+                4 -> {
                     thinkpadRepository.getThinkpadsHighPriceFirst(query)
                         .collect {
                             allThinkpads.value = it.asDomainModel()
@@ -117,7 +130,8 @@ class ThinkpadListViewModel @Inject constructor(
     }
 
     // Set the sort option from the UI
-    fun sortSelected(sort: Sort) {
+    fun sortSelected(sort: Int) {
         sortOption.value = sort
+        getNewThinkpadListFromDatabase()
     }
 }

@@ -22,9 +22,9 @@ import work.racka.thinkrchive.ui.main.screens.ThinkpadDetailsScreen
 import work.racka.thinkrchive.ui.main.screens.ThinkpadListScreen
 import work.racka.thinkrchive.ui.main.screens.ThinkpadSettingsScreen
 import work.racka.thinkrchive.ui.main.screens.ThinkrchiveScreens
-import work.racka.thinkrchive.ui.main.states.ThinkpadDetailsScreenState
-import work.racka.thinkrchive.ui.main.states.ThinkpadListScreenState
-import work.racka.thinkrchive.ui.main.states.ThinkpadSettingsScreenState
+import work.racka.thinkrchive.ui.main.screenStates.ThinkpadDetailsScreenState
+import work.racka.thinkrchive.ui.main.screenStates.ThinkpadListScreenState
+import work.racka.thinkrchive.ui.main.screenStates.ThinkpadSettingsScreenState
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadDetailsViewModel
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadListViewModel
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadSettingsViewModel
@@ -92,7 +92,6 @@ fun ThinkrchiveNavHost(
                 currentSortOption = thinkpadListScreenData.sortOption,
                 onSortOptionClicked = { sort ->
                     viewModel.sortSelected(sort)
-                    viewModel.getNewThinkpadListFromDatabase()
                 },
                 onSettingsClicked = {
                     navController.navigate(
@@ -169,17 +168,24 @@ fun ThinkrchiveNavHost(
         ) {
             val viewModel: ThinkpadSettingsViewModel = hiltViewModel()
             val settingsScreenState by viewModel.uiState.collectAsState()
-            val settingsScreenData = settingsScreenState as ThinkpadSettingsScreenState.ThinkpadSettings
+            if (settingsScreenState is ThinkpadSettingsScreenState.ThinkpadSettings) {
+                val settingsScreenData =
+                    settingsScreenState as ThinkpadSettingsScreenState.ThinkpadSettings
 
-            ThinkpadSettingsScreen(
-                currentTheme = settingsScreenData.themeOption,
-                onThemeOptionClicked = {
-                    viewModel.saveThemeSetting(it)
-                },
-                onBackButtonPressed = {
-                    navController.popBackStack()
-                }
-            )
+                ThinkpadSettingsScreen(
+                    currentTheme = settingsScreenData.themeOption,
+                    currentSortOption = settingsScreenData.sortOption,
+                    onThemeOptionClicked = {
+                        viewModel.saveThemeSetting(it)
+                    },
+                    onSortOptionClicked = {
+                        viewModel.saveSortOptionSetting(it)
+                    },
+                    onBackButtonPressed = {
+                        navController.popBackStack()
+                    }
+                )
+            }
         }
     }
 

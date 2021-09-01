@@ -42,9 +42,9 @@ fun ModalBottomSheet(
     modifier: Modifier = Modifier,
     sheetState: ModalBottomSheetState,
     scope: CoroutineScope,
-    currentSortOption: Sort,
+    currentSortOption: Int,
     onSettingsClicked: () -> Unit = { },
-    onSortOptionClicked: (Sort) -> Unit = { }
+    onSortOptionClicked: (Int) -> Unit = { }
 ) {
 
     Surface(
@@ -84,7 +84,7 @@ fun ModalBottomSheet(
 
                 items(Sort.values()) { item ->
                     val selectedColor by animateColorAsState(
-                        targetValue = if (currentSortOption == item) {
+                        targetValue = if (currentSortOption == item.sortValue) {
                             MaterialTheme.colors.primary
                                 .copy(alpha = .6f)
                         } else Color.Transparent,
@@ -94,7 +94,7 @@ fun ModalBottomSheet(
                         )
                     )
                     val contentColor by animateColorAsState(
-                        targetValue = if (currentSortOption == item) {
+                        targetValue = if (currentSortOption == item.sortValue) {
                             LightDark
                                 .copy(alpha = .9f)
                         } else MaterialTheme.colors.onBackground,
@@ -109,8 +109,8 @@ fun ModalBottomSheet(
                             .fillMaxWidth(),
                         sortOptionName = item.type,
                         icon = item.icon,
-                        onSortOptionClicked = {
-                            onSortOptionClicked(item)
+                        onOptionClicked = {
+                            onSortOptionClicked(item.sortValue)
                         },
                         selectedSortColor = selectedColor,
                         contentColor = contentColor
@@ -202,7 +202,7 @@ fun SheetOption(
     iconDescription: String? = null,
     icon: ImageVector,
     contentColor: Color = MaterialTheme.colors.onBackground,
-    onSortOptionClicked: () -> Unit = { },
+    onOptionClicked: () -> Unit = { },
     selectedSortColor: Color = Color.Transparent
 ) {
 
@@ -213,7 +213,7 @@ fun SheetOption(
                 color = selectedSortColor,
                 shape = Shapes.large
             )
-            .clickable { onSortOptionClicked() }
+            .clickable { onOptionClicked() }
     ) {
         Row(
             horizontalArrangement = Arrangement.Start,
@@ -312,7 +312,7 @@ fun BottomSheetPreview() {
         ModalBottomSheet(
             scope = rememberCoroutineScope(),
             sheetState = ModalBottomSheetState(ModalBottomSheetValue.Hidden),
-            currentSortOption = Sort.NEW_RELEASE_FIRST
+            currentSortOption = 1
         )
     }
 }

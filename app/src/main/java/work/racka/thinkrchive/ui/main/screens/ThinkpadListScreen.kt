@@ -34,7 +34,6 @@ import work.racka.thinkrchive.ui.components.ThinkpadEntry
 import work.racka.thinkrchive.ui.theme.Dimens
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.utils.Constants
-import work.racka.thinkrchive.utils.Sort
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
@@ -45,9 +44,9 @@ fun ThinkpadListScreen(
     listState: LazyListState = rememberLazyListState(),
     onEntryClick: (Thinkpad) -> Unit = { },
     onSearch: (String) -> Unit = { },
-    onSortOptionClicked: (Sort) -> Unit =  { },
+    onSortOptionClicked: (Int) -> Unit = { },
     onSettingsClicked: () -> Unit = { },
-    currentSortOption: Sort,
+    currentSortOption: Int,
     thinkpadList: List<Thinkpad>,
     networkLoading: Boolean,
     networkError: String
@@ -159,7 +158,7 @@ private fun ThinkpadListScreenPreview() {
             thinkpadList = Constants.ThinkpadsListPreview,
             networkLoading = false,
             networkError = "",
-            currentSortOption = Sort.ALPHABETICAL_ASC
+            currentSortOption = 0
         )
     }
 }
