@@ -10,6 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,9 +31,8 @@ class MainActivity : AppCompatActivity() {
     @ExperimentalAnimationApi
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
         super.onCreate(savedInstanceState)
+        installSplashScreen()
 
         // Enable edge-to-edge experience and ProvideWindowInsets to the composables
         WindowCompat.setDecorFitsSystemWindows(window, false)

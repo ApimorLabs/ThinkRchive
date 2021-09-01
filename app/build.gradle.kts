@@ -119,4 +119,7 @@ dependencies {
     // Preferences DataStore
     implementation(Deps.prefDataStore)
 
+    // Splash Screen
+    implementation(Deps.splashScreenCore)
+
 }

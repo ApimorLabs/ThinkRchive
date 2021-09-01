@@ -62,4 +62,7 @@ object Deps {
     // Preferences DataStore
     val prefDataStore by lazy { "androidx.datastore:datastore-preferences:${Versions.dataStore}" }
 
+    // Splash Screen
+    val splashScreenCore by lazy { "androidx.core:core-splashscreen:${Versions.splashScreen}" }
+
 }

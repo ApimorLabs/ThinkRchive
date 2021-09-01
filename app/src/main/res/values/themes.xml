@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="backgroundColor">@color/cream_white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
@@ -24,4 +25,12 @@
     <style name="Theme.ThinkRchive.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.ThinkRchive.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Splash Screen Theme. -->
+    <style name="Theme.AppSplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/dark</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/app_logo_big</item>
+        <item name="windowSplashScreenAnimationDuration">300</item>
+        <item name="postSplashScreenTheme">@style/Theme.ThinkRchive</item>
+    </style>
 </resources>
