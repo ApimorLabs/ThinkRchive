@@ -44,7 +44,9 @@ fun ModalBottomSheet(
     scope: CoroutineScope,
     currentSortOption: Int,
     onSettingsClicked: () -> Unit = { },
-    onSortOptionClicked: (Int) -> Unit = { }
+    onSortOptionClicked: (Int) -> Unit = { },
+    onAboutClicked: () -> Unit = { },
+    onCheckUpdates: () -> Unit = { },
 ) {
 
     Surface(
@@ -69,9 +71,9 @@ fun ModalBottomSheet(
                     }
                 },
                 onSettingsClicked = {
-                    onSettingsClicked()
                     scope.launch {
                         sheetState.hide()
+                        onSettingsClicked()
                     }
                 }
             )
@@ -120,7 +122,19 @@ fun ModalBottomSheet(
                 item {
                     UpdatesAndAbout(
                         modifier = Modifier
-                            .padding(Dimens.MediumPadding.size)
+                            .padding(Dimens.MediumPadding.size),
+                        onAboutClicked = {
+                            scope.launch {
+                                sheetState.hide()
+                                onAboutClicked()
+                            }
+                        },
+                        onUpdatesClicked = {
+                            scope.launch {
+                                sheetState.hide()
+                                onCheckUpdates()
+                            }
+                        }
                     )
                 }
 
@@ -252,7 +266,7 @@ private fun UpdatesAndAbout(
     ) {
         Button(
             onClick = onUpdatesClicked,
-            shape = Shapes.large,
+            shape = CircleShape,
             elevation = ButtonDefaults
                 .elevation(0.dp)
         ) {
@@ -278,7 +292,7 @@ private fun UpdatesAndAbout(
         Spacer(modifier = Modifier.width(Dimens.MediumPadding.size))
         Button(
             onClick = onAboutClicked,
-            shape = Shapes.large,
+            shape = CircleShape,
             elevation = ButtonDefaults
                 .elevation(0.dp)
         ) {

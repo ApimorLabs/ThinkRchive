@@ -1,6 +1,9 @@
 package work.racka.thinkrchive.ui.main.screens
 
 import android.content.res.Configuration
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,7 +12,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -19,7 +21,9 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import work.racka.thinkrchive.ui.components.*
+import work.racka.thinkrchive.ui.components.SettingEntrySheet
+import work.racka.thinkrchive.ui.components.SettingsEntry
+import work.racka.thinkrchive.ui.components.TopCollapsingToolbar
 import work.racka.thinkrchive.ui.theme.Dimens
 import work.racka.thinkrchive.ui.theme.Theme
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
@@ -74,7 +78,23 @@ fun ThinkpadSettingsScreen(
                 TopCollapsingToolbar(
                     toolbarHeading = "Settings",
                     listState = listState,
-                    onBackButtonPressed = onBackButtonPressed
+                    onBackButtonPressed = onBackButtonPressed,
+                    toolbarHeight = 250.dp,
+                    content = {
+                        Text(
+                            text = "Settings",
+                            color = MaterialTheme.colors.onSurface,
+                            style = MaterialTheme.typography.h3,
+                            modifier = Modifier
+                                .padding(horizontal = Dimens.SmallPadding.size)
+                                .animateContentSize(
+                                    animationSpec = tween(
+                                        300,
+                                        easing = LinearOutSlowInEasing
+                                    )
+                                )
+                        )
+                    }
                 )
             }
         ) {
@@ -84,7 +104,7 @@ fun ThinkpadSettingsScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 item {
-                    val theme = when(currentTheme) {
+                    val theme = when (currentTheme) {
                         1 -> Theme.DARK_THEME
                         2 -> Theme.LIGHT_THEME
                         else -> Theme.FOLLOW_SYSTEM
@@ -106,7 +126,7 @@ fun ThinkpadSettingsScreen(
                     )
                 }
                 item {
-                    val sort = when(currentSortOption) {
+                    val sort = when (currentSortOption) {
                         1 -> Sort.NEW_RELEASE_FIRST
                         2 -> Sort.OLD_RELEASE_FIRST
                         3 -> Sort.LOW_PRICE_FIRST

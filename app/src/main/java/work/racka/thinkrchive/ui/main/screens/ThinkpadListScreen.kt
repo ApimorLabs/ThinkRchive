@@ -46,6 +46,8 @@ fun ThinkpadListScreen(
     onSearch: (String) -> Unit = { },
     onSortOptionClicked: (Int) -> Unit = { },
     onSettingsClicked: () -> Unit = { },
+    onAboutClicked: () -> Unit = { },
+    onCheckUpdates: () -> Unit = { },
     currentSortOption: Int,
     thinkpadList: List<Thinkpad>,
     networkLoading: Boolean,
@@ -71,7 +73,9 @@ fun ThinkpadListScreen(
                         onSortOptionClicked(it)
                     },
                     currentSortOption = currentSortOption,
-                    onSettingsClicked = onSettingsClicked
+                    onSettingsClicked = onSettingsClicked,
+                    onCheckUpdates = onCheckUpdates,
+                    onAboutClicked = onAboutClicked
                 )
             },
             sheetState = sheetState,

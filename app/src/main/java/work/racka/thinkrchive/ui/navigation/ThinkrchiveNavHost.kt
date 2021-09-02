@@ -18,13 +18,10 @@ import androidx.navigation.compose.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import timber.log.Timber
-import work.racka.thinkrchive.ui.main.screens.ThinkpadDetailsScreen
-import work.racka.thinkrchive.ui.main.screens.ThinkpadListScreen
-import work.racka.thinkrchive.ui.main.screens.ThinkpadSettingsScreen
-import work.racka.thinkrchive.ui.main.screens.ThinkrchiveScreens
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadDetailsScreenState
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadListScreenState
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadSettingsScreenState
+import work.racka.thinkrchive.ui.main.screens.*
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadDetailsViewModel
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadListViewModel
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadSettingsViewModel
@@ -97,6 +94,14 @@ fun ThinkrchiveNavHost(
                     navController.navigate(
                         route = ThinkrchiveScreens.ThinkpadSettingsScreen.name
                     )
+                },
+                onAboutClicked = {
+                    navController.navigate(
+                        route = ThinkrchiveScreens.ThinkpadAboutScreen.name
+                    )
+                },
+                onCheckUpdates = {
+                    // TODO: Check updates implementation
                 }
             )
         }
@@ -186,6 +191,32 @@ fun ThinkrchiveNavHost(
                     }
                 )
             }
+        }
+
+        // About Screen
+        composable(
+            route = ThinkrchiveScreens.ThinkpadAboutScreen.name,
+            enterTransition = { _, _ ->
+                scaleInEnterTransition()
+            },
+            exitTransition = { _, _ ->
+                scaleOutExitTransition()
+            },
+            popEnterTransition = { _, _ ->
+                scaleInPopEnterTransition()
+            },
+            popExitTransition = { _, _ ->
+                scaleOutPopExitTransition()
+            }
+        ) {
+            ThinkpadAboutScreen(
+                onCheckUpdates = {
+                    // TODO: Check updates implementation
+                },
+                onBackButtonPressed = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 
