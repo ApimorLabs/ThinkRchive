@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import work.racka.thinkrchive.R
+import work.racka.thinkrchive.ui.theme.Dimens
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
 
 @Composable
@@ -85,7 +86,10 @@ fun AboutTopSection(
             Text(
                 text = "Check Updates",
                 modifier = Modifier
-                    .padding(4.dp),
+                    .padding(
+                        horizontal = 4.dp,
+                        vertical = Dimens.SmallPadding.size
+                    ),
                 style = TextStyle(
                     fontWeight = FontWeight.Normal,
                     fontSize = 16.sp

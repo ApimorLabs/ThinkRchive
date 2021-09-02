@@ -260,7 +260,7 @@ private fun UpdatesAndAbout(
     onAboutClicked: () -> Unit = { }
 ) {
     Row(
-        horizontalArrangement = Arrangement.End,
+        horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
             .fillMaxWidth()
     ) {
@@ -268,7 +268,9 @@ private fun UpdatesAndAbout(
             onClick = onUpdatesClicked,
             shape = CircleShape,
             elevation = ButtonDefaults
-                .elevation(0.dp)
+                .elevation(0.dp),
+            modifier = Modifier
+                .weight(1f)
         ) {
             Icon(
                 imageVector = Icons.Outlined.SecurityUpdate,
@@ -279,7 +281,10 @@ private fun UpdatesAndAbout(
             Text(
                 text = "Check Updates",
                 modifier = Modifier
-                    .padding(4.dp),
+                    .padding(
+                        horizontal = 4.dp,
+                        vertical = Dimens.SmallPadding.size
+                    ),
                 style = TextStyle(
                     fontWeight = FontWeight.Normal,
                     fontSize = 16.sp
@@ -294,7 +299,9 @@ private fun UpdatesAndAbout(
             onClick = onAboutClicked,
             shape = CircleShape,
             elevation = ButtonDefaults
-                .elevation(0.dp)
+                .elevation(0.dp),
+            modifier = Modifier
+                .weight(.7f)
         ) {
             Icon(
                 imageVector = Icons.Outlined.Info,
@@ -305,7 +312,10 @@ private fun UpdatesAndAbout(
             Text(
                 text = "About",
                 modifier = Modifier
-                    .padding(4.dp),
+                    .padding(
+                    horizontal = 4.dp,
+                    vertical = Dimens.SmallPadding.size
+                ),
                 style = TextStyle(
                     fontWeight = FontWeight.Normal,
                     fontSize = 16.sp

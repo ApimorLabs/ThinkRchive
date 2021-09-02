@@ -12,18 +12,24 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import work.racka.thinkrchive.ui.components.CollapsingToolbarBase
 import work.racka.thinkrchive.ui.components.SettingEntrySheet
 import work.racka.thinkrchive.ui.components.SettingsEntry
-import work.racka.thinkrchive.ui.components.TopCollapsingToolbar
 import work.racka.thinkrchive.ui.theme.Dimens
 import work.racka.thinkrchive.ui.theme.Theme
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
@@ -41,6 +47,21 @@ fun ThinkpadSettingsScreen(
     currentTheme: Int,
     currentSortOption: Int
 ) {
+    // CollapsingToolbar Implementation
+    val toolbarHeight = 250.dp
+    val toolbarHeightPx = with(LocalDensity.current) { toolbarHeight.roundToPx().toFloat() }
+    val toolbarOffsetHeightPx = remember { mutableStateOf(0f) }
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                val delta = available.y
+                val newOffset = toolbarOffsetHeightPx.value + delta
+                toolbarOffsetHeightPx.value = newOffset.coerceIn(-toolbarHeightPx, 0f)
+                // Returning Zero so we just observe the scroll but don't execute it
+                return Offset.Zero
+            }
+        }
+    }
 
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(
@@ -75,11 +96,11 @@ fun ThinkpadSettingsScreen(
             modifier = Modifier
                 .fillMaxSize(),
             topBar = {
-                TopCollapsingToolbar(
+                CollapsingToolbarBase(
                     toolbarHeading = "Settings",
-                    listState = listState,
                     onBackButtonPressed = onBackButtonPressed,
                     toolbarHeight = 250.dp,
+                    toolbarOffset = toolbarOffsetHeightPx.value,
                     content = {
                         Text(
                             text = "Settings",
@@ -99,8 +120,9 @@ fun ThinkpadSettingsScreen(
             }
         ) {
             LazyColumn(
+                modifier = modifier
+                    .nestedScroll(nestedScrollConnection),
                 state = listState,
-                modifier = modifier,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 item {

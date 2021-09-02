@@ -1,11 +1,10 @@
 package work.racka.thinkrchive.ui.components
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -13,7 +12,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -26,26 +28,37 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.statusBarsPadding
+import work.racka.thinkrchive.R
 import work.racka.thinkrchive.ui.theme.Dimens
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
-import work.racka.thinkrchive.R
 
-// Collapsing Toolbar that can be used anywhere.
-// It has a back button, default bottom rounded corners
-// & a box scope which holds content centered by default.
+/**
+ * Collapsing Toolbar that can be used in a topBar slot of Scaffold.
+ * It has a back button, default bottom rounded corners
+ * & a box scope which holds content centered by default.
+ * You need to implement nestedScrollConnection to set the offset values
+ * See Usage of this in AboutScreen or SettingsScreen or DetailsScreen
+ *
+ * To use this Toolbar with a persistent Image that's always visible
+ * and just shrinks when scroll then leave the toolbarHeading blank("")
+ *
+ * With nestedScrollConnection know that the maximum offset that can be
+ * reached is -132.0
+*/
 @Composable
-fun TopCollapsingToolbar(
+fun CollapsingToolbarBase(
     modifier: Modifier = Modifier,
     toolbarHeading: String,
     onBackButtonPressed: () -> Unit = { },
-    listState: LazyListState,
     contentAlignment: Alignment = Alignment.Center,
     shape: Shape = RoundedCornerShape(
-        bottomEnd = 20.dp,
-        bottomStart = 20.dp
+        bottomEnd = 10.dp,
+        bottomStart = 10.dp
     ),
     backgroundColor: Color = MaterialTheme.colors.surface,
-    toolbarHeight: Dp = 300.dp,
+    toolbarHeight: Dp,
+    minShrinkHeight: Dp = 100.dp,
+    toolbarOffset: Float,
     content: @Composable BoxScope.() -> Unit
 ) {
     //Scale animation
@@ -53,26 +66,24 @@ fun TopCollapsingToolbar(
         Animatable(initialValue = 0.9f)
     }
 
-    var offset by remember {
-        mutableStateOf(0)
-    }
-
-    // TODO: Fix Collapsing Toolbar
-    LaunchedEffect(key1 = listState.firstVisibleItemScrollOffset) {
-
-        offset += listState.firstVisibleItemScrollOffset
-    }
-    val scrollDp = 300 - offset
+    val scrollDp = toolbarHeight + toolbarOffset.dp
     val animatedCardSize by animateDpAsState(
-        targetValue = if (scrollDp <= 100) 100.dp else scrollDp.dp,
+        targetValue = if (scrollDp <= minShrinkHeight) 100.dp else scrollDp,
         animationSpec = tween(300, easing = LinearOutSlowInEasing)
     )
     val animatedElevation by animateDpAsState(
-        targetValue = if (scrollDp < 110) 10.dp else 0.dp,
+        targetValue = if (scrollDp < minShrinkHeight + 20.dp) 10.dp else 0.dp,
         animationSpec = tween(500, easing = LinearOutSlowInEasing)
     )
     val animatedTitleAlpha by animateFloatAsState(
-        targetValue = if (scrollDp <= 110) 1f else 0f,
+        targetValue = if (toolbarHeading.isNotBlank()) {
+            if (scrollDp <= minShrinkHeight + 20.dp) 1f else 0f
+        } else 0f,
+        animationSpec = tween(300, easing = LinearOutSlowInEasing)
+    )
+    val animatedColor by animateColorAsState(
+        targetValue = if (scrollDp < minShrinkHeight + 20.dp) backgroundColor
+        else MaterialTheme.colors.background,
         animationSpec = tween(300, easing = LinearOutSlowInEasing)
     )
 
@@ -94,14 +105,10 @@ fun TopCollapsingToolbar(
             .height(animatedCardSize)
             .shadow(
                 elevation = animatedElevation,
-                shape = RoundedCornerShape(
-                    bottomEnd = 20.dp,
-                    bottomStart = 20.dp
-                )
+                shape = shape
             )
             .background(
-                color = backgroundColor
-                    .copy(alpha = animatedTitleAlpha),
+                color = animatedColor,
                 shape = shape
             )
     ) {
@@ -127,7 +134,7 @@ fun TopCollapsingToolbar(
                 color = MaterialTheme.colors.onSurface.copy(
                     alpha = animatedTitleAlpha
                 ),
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.h6,
                 modifier = Modifier
                     .padding(horizontal = Dimens.SmallPadding.size)
             )
@@ -148,9 +155,10 @@ fun TopCollapsingToolbar(
 @Composable
 fun CollapsingToolbarPrev() {
     ThinkRchiveTheme {
-        TopCollapsingToolbar(
+        CollapsingToolbarBase(
             toolbarHeading = "Settings",
-            listState = rememberLazyListState(),
+            toolbarOffset = 0f,
+            toolbarHeight = 300.dp,
             content = {
                 Text(
                     text = "Settings",
