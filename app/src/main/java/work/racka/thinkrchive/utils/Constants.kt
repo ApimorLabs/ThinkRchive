@@ -1,6 +1,6 @@
 package work.racka.thinkrchive.utils
 
-import work.racka.thinkrchive.data.model.Thinkpad
+import work.racka.thinkrchive.domain.model.Thinkpad
 
 object Constants {
     const val BASE_URL = "https://docs.google.com/spreadsheets/d/1cFrYzzAP7i3bzSLKuBMykz3ZNUbf-YPTqRSEAwINy_E/"

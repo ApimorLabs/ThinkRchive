@@ -65,4 +65,7 @@ object Deps {
     // Splash Screen
     val splashScreenCore by lazy { "androidx.core:core-splashscreen:${Versions.splashScreen}" }
 
+    // Billing
+    val googleBilling by lazy { "com.android.billingclient:billing-ktx:${Versions.gBilling}" }
+
 }

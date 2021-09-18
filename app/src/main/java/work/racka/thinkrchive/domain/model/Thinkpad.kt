@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.data.model
+package work.racka.thinkrchive.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

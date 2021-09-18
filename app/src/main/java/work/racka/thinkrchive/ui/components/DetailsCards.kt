@@ -6,7 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import work.racka.thinkrchive.data.model.Thinkpad
+import work.racka.thinkrchive.domain.model.Thinkpad
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.utils.Constants
 

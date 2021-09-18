@@ -26,9 +26,9 @@ import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import work.racka.thinkrchive.data.model.Thinkpad
+import work.racka.thinkrchive.domain.model.Thinkpad
 import work.racka.thinkrchive.ui.components.CustomSearchBar
-import work.racka.thinkrchive.ui.components.ModalBottomSheet
+import work.racka.thinkrchive.ui.components.HomeBottomSheet
 import work.racka.thinkrchive.ui.components.ScrollToTopButton
 import work.racka.thinkrchive.ui.components.ThinkpadEntry
 import work.racka.thinkrchive.ui.theme.Dimens
@@ -47,7 +47,7 @@ fun ThinkpadListScreen(
     onSortOptionClicked: (Int) -> Unit = { },
     onSettingsClicked: () -> Unit = { },
     onAboutClicked: () -> Unit = { },
-    onCheckUpdates: () -> Unit = { },
+    onDonateClicked: () -> Unit = { },
     currentSortOption: Int,
     thinkpadList: List<Thinkpad>,
     networkLoading: Boolean,
@@ -66,7 +66,7 @@ fun ThinkpadListScreen(
     ) {
         ModalBottomSheetLayout(
             sheetContent = {
-                ModalBottomSheet(
+                HomeBottomSheet(
                     sheetState = sheetState,
                     scope = scope,
                     onSortOptionClicked = {
@@ -74,7 +74,7 @@ fun ThinkpadListScreen(
                     },
                     currentSortOption = currentSortOption,
                     onSettingsClicked = onSettingsClicked,
-                    onCheckUpdates = onCheckUpdates,
+                    onDonateClicked = onDonateClicked,
                     onAboutClicked = onAboutClicked
                 )
             },

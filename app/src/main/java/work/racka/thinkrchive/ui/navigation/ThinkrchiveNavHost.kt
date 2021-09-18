@@ -1,5 +1,6 @@
 package work.racka.thinkrchive.ui.navigation
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -14,14 +15,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
+import androidx.navigation.activity
 import androidx.navigation.compose.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import timber.log.Timber
+import work.racka.thinkrchive.billing.BillingManager
+import work.racka.thinkrchive.ui.main.screenStates.DonateScreenState
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadDetailsScreenState
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadListScreenState
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadSettingsScreenState
 import work.racka.thinkrchive.ui.main.screens.*
+import work.racka.thinkrchive.ui.main.viewModel.DonateViewModel
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadDetailsViewModel
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadListViewModel
 import work.racka.thinkrchive.ui.main.viewModel.ThinkpadSettingsViewModel
@@ -100,8 +105,10 @@ fun ThinkrchiveNavHost(
                         route = ThinkrchiveScreens.ThinkpadAboutScreen.name
                     )
                 },
-                onCheckUpdates = {
-                    // TODO: Check updates implementation
+                onDonateClicked = {
+                    navController.navigate(
+                        route = ThinkrchiveScreens.DonationScreen.name
+                    )
                 }
             )
         }
@@ -212,6 +219,39 @@ fun ThinkrchiveNavHost(
             ThinkpadAboutScreen(
                 onCheckUpdates = {
                     // TODO: Check updates implementation
+                },
+                onBackButtonPressed = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        // Donate Screen
+        composable(
+            route = ThinkrchiveScreens.DonationScreen.name,
+            enterTransition = { _, _ ->
+                scaleInEnterTransition()
+            },
+            exitTransition = { _, _ ->
+                scaleOutExitTransition()
+            },
+            popEnterTransition = { _, _ ->
+                scaleInPopEnterTransition()
+            },
+            popExitTransition = { _, _ ->
+                scaleOutPopExitTransition()
+            }
+        ) {
+            val currentActivity = LocalContext.current as Activity
+            val viewModel: DonateViewModel = hiltViewModel()
+            val donateScreenState by viewModel.uiState.collectAsState()
+            val donateScreenData = donateScreenState as DonateScreenState.Donate
+
+
+            DonateScreen(
+                skuList = donateScreenData.skuDetailsList,
+                onDonateItemClicked = {
+                    viewModel.launchPurchaseScreen(currentActivity, it)
                 },
                 onBackButtonPressed = {
                     navController.popBackStack()

@@ -6,5 +6,6 @@ enum class ThinkrchiveScreens {
     ThinkpadListScreen,
     ThinkpadDetailsScreen,
     ThinkpadSettingsScreen,
-    ThinkpadAboutScreen;
+    ThinkpadAboutScreen,
+    DonationScreen;
 }

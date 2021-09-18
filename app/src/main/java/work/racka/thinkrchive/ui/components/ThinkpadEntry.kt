@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
-import work.racka.thinkrchive.data.model.Thinkpad
+import work.racka.thinkrchive.domain.model.Thinkpad
 import work.racka.thinkrchive.ui.theme.Dimens
 import work.racka.thinkrchive.ui.theme.Shapes
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme

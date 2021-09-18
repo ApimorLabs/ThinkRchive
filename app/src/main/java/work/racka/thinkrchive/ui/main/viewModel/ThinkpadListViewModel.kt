@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import work.racka.thinkrchive.data.dataTransferObjects.asDomainModel
-import work.racka.thinkrchive.data.model.Thinkpad
+import work.racka.thinkrchive.domain.model.Thinkpad
 import work.racka.thinkrchive.repository.DataStoreRepository
 import work.racka.thinkrchive.repository.ThinkpadRepository
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadListScreenState
@@ -30,6 +30,7 @@ class ThinkpadListViewModel @Inject constructor(
     // This will combine the different Flows emitted in this ViewModel into a single state
     // that will be observed by the UI.
     // Compose mutableStateOf can also be used to provide something similar
+    // But this approach ensures that it will work with regular Android Views OOB
     val uiState: StateFlow<ThinkpadListScreenState> = combine(
         allThinkpads,
         networkLoading,

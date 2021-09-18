@@ -2,7 +2,7 @@ package work.racka.thinkrchive.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import work.racka.thinkrchive.data.model.Thinkpad
+import work.racka.thinkrchive.domain.model.Thinkpad
 
 suspend fun List<Thinkpad>.getChipNamesList(): List<String> {
     return withContext(Dispatchers.Default) {

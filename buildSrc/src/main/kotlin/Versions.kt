@@ -48,4 +48,7 @@ object Versions {
 
     // DataStore
     const val dataStore = "1.0.0"
+
+    // Billing
+    const val gBilling = "4.0.0"
 }

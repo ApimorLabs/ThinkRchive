@@ -13,11 +13,12 @@ import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import work.racka.thinkrchive.utils.Constants
 import java.io.IOException
+import javax.inject.Inject
 
 // This is provided by Hilt for easy usage throughout the app
 // See @DataStoreModule
 @ActivityScoped
-class DataStoreRepository(
+class DataStoreRepository @Inject constructor(
     private val context: Context
 ) {
     private object PreferenceKeys {

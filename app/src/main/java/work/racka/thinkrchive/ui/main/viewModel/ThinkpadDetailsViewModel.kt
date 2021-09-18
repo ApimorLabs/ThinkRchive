@@ -24,7 +24,8 @@ class ThinkpadDetailsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<ThinkpadDetailsScreenState>(
         value = ThinkpadDetailsScreenState.EmptyState
     )
-    val uiState: StateFlow<ThinkpadDetailsScreenState> = _uiState
+    val uiState: StateFlow<ThinkpadDetailsScreenState>
+        get() = _uiState
 
     init {
         initializeThinkpad()

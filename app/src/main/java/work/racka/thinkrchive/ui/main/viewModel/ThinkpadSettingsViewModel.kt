@@ -54,6 +54,7 @@ class ThinkpadSettingsViewModel @Inject constructor(
 
     init {
         readSettings()
+        Timber.i("SettingViewModel created")
     }
 
     // This is used retrieve the previous set values for settings and be displayed on the

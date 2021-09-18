@@ -1,7 +1,7 @@
 package work.racka.thinkrchive.data.dataTransferObjects
 
 import work.racka.thinkrchive.data.database.ThinkpadDatabaseObject
-import work.racka.thinkrchive.data.model.Thinkpad
+import work.racka.thinkrchive.domain.model.Thinkpad
 import work.racka.thinkrchive.data.responses.ThinkpadResponse
 
 // Converting data from API to a domain model that will be read by the UI

@@ -26,7 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import work.racka.thinkrchive.R
-import work.racka.thinkrchive.data.model.Thinkpad
+import work.racka.thinkrchive.domain.model.Thinkpad
 import work.racka.thinkrchive.ui.theme.Dimens
 import work.racka.thinkrchive.ui.theme.Shapes
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme

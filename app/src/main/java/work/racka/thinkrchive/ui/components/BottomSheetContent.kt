@@ -38,7 +38,7 @@ import work.racka.thinkrchive.utils.Sort
 
 @ExperimentalMaterialApi
 @Composable
-fun ModalBottomSheet(
+fun HomeBottomSheet(
     modifier: Modifier = Modifier,
     sheetState: ModalBottomSheetState,
     scope: CoroutineScope,
@@ -46,7 +46,7 @@ fun ModalBottomSheet(
     onSettingsClicked: () -> Unit = { },
     onSortOptionClicked: (Int) -> Unit = { },
     onAboutClicked: () -> Unit = { },
-    onCheckUpdates: () -> Unit = { },
+    onDonateClicked: () -> Unit = { },
 ) {
 
     Surface(
@@ -120,7 +120,7 @@ fun ModalBottomSheet(
                 }
 
                 item {
-                    UpdatesAndAbout(
+                    DonateAndAbout(
                         modifier = Modifier
                             .padding(Dimens.MediumPadding.size),
                         onAboutClicked = {
@@ -129,10 +129,10 @@ fun ModalBottomSheet(
                                 onAboutClicked()
                             }
                         },
-                        onUpdatesClicked = {
+                        onDonateClicked = {
                             scope.launch {
                                 sheetState.hide()
-                                onCheckUpdates()
+                                onDonateClicked()
                             }
                         }
                     )
@@ -254,9 +254,9 @@ fun SheetOption(
 }
 
 @Composable
-private fun UpdatesAndAbout(
+private fun DonateAndAbout(
     modifier: Modifier = Modifier,
-    onUpdatesClicked: () -> Unit = { },
+    onDonateClicked: () -> Unit = { },
     onAboutClicked: () -> Unit = { }
 ) {
     Row(
@@ -265,7 +265,7 @@ private fun UpdatesAndAbout(
             .fillMaxWidth()
     ) {
         Button(
-            onClick = onUpdatesClicked,
+            onClick = onDonateClicked,
             shape = CircleShape,
             elevation = ButtonDefaults
                 .elevation(0.dp),
@@ -273,13 +273,13 @@ private fun UpdatesAndAbout(
                 .weight(1f)
         ) {
             Icon(
-                imageVector = Icons.Outlined.SecurityUpdate,
+                imageVector = Icons.Outlined.VolunteerActivism,
                 contentDescription = null,
                 tint = MaterialTheme.colors.onPrimary
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
-                text = "Check Updates",
+                text = "Donate",
                 modifier = Modifier
                     .padding(
                         horizontal = 4.dp,
@@ -333,7 +333,7 @@ private fun UpdatesAndAbout(
 @Composable
 fun BottomSheetPreview() {
     ThinkRchiveTheme {
-        ModalBottomSheet(
+        HomeBottomSheet(
             scope = rememberCoroutineScope(),
             sheetState = ModalBottomSheetState(ModalBottomSheetValue.Hidden),
             currentSortOption = 1
