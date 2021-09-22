@@ -33,7 +33,7 @@ fun DonateScreen(
     onBackButtonPressed: () -> Unit = { }
 ) {
     // CollapsingToolbar Implementation
-    val toolbarHeight = 300.dp
+    val toolbarHeight = 250.dp
     val toolbarHeightPx = with(LocalDensity.current) { toolbarHeight.roundToPx().toFloat() }
     val toolbarOffsetHeightPx = remember { mutableStateOf(0f) }
     val nestedScrollConnection = remember {

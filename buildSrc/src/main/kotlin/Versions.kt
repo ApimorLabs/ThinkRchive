@@ -10,13 +10,13 @@ object Versions {
     const val coreKtx = "1.6.0"
 
     // Compose Base
-    const val composeKotlin = "1.5.21"
-    const val compose = "1.1.0-alpha02"
+    const val composeKotlin = "1.5.30"
+    const val compose = "1.1.0-alpha04"
     const val composeConstraintLayout = "1.0.0-beta02"
     const val activityCompose = "1.3.1"
 
     // Navigation
-    const val composeNavigation = "2.4.0-alpha05"
+    const val composeNavigation = "2.4.0-alpha09"
 
     // Lifecycle components
     const val lifecycleViewModelCompose = "1.0.0-alpha07"

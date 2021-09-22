@@ -34,6 +34,7 @@ class DonateViewModel @Inject constructor(
     private fun initialize() {
         viewModelScope.launch {
             billingRepository.billingResponse.collect { billingResponse ->
+                Timber.i("Response: $billingResponse")
                 if (billingResponse == BillingClient.BillingResponseCode.OK) {
                     val skuDetailsList = billingRepository.querySkuDetails().skuDetailsList
                     skuDetailsList?.let {
@@ -41,8 +42,10 @@ class DonateViewModel @Inject constructor(
                     }
                 }
             }
-
+        }
+        viewModelScope.launch {
             billingRepository.purchasesState.collect {
+                Timber.i("Purchase query collected: $it")
                 billingRepository.consumePurchase()
             }
         }

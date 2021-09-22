@@ -2,6 +2,7 @@ package work.racka.thinkrchive.billing
 
 import android.app.Activity
 import android.content.Context
+import androidx.lifecycle.LifecycleObserver
 import com.android.billingclient.api.*
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.scopes.ActivityScoped
@@ -17,7 +18,7 @@ import javax.inject.Inject
 @ActivityScoped
 class BillingManager @Inject constructor(
     @ActivityContext private val context: Context
-) : PurchasesUpdatedListener, AcknowledgePurchaseResponseListener {
+) : LifecycleObserver, PurchasesUpdatedListener, AcknowledgePurchaseResponseListener {
 
     private val billingClient = BillingClient.newBuilder(context)
         .setListener(this)
@@ -33,7 +34,7 @@ class BillingManager @Inject constructor(
     val billingResponse: StateFlow<Int>
         get() = _billingResponse
 
-    private val _purchases = MutableSharedFlow<List<Purchase>?>()
+    private val _purchases = MutableStateFlow<List<Purchase>?>(null)
     val purchases: SharedFlow<List<Purchase>?>
         get() = _purchases
 
@@ -51,7 +52,8 @@ class BillingManager @Inject constructor(
     ) {
         _billingResponse.value = billingResult.responseCode
         Timber.d("onPurchasesUpdated() response: ${billingResult.responseCode}")
-        _purchases.tryEmit(purchases)
+        Timber.d("userCancelled: ${billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED}")
+        _purchases.value = purchases
     }
 
     override fun onAcknowledgePurchaseResponse(billingResult: BillingResult) {
@@ -67,9 +69,9 @@ class BillingManager @Inject constructor(
             }
 
             override fun onBillingSetupFinished(billingResult: BillingResult) {
+                _billingResponse.value = billingResult.responseCode
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     Timber.i("Billing Setup successful")
-                    _billingResponse.value = BillingClient.BillingResponseCode.OK
                 }
             }
         })
@@ -114,6 +116,22 @@ class BillingManager @Inject constructor(
     }
 
     /**
+     * Should be called whenever billingManager is created to make sure there are no
+     * pending purchases done by the user previously.
+     * Should be called in onResume and onCreate
+     */
+    suspend fun refreshPurchases() {
+        Timber.d("Refreshing purchases.")
+        val purchasesResult = billingClient.queryPurchasesAsync(BillingClient.SkuType.INAPP)
+        val billingResult = purchasesResult.billingResult
+        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+            consumeConsumable(purchasesResult.purchasesList)
+        } else {
+            Timber.e("Problem getting purchases: ${billingResult.debugMessage}")
+        }
+    }
+
+    /**
      * Consuming the purchase with proper checks
      * Here you can check for entitlement of previous purchase or grant entitlement
      *
@@ -121,12 +139,18 @@ class BillingManager @Inject constructor(
     suspend fun consumeConsumable(purchases: List<Purchase>?) {
         if (billingResponse.value == BillingClient.BillingResponseCode.OK) {
             purchases?.let {
-                Timber.i("Purchase List Not Null")
+                Timber.i("Purchase List Not Null: $it")
                 for (purchase in it) {
                     val token = handleConsumablePurchase(purchase)
                     // Store the token locally or in your server
+                    // You can grant entitlement here
+                    Timber.i("token is: $token")
                 }
             }
+        } else if (billingResponse.value == BillingClient.BillingResponseCode.USER_CANCELED) {
+            // Handle cancelled purchases
+            // Don't grant entitlement
+            Timber.i("Purchase cancelled")
         }
     }
 

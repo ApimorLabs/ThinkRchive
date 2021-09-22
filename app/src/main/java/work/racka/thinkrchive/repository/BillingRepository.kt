@@ -16,7 +16,9 @@ class BillingRepository @Inject constructor(
     val purchasesState = billingManager.purchases
 
     suspend fun querySkuDetails(): SkuDetailsResult {
-        return billingManager.querySkuDetails()
+        val result = billingManager.querySkuDetails()
+        billingManager.refreshPurchases()
+        return result
     }
 
     fun launchPurchaseScreen(activity: Activity, skuDetails: SkuDetails) {

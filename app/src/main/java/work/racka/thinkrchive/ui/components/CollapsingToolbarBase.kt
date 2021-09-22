@@ -55,7 +55,8 @@ fun CollapsingToolbarBase(
         bottomEnd = 10.dp,
         bottomStart = 10.dp
     ),
-    backgroundColor: Color = MaterialTheme.colors.surface,
+    collapsedBackgroundColor: Color = MaterialTheme.colors.surface,
+    backgroundColor: Color = MaterialTheme.colors.background,
     toolbarHeight: Dp,
     minShrinkHeight: Dp = 100.dp,
     toolbarOffset: Float,
@@ -68,7 +69,7 @@ fun CollapsingToolbarBase(
 
     val scrollDp = toolbarHeight + toolbarOffset.dp
     val animatedCardSize by animateDpAsState(
-        targetValue = if (scrollDp <= minShrinkHeight) 100.dp else scrollDp,
+        targetValue = if (scrollDp <= minShrinkHeight) minShrinkHeight else scrollDp,
         animationSpec = tween(300, easing = LinearOutSlowInEasing)
     )
     val animatedElevation by animateDpAsState(
@@ -82,8 +83,8 @@ fun CollapsingToolbarBase(
         animationSpec = tween(300, easing = LinearOutSlowInEasing)
     )
     val animatedColor by animateColorAsState(
-        targetValue = if (scrollDp < minShrinkHeight + 20.dp) backgroundColor
-        else MaterialTheme.colors.background,
+        targetValue = if (scrollDp < minShrinkHeight + 20.dp) collapsedBackgroundColor
+        else backgroundColor,
         animationSpec = tween(300, easing = LinearOutSlowInEasing)
     )
 
