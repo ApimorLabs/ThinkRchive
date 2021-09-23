@@ -53,7 +53,7 @@ object NetworkModule {
     fun providesThinkpadRepository(
         thinkrchiveApi: ThinkrchiveApi,
         thinkpadDao: ThinkpadDao
-    ) = ThinkpadRepository(
+    ): ThinkpadRepository = ThinkpadRepository(
         thinkrchiveApi,
         thinkpadDao
     )

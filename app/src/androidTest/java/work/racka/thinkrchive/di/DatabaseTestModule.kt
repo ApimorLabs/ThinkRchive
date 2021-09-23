@@ -4,30 +4,34 @@ import android.content.Context
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dagger.hilt.testing.TestInstallIn
 import work.racka.thinkrchive.data.database.ThinkpadDao
 import work.racka.thinkrchive.data.database.ThinkpadDatabase
-import work.racka.thinkrchive.utils.Constants.THINKPAD_LIST_TABLE
+import work.racka.thinkrchive.utils.Constants
 import javax.inject.Singleton
 
+@TestInstallIn(
+    components = [SingletonComponent::class],
+    replaces = [DatabaseModule::class]
+)
 @Module
-@InstallIn(SingletonComponent::class)
-object DatabaseModule {
+object DatabaseTestModule {
 
     @Singleton
     @Provides
-    fun providesThinkpadDatabase(
+    fun providesFakeDb(
         @ApplicationContext app: Context
     ) = Room.databaseBuilder(
         app,
         ThinkpadDatabase::class.java,
-        THINKPAD_LIST_TABLE
+        Constants.THINKPAD_LIST_TABLE
     ).fallbackToDestructiveMigration()
+        .allowMainThreadQueries()
         .build()
 
     @Singleton
     @Provides
-    fun providesThinkpadDao(database: ThinkpadDatabase): ThinkpadDao = database.thinkpadDao
+    fun providesFakeDao(db: ThinkpadDatabase): ThinkpadDao = db.thinkpadDao
 }

@@ -17,7 +17,7 @@ android {
         versionCode = AppConfig.versionCode
         versionName = AppConfig.versionName
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "work.racka.thinkrchive.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -48,7 +48,14 @@ android {
     packagingOptions {
         resources {
             excludes += mutableSetOf(
-                "/META-INF/{AL2.0,LGPL2.1}"
+                "/META-INF/{AL2.0,LGPL2.1}",
+                "META-INF/licenses/ASM"
+            )
+            // Fixes conflicts caused by ByteBuddy library used in
+            // coroutines-debug and mockito
+            pickFirsts += mutableSetOf(
+                "win32-x86-64/attach_hotspot_windows.dll",
+                "win32-x86/attach_hotspot_windows.dll"
             )
         }
     }
@@ -61,9 +68,21 @@ dependencies {
     implementation(Deps.material)
     implementation(Deps.lifecycleRuntimeKtx)
 
+    // Testing
     testImplementation(Deps.junit)
     androidTestImplementation(Deps.junitTest)
     androidTestImplementation(Deps.espressoCore)
+    androidTestImplementation(Deps.testCore)
+    testImplementation("org.mockito:mockito-inline:3.8.0")
+    androidTestImplementation("org.mockito:mockito-android:3.8.0")
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+    androidTestImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+    testImplementation("org.robolectric:robolectric:4.3.1")
+    testImplementation("app.cash.turbine:turbine:0.6.1")
+    androidTestImplementation("app.cash.turbine:turbine:0.6.1")
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
+    androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
 
     // Testing Compose
     androidTestImplementation(Deps.junitCompose)
@@ -100,6 +119,14 @@ dependencies {
     implementation(Deps.hilt)
     implementation(Deps.hiltNavigationCompose)
     kapt(Deps.hiltCompiler)
+
+    // Hilt Testing
+    // Instrumentation Test
+    androidTestImplementation(Deps.hiltTest)
+    kaptAndroidTest(Deps.hiltCompiler)
+    // Local Unit Tests
+    testImplementation(Deps.hiltTest)
+    kaptTest(Deps.hiltCompiler)
 
     // Coil Image loader
     implementation(Deps.coilImage)

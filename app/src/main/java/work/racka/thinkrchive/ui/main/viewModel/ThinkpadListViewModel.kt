@@ -96,7 +96,10 @@ class ThinkpadListViewModel @Inject constructor(
                     thinkpadRepository.getThinkpadsAlphaAscending(query)
                         .collect {
                             allThinkpads.value = it.asDomainModel()
-                            if (allThinkpads.value.size > availableThinkpadSeries.value.size) {
+                            if (
+                                allThinkpads.value.size > availableThinkpadSeries.value.size
+                                || allThinkpads.value.isEmpty()
+                            ) {
                                 availableThinkpadSeries.value =
                                     allThinkpads.value.getChipNamesList()
                             }

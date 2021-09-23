@@ -13,6 +13,7 @@ object Deps {
     val junit by lazy { "junit:junit:${Versions.junit}" }
     val junitTest by lazy { "androidx.test.ext:junit:${Versions.junitTest}" }
     val espressoCore by lazy { "androidx.test.espresso:espresso-core:${Versions.espressoTest}" }
+    val testCore by lazy { "androidx.test:core-ktx:${Versions.testCore}" }
 
     // Compose Testing
     val junitCompose by lazy { "androidx.compose.ui:ui-test-junit4:${Versions.compose}" }
@@ -45,6 +46,8 @@ object Deps {
     val hilt by lazy { "com.google.dagger:hilt-android:${Versions.hilt}" }
     val hiltNavigationCompose by lazy { "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}" }
     val hiltCompiler by lazy { "com.google.dagger:hilt-android-compiler:${Versions.hilt}" }
+    // Hilt testing
+    val hiltTest by lazy { "com.google.dagger:hilt-android-testing:${Versions.hilt}" }
 
     // Coil image loader
     val coilImage by lazy { "io.coil-kt:coil-compose:${Versions.coilImage}" }

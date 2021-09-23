@@ -34,8 +34,7 @@ class ThinkpadRepository @Inject constructor(
     }
 
     // Get requested Thinkpads from the Database
-    // This is the default way of getting the data from the database
-    // Depends on Sorting options
+    // This has been replaced by the sorting specific functions below
     fun queryThinkpads(query: String): Flow<List<ThinkpadDatabaseObject>> {
         return thinkpadDao.searchDatabase("%$query%")
     }

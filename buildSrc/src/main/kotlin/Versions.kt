@@ -1,6 +1,6 @@
 object Versions {
     // Kotlin
-    const val kotlin = "1.5.21"
+    const val kotlin = "1.5.30"
 
     // Essentials
     const val material = "1.4.0"
@@ -16,7 +16,7 @@ object Versions {
     const val activityCompose = "1.3.1"
 
     // Navigation
-    const val composeNavigation = "2.4.0-alpha09"
+    const val composeNavigation = "2.4.0-alpha08"
 
     // Lifecycle components
     const val lifecycleViewModelCompose = "1.0.0-alpha07"
@@ -30,12 +30,13 @@ object Versions {
     const val junit = "4.13.2"
     const val junitTest = "1.1.3"
     const val espressoTest = "3.4.0"
+    const val testCore = "1.4.0"
 
     // Logging
     const val timber = "4.7.1"
 
     // Helpers
-    const val accompanist = "0.17.0"
+    const val accompanist = "0.18.0"
     const val coilImage = "1.3.2"
 
     // Networking & JSON

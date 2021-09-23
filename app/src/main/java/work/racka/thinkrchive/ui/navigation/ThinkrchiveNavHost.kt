@@ -15,12 +15,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.activity
 import androidx.navigation.compose.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import timber.log.Timber
-import work.racka.thinkrchive.billing.BillingManager
 import work.racka.thinkrchive.ui.main.screenStates.DonateScreenState
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadDetailsScreenState
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadListScreenState
