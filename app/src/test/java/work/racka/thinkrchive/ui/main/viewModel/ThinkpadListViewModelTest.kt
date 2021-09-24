@@ -18,8 +18,8 @@ import work.racka.thinkrchive.data.database.ThinkpadDatabaseObject
 import work.racka.thinkrchive.domain.model.Thinkpad
 import work.racka.thinkrchive.repository.DataStoreRepository
 import work.racka.thinkrchive.repository.ThinkpadRepository
-import work.racka.thinkrchive.testUtils.MainCoroutineRule
 import work.racka.thinkrchive.testUtils.FakeThinkpadLists
+import work.racka.thinkrchive.testUtils.MainCoroutineRule
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadListScreenState
 import work.racka.thinkrchive.utils.Resource
 import kotlin.time.ExperimentalTime
@@ -65,7 +65,7 @@ class ThinkpadListViewModelTest {
     @ExperimentalTime
     @ExperimentalCoroutinesApi
     @Test
-    fun canGetUiStateTest() {
+    fun uIState_GetsUiState() {
         val query = ""
         val expected = ThinkpadListScreenState.ThinkpadListScreen()
         coroutineRule.runBlockingTest {
@@ -88,7 +88,7 @@ class ThinkpadListViewModelTest {
     @ExperimentalTime
     @ExperimentalCoroutinesApi
     @Test
-    fun refreshThinkpadListTest() {
+    fun refreshThinkpadList_WhenRefreshed_GetNewList() {
         val query = ""
         val notExpected = expectedThinkpadList
         coroutineRule.runBlockingTest {
@@ -121,7 +121,7 @@ class ThinkpadListViewModelTest {
     @ExperimentalCoroutinesApi
     @ExperimentalTime
     @Test
-    fun getNewThinkpadListFromDatabaseTest() {
+    fun getNewThinkpadListFromDatabase_WhenCalled_DisplayList() {
         val query = ""
         val expected = expectedThinkpadList
         coroutineRule.runBlockingTest {
@@ -146,7 +146,7 @@ class ThinkpadListViewModelTest {
     @ExperimentalCoroutinesApi
     @ExperimentalTime
     @Test
-    fun getNewThinkpadListFromDatabaseWithSearchQueryFoundTest() {
+    fun getNewThinkpadListFromDatabase_WhenSearchQueryFound_DisplayListWithSingleElement() {
         val query = "Thinkpad T450"
         val expected = expectedThinkpadList.subList(1, expectedThinkpadList.lastIndex)
         coroutineRule.runBlockingTest {
@@ -172,7 +172,7 @@ class ThinkpadListViewModelTest {
     @ExperimentalCoroutinesApi
     @ExperimentalTime
     @Test
-    fun getNewThinkpadListFromDatabaseWithSearchQueryNotFoundTest() {
+    fun getNewThinkpadListFromDatabase_WhenSearchQueryNotFound_DisplayEmptyList() {
         val query = "Thinkpad T4893"
         val expected = listOf<Thinkpad>()
         coroutineRule.runBlockingTest {
@@ -197,7 +197,7 @@ class ThinkpadListViewModelTest {
     @ExperimentalCoroutinesApi
     @ExperimentalTime
     @Test
-    fun sortSelectedTest() {
+    fun sortSelected_WhenNewSortOptionSelected_DisplayListFromNewSort() {
         val query = ""
         var notExpected = 3
         coroutineRule.runBlockingTest {
