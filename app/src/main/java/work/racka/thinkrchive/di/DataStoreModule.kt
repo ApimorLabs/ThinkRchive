@@ -6,6 +6,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import work.racka.thinkrchive.repository.DataStoreRepository
 import javax.inject.Singleton
 
@@ -16,6 +18,10 @@ object DataStoreModule {
     @Singleton
     @Provides
     fun providesDataStore(
-        @ApplicationContext context: Context
-    ) = DataStoreRepository(context = context)
+        @ApplicationContext context: Context,
+        @IoDispatcher dispatcher: CoroutineDispatcher
+    ) = DataStoreRepository(
+        context = context,
+        dataStoreScope = CoroutineScope(dispatcher)
+    )
 }

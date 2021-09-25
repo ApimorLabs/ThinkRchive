@@ -1,6 +1,7 @@
 package work.racka.thinkrchive.repository
 
 import dagger.hilt.android.scopes.ActivityScoped
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -15,7 +16,8 @@ import javax.inject.Inject
 @ActivityScoped
 class ThinkpadRepository @Inject constructor(
     private val thinkrchiveApi: ThinkrchiveApi,
-    private val thinkpadDao: ThinkpadDao
+    private val thinkpadDao: ThinkpadDao,
+    private val dbDispatcher: CoroutineDispatcher
 ) {
 
     // Get all the Thinkpads from the network
@@ -61,7 +63,7 @@ class ThinkpadRepository @Inject constructor(
 
     // Insert all Thinkpads obtained from the network to the database
     suspend fun refreshThinkpadList(thinkpadList: List<ThinkpadResponse>) {
-        withContext(Dispatchers.IO) {
+        withContext(dbDispatcher) {
             thinkpadDao.insertAllThinkpads(*thinkpadList.asDatabaseModel())
         }
     }

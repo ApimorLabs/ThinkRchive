@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -50,16 +51,6 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providesThinkpadRepository(
-        thinkrchiveApi: ThinkrchiveApi,
-        thinkpadDao: ThinkpadDao
-    ): ThinkpadRepository = ThinkpadRepository(
-        thinkrchiveApi,
-        thinkpadDao
-    )
-
-    @Singleton
-    @Provides
     fun providesThinkrchiveApi(): ThinkrchiveApi =
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
@@ -67,4 +58,16 @@ object NetworkModule {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(ThinkrchiveApi::class.java)
+
+    @Singleton
+    @Provides
+    fun providesThinkpadRepository(
+        thinkrchiveApi: ThinkrchiveApi,
+        thinkpadDao: ThinkpadDao,
+        @IoDispatcher dbDispatcher: CoroutineDispatcher
+    ): ThinkpadRepository = ThinkpadRepository(
+        thinkrchiveApi,
+        thinkpadDao,
+        dbDispatcher
+    )
 }

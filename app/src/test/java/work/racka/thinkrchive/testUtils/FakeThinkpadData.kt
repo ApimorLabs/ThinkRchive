@@ -2,7 +2,7 @@ package work.racka.thinkrchive.testUtils
 
 import work.racka.thinkrchive.data.responses.ThinkpadResponse
 
-internal object FakeThinkpadLists {
+internal object FakeThinkpadData {
 
     val fakeResponseList = listOf(
         ThinkpadResponse(

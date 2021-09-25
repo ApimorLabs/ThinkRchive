@@ -1,31 +1,34 @@
 package work.racka.thinkrchive.ui.main.viewModel
 
 import app.cash.turbine.test
-import com.nhaarman.mockitokotlin2.clearInvocations
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.kotlin.clearInvocations
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import work.racka.thinkrchive.data.dataTransferObjects.asDatabaseModel
 import work.racka.thinkrchive.data.dataTransferObjects.asDomainModel
 import work.racka.thinkrchive.data.database.ThinkpadDatabaseObject
 import work.racka.thinkrchive.domain.model.Thinkpad
 import work.racka.thinkrchive.repository.DataStoreRepository
 import work.racka.thinkrchive.repository.ThinkpadRepository
-import work.racka.thinkrchive.testUtils.FakeThinkpadLists
+import work.racka.thinkrchive.testUtils.FakeThinkpadData
 import work.racka.thinkrchive.testUtils.MainCoroutineRule
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadListScreenState
 import work.racka.thinkrchive.utils.Resource
 import kotlin.time.ExperimentalTime
 
+@ExperimentalCoroutinesApi
+@ExperimentalTime
 class ThinkpadListViewModelTest {
-    @ExperimentalCoroutinesApi
+
     @get:Rule
     val coroutineRule = MainCoroutineRule()
 
@@ -33,28 +36,23 @@ class ThinkpadListViewModelTest {
     private lateinit var dataStoreRepo: DataStoreRepository
     private lateinit var viewModel: ThinkpadListViewModel
 
-    private val expectedThinkpadList = FakeThinkpadLists.fakeResponseList
+    private val expectedThinkpadList = FakeThinkpadData.fakeResponseList
         .asDatabaseModel()
         .toList()
         .asDomainModel()
-    private val expectedThinkpadDbList = FakeThinkpadLists.fakeResponseList
+    private val expectedThinkpadDbList = FakeThinkpadData.fakeResponseList
         .asDatabaseModel()
         .toList()
 
-    @ExperimentalCoroutinesApi
     @Before
     fun setUp() {
         thinkpadRepo = mock()
         dataStoreRepo = mock()
-        coroutineRule.runBlockingTest {
-            val insertFlow =
-                flow { emit(expectedThinkpadDbList) }
-            whenever(dataStoreRepo.readSortOptionSetting)
-                .thenReturn(flow { emit(0) })
-            whenever(thinkpadRepo.getThinkpadsAlphaAscending(""))
-                .thenReturn(insertFlow)
-            viewModel = ThinkpadListViewModel(thinkpadRepo, dataStoreRepo)
-        }
+        whenever(dataStoreRepo.readSortOptionSetting)
+            .thenReturn(flowOf(0))
+        whenever(thinkpadRepo.getThinkpadsAlphaAscending(""))
+            .thenReturn(flowOf(expectedThinkpadDbList))
+        viewModel = ThinkpadListViewModel(thinkpadRepo, dataStoreRepo)
     }
 
     @After
@@ -62,19 +60,17 @@ class ThinkpadListViewModelTest {
         clearInvocations(thinkpadRepo, dataStoreRepo)
     }
 
-    @ExperimentalTime
-    @ExperimentalCoroutinesApi
     @Test
-    fun uIState_GetsUiState() {
+    fun uIState_GetsLatestThinkpadListScreenUiState() {
         val query = ""
         val expected = ThinkpadListScreenState.ThinkpadListScreen()
         coroutineRule.runBlockingTest {
             whenever(thinkpadRepo.getAllThinkpadsFromNetwork())
                 .thenReturn(Resource.Success(data = listOf()))
             whenever(dataStoreRepo.readSortOptionSetting)
-                .thenReturn(flow { emit(0) })
+                .thenReturn(flowOf(0))
             whenever(thinkpadRepo.getThinkpadsAlphaAscending(query))
-                .thenReturn(flow { emit(listOf<ThinkpadDatabaseObject>()) })
+                .thenReturn(flowOf(listOf<ThinkpadDatabaseObject>()))
             viewModel.refreshThinkpadList()
             viewModel.getNewThinkpadListFromDatabase(query)
             val state = viewModel.uiState
@@ -85,8 +81,6 @@ class ThinkpadListViewModelTest {
         }
     }
 
-    @ExperimentalTime
-    @ExperimentalCoroutinesApi
     @Test
     fun refreshThinkpadList_WhenRefreshed_GetNewList() {
         val query = ""
@@ -96,15 +90,16 @@ class ThinkpadListViewModelTest {
             whenever(thinkpadRepo.getAllThinkpadsFromNetwork())
                 .thenReturn(
                     Resource.Success(
-                        data = FakeThinkpadLists.fakeResponseList
+                        data = FakeThinkpadData.fakeResponseList
                             .subList(0, 2)
                     )
                 )
             whenever(thinkpadRepo.getThinkpadsAlphaAscending(query))
-                .thenReturn(flow { emit(refreshedList) })
-
-            viewModel.getNewThinkpadListFromDatabase(query)
+                .thenReturn(flowOf(refreshedList))
+            verify(thinkpadRepo)
+                .getAllThinkpadsFromNetwork()
             viewModel.refreshThinkpadList()
+            viewModel.getNewThinkpadListFromDatabase(query)
             val state = viewModel.uiState
             state.test {
                 val actual = expectMostRecentItem() as ThinkpadListScreenState.ThinkpadListScreen
@@ -118,21 +113,16 @@ class ThinkpadListViewModelTest {
         }
     }
 
-    @ExperimentalCoroutinesApi
-    @ExperimentalTime
     @Test
     fun getNewThinkpadListFromDatabase_WhenCalled_DisplayList() {
         val query = ""
         val expected = expectedThinkpadList
         coroutineRule.runBlockingTest {
-            val insertFlow =
-                flow { emit(expectedThinkpadDbList) }
+            val insertFlow = flowOf(expectedThinkpadDbList)
             whenever(thinkpadRepo.getThinkpadsAlphaAscending(query))
                 .thenReturn(insertFlow)
             whenever(dataStoreRepo.readSortOptionSetting)
-                .thenReturn(
-                    flow { emit(0) }
-                )
+                .thenReturn(flowOf(0))
             viewModel.getNewThinkpadListFromDatabase(query)
             val state = viewModel.uiState
             state.test {
@@ -143,8 +133,6 @@ class ThinkpadListViewModelTest {
 
     }
 
-    @ExperimentalCoroutinesApi
-    @ExperimentalTime
     @Test
     fun getNewThinkpadListFromDatabase_WhenSearchQueryFound_DisplayListWithSingleElement() {
         val query = "Thinkpad T450"
@@ -152,13 +140,9 @@ class ThinkpadListViewModelTest {
         coroutineRule.runBlockingTest {
             val firstItem = expectedThinkpadDbList.subList(1, expectedThinkpadDbList.lastIndex)
             whenever(thinkpadRepo.getThinkpadsAlphaAscending(query))
-                .thenReturn(
-                    flow { emit(firstItem) }
-                )
+                .thenReturn(flowOf(firstItem))
             whenever(dataStoreRepo.readSortOptionSetting)
-                .thenReturn(
-                    flow { emit(0) }
-                )
+                .thenReturn(flowOf(0))
             viewModel.getNewThinkpadListFromDatabase(query)
             val state = viewModel.uiState
             state.test {
@@ -169,21 +153,15 @@ class ThinkpadListViewModelTest {
         }
     }
 
-    @ExperimentalCoroutinesApi
-    @ExperimentalTime
     @Test
     fun getNewThinkpadListFromDatabase_WhenSearchQueryNotFound_DisplayEmptyList() {
         val query = "Thinkpad T4893"
         val expected = listOf<Thinkpad>()
         coroutineRule.runBlockingTest {
             whenever(thinkpadRepo.getThinkpadsAlphaAscending(query))
-                .thenReturn(
-                    flow { emit(listOf<ThinkpadDatabaseObject>()) }
-                )
+                .thenReturn(flowOf(listOf<ThinkpadDatabaseObject>()))
             whenever(dataStoreRepo.readSortOptionSetting)
-                .thenReturn(
-                    flow { emit(0) }
-                )
+                .thenReturn(flowOf(0))
             viewModel.getNewThinkpadListFromDatabase(query)
             val state = viewModel.uiState
             state.test {
@@ -194,8 +172,6 @@ class ThinkpadListViewModelTest {
         }
     }
 
-    @ExperimentalCoroutinesApi
-    @ExperimentalTime
     @Test
     fun sortSelected_WhenNewSortOptionSelected_DisplayListFromNewSort() {
         val query = ""
@@ -208,9 +184,11 @@ class ThinkpadListViewModelTest {
                         ThinkpadListScreenState.ThinkpadListScreen).sortOption
             }
             whenever(thinkpadRepo.getThinkpadsLowPriceFirst(query))
-                .thenReturn(flow { emit(expectedThinkpadDbList) })
+                .thenReturn(flowOf(expectedThinkpadDbList))
             // Pass New Sorting
             viewModel.sortSelected(3)
+            verify(thinkpadRepo)
+                .getThinkpadsLowPriceFirst(query)
             // Collect New State After New Sort option
             state = viewModel.uiState
             state.test {

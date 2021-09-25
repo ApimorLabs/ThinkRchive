@@ -31,6 +31,13 @@ object Versions {
     const val junitTest = "1.1.3"
     const val espressoTest = "3.4.0"
     const val testCore = "1.4.0"
+    const val testArchCore = "2.1.0"
+    const val testExtJUnit = "1.1.3"
+    const val mockito = "3.12.4"
+    const val mockitoKotlin = "3.2.0"
+    const val robolectric = "4.3.1"
+    const val turbine = "0.6.1"
+    const val coroutineTest = "1.5.1"
 
     // Logging
     const val timber = "4.7.1"

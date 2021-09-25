@@ -70,19 +70,29 @@ dependencies {
 
     // Testing
     testImplementation(Deps.junit)
+    testImplementation(Deps.testArchCore)
+    testImplementation(Deps.testExtJUnitKtx)
+    testImplementation(Deps.mockitoInline)
+    testImplementation(Deps.mockitoKotlin)
+    testImplementation(Deps.robolectric)
+    testImplementation(Deps.turbine)
+    testImplementation(Deps.coroutineTest)
+
     androidTestImplementation(Deps.junitTest)
     androidTestImplementation(Deps.espressoCore)
-    androidTestImplementation(Deps.testCore)
-    testImplementation("org.mockito:mockito-inline:3.8.0")
-    androidTestImplementation("org.mockito:mockito-android:3.8.0")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
-    androidTestImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
-    testImplementation("org.robolectric:robolectric:4.3.1")
-    testImplementation("app.cash.turbine:turbine:0.6.1")
-    androidTestImplementation("app.cash.turbine:turbine:0.6.1")
-    testImplementation("androidx.arch.core:core-testing:2.1.0")
-    androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
+    androidTestImplementation(Deps.testCoreKtx)
+    androidTestImplementation(Deps.testArchCore)
+    androidTestImplementation(Deps.mockitoAndroid)
+    androidTestImplementation(Deps.mockitoKotlin)
+    androidTestImplementation(Deps.turbine)
+
+    // Hilt Testing
+    // Local Unit Tests
+    testImplementation(Deps.hiltTest)
+    kaptTest(Deps.hiltCompiler)
+    // Instrumentation Test
+    androidTestImplementation(Deps.hiltTest)
+    kaptAndroidTest(Deps.hiltCompiler)
 
     // Testing Compose
     androidTestImplementation(Deps.junitCompose)
@@ -119,14 +129,6 @@ dependencies {
     implementation(Deps.hilt)
     implementation(Deps.hiltNavigationCompose)
     kapt(Deps.hiltCompiler)
-
-    // Hilt Testing
-    // Instrumentation Test
-    androidTestImplementation(Deps.hiltTest)
-    kaptAndroidTest(Deps.hiltCompiler)
-    // Local Unit Tests
-    testImplementation(Deps.hiltTest)
-    kaptTest(Deps.hiltCompiler)
 
     // Coil Image loader
     implementation(Deps.coilImage)

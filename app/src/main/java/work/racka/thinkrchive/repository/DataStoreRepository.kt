@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.scopes.ActivityScoped
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -19,7 +20,8 @@ import javax.inject.Inject
 // See @DataStoreModule
 @ActivityScoped
 class DataStoreRepository @Inject constructor(
-    private val context: Context
+    private val context: Context,
+    dataStoreScope: CoroutineScope
 ) {
     private object PreferenceKeys {
         val themeOption = intPreferencesKey(name = "theme_option")
@@ -27,7 +29,8 @@ class DataStoreRepository @Inject constructor(
     }
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
-        name = Constants.PREFERENCE_NAME
+        name = Constants.PREFERENCE_NAME,
+        scope = dataStoreScope
     )
 
     // Theme Settings

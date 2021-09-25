@@ -13,7 +13,15 @@ object Deps {
     val junit by lazy { "junit:junit:${Versions.junit}" }
     val junitTest by lazy { "androidx.test.ext:junit:${Versions.junitTest}" }
     val espressoCore by lazy { "androidx.test.espresso:espresso-core:${Versions.espressoTest}" }
-    val testCore by lazy { "androidx.test:core-ktx:${Versions.testCore}" }
+    val testCoreKtx by lazy { "androidx.test:core-ktx:${Versions.testCore}" }
+    val testArchCore by lazy { "androidx.arch.core:core-testing:${Versions.testArchCore}" }
+    val testExtJUnitKtx by lazy { "androidx.test.ext:junit-ktx:${Versions.testExtJUnit}" }
+    val mockitoInline by lazy { "org.mockito:mockito-inline:${Versions.mockito}" }
+    val mockitoAndroid by lazy { "org.mockito:mockito-android:${Versions.mockito}" }
+    val mockitoKotlin by lazy { "org.mockito.kotlin:mockito-kotlin:${Versions.mockitoKotlin}" }
+    val robolectric by lazy { "org.robolectric:robolectric:${Versions.robolectric}" }
+    val turbine by lazy { "app.cash.turbine:turbine:${Versions.turbine}" }
+    val coroutineTest by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutineTest}" }
 
     // Compose Testing
     val junitCompose by lazy { "androidx.compose.ui:ui-test-junit4:${Versions.compose}" }
