@@ -127,8 +127,8 @@ fun ThinkpadSettingsScreen(
             ) {
                 item {
                     val theme = when (currentTheme) {
-                        1 -> Theme.DARK_THEME
-                        2 -> Theme.LIGHT_THEME
+                        1 -> Theme.LIGHT_THEME
+                        2 -> Theme.DARK_THEME
                         else -> Theme.FOLLOW_SYSTEM
                     }
                     SettingsEntry(

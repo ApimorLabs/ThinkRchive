@@ -33,41 +33,50 @@ class DataStoreRepository @Inject constructor(
         scope = dataStoreScope
     )
 
-    // Theme Settings
-    // See Theme enum class for data meaning
-    suspend fun saveThemeSetting(value: Int) {
-        context.dataStore.edit { settings ->
-            settings[PreferenceKeys.themeOption] = value
-        }
+    // Write
+    private suspend fun <T> Context.writePreference(
+        preferenceKey: Preferences.Key<T>,
+        value: T
+    ) = this.dataStore.edit { preferences ->
+        preferences[preferenceKey] = value
     }
 
-    val readThemeSetting: Flow<Int> = context.dataStore.data
+    // Read
+    private fun <T> Context.readPreference(
+        preferenceKey: Preferences.Key<T>,
+        defaultValue: T
+    ): Flow<T> = this.dataStore.data
         .catch { exception ->
             if (exception is IOException) {
                 Timber.d(exception.message.toString())
             } else {
                 throw exception
             }
-        }.map { settings ->
-            settings[PreferenceKeys.themeOption] ?: -1
+        }.map { preferences ->
+            preferences[preferenceKey] ?: defaultValue
         }
+
+    // Theme Settings
+    // See Theme enum class for data meaning
+    suspend fun saveThemeSetting(value: Int) = context.writePreference(
+        preferenceKey = PreferenceKeys.themeOption,
+        value = value
+    )
+
+    val readThemeSetting: Flow<Int> = context.readPreference(
+        preferenceKey = PreferenceKeys.themeOption,
+        defaultValue = -1
+    )
 
     // Sort Option Settings
     // See Sort enum class for data meaning
-    suspend fun saveSortOptionSetting(value: Int) {
-        context.dataStore.edit { settings ->
-            settings[PreferenceKeys.sortOption] = value
-        }
-    }
+    suspend fun saveSortOptionSetting(value: Int) = context.writePreference(
+        preferenceKey = PreferenceKeys.sortOption,
+        value = value
+    )
 
-    val readSortOptionSetting: Flow<Int> = context.dataStore.data
-        .catch { exception ->
-            if (exception is IOException) {
-                Timber.d(exception.message.toString())
-            } else {
-                throw exception
-            }
-        }.map { settings ->
-            settings[PreferenceKeys.sortOption] ?: 0
-        }
+    val readSortOptionSetting: Flow<Int> = context.readPreference(
+        preferenceKey = PreferenceKeys.sortOption,
+        defaultValue = 0
+    )
 }
