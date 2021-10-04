@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.repository
+package work.racka.thinkrchive.data.local.dataStore
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -6,22 +6,24 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import dagger.hilt.android.scopes.ActivityScoped
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
+import work.racka.thinkrchive.di.IoDispatcher
 import work.racka.thinkrchive.utils.Constants
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
 // This is provided by Hilt for easy usage throughout the app
-// See @DataStoreModule
-@ActivityScoped
-class DataStoreRepository @Inject constructor(
-    private val context: Context,
-    dataStoreScope: CoroutineScope
+@Singleton
+class PrefDataStore @Inject constructor(
+    @ApplicationContext private val context: Context,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
     private object PreferenceKeys {
         val themeOption = intPreferencesKey(name = "theme_option")
@@ -30,7 +32,7 @@ class DataStoreRepository @Inject constructor(
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
         name = Constants.PREFERENCE_NAME,
-        scope = dataStoreScope
+        scope = CoroutineScope(dispatcher)
     )
 
     // Write

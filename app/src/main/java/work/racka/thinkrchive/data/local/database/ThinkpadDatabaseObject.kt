@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.data.database
+package work.racka.thinkrchive.data.local.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

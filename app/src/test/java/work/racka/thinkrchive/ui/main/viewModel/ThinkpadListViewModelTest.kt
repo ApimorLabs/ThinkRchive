@@ -15,14 +15,12 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import work.racka.thinkrchive.data.dataTransferObjects.asDatabaseModel
 import work.racka.thinkrchive.data.dataTransferObjects.asDomainModel
-import work.racka.thinkrchive.data.database.ThinkpadDatabaseObject
+import work.racka.thinkrchive.data.local.dataStore.PrefDataStore
 import work.racka.thinkrchive.domain.model.Thinkpad
-import work.racka.thinkrchive.repository.DataStoreRepository
 import work.racka.thinkrchive.repository.ThinkpadRepository
 import work.racka.thinkrchive.testUtils.FakeThinkpadData
 import work.racka.thinkrchive.testUtils.MainCoroutineRule
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadListScreenState
-import work.racka.thinkrchive.utils.Resource
 import kotlin.time.ExperimentalTime
 
 @ExperimentalCoroutinesApi
@@ -33,7 +31,7 @@ class ThinkpadListViewModelTest {
     val coroutineRule = MainCoroutineRule()
 
     private lateinit var thinkpadRepo: ThinkpadRepository
-    private lateinit var dataStoreRepo: DataStoreRepository
+    private lateinit var prefDataStoreRepo: PrefDataStore
     private lateinit var viewModel: ThinkpadListViewModel
 
     private val expectedThinkpadList = FakeThinkpadData.fakeResponseList
@@ -47,17 +45,17 @@ class ThinkpadListViewModelTest {
     @Before
     fun setUp() {
         thinkpadRepo = mock()
-        dataStoreRepo = mock()
-        whenever(dataStoreRepo.readSortOptionSetting)
+        prefDataStoreRepo = mock()
+        whenever(prefDataStoreRepo.readSortOptionSetting)
             .thenReturn(flowOf(0))
         whenever(thinkpadRepo.getThinkpadsAlphaAscending(""))
             .thenReturn(flowOf(expectedThinkpadDbList))
-        viewModel = ThinkpadListViewModel(thinkpadRepo, dataStoreRepo)
+        viewModel = ThinkpadListViewModel(thinkpadRepo, prefDataStoreRepo)
     }
 
     @After
     fun tearDown() {
-        clearInvocations(thinkpadRepo, dataStoreRepo)
+        clearInvocations(thinkpadRepo, prefDataStoreRepo)
     }
 
     @Test
@@ -66,11 +64,11 @@ class ThinkpadListViewModelTest {
         val expected = ThinkpadListScreenState.ThinkpadListScreen()
         coroutineRule.runBlockingTest {
             whenever(thinkpadRepo.getAllThinkpadsFromNetwork())
-                .thenReturn(Resource.Success(data = listOf()))
-            whenever(dataStoreRepo.readSortOptionSetting)
+                .thenReturn(listOf())
+            whenever(prefDataStoreRepo.readSortOptionSetting)
                 .thenReturn(flowOf(0))
             whenever(thinkpadRepo.getThinkpadsAlphaAscending(query))
-                .thenReturn(flowOf(listOf<ThinkpadDatabaseObject>()))
+                .thenReturn(flowOf(listOf()))
             viewModel.refreshThinkpadList()
             viewModel.getNewThinkpadListFromDatabase(query)
             val state = viewModel.uiState
@@ -89,10 +87,8 @@ class ThinkpadListViewModelTest {
             val refreshedList = expectedThinkpadDbList.subList(0, 2)
             whenever(thinkpadRepo.getAllThinkpadsFromNetwork())
                 .thenReturn(
-                    Resource.Success(
-                        data = FakeThinkpadData.fakeResponseList
-                            .subList(0, 2)
-                    )
+                    FakeThinkpadData.fakeResponseList
+                        .subList(0, 2)
                 )
             whenever(thinkpadRepo.getThinkpadsAlphaAscending(query))
                 .thenReturn(flowOf(refreshedList))
@@ -121,7 +117,7 @@ class ThinkpadListViewModelTest {
             val insertFlow = flowOf(expectedThinkpadDbList)
             whenever(thinkpadRepo.getThinkpadsAlphaAscending(query))
                 .thenReturn(insertFlow)
-            whenever(dataStoreRepo.readSortOptionSetting)
+            whenever(prefDataStoreRepo.readSortOptionSetting)
                 .thenReturn(flowOf(0))
             viewModel.getNewThinkpadListFromDatabase(query)
             val state = viewModel.uiState
@@ -141,7 +137,7 @@ class ThinkpadListViewModelTest {
             val firstItem = expectedThinkpadDbList.subList(1, expectedThinkpadDbList.lastIndex)
             whenever(thinkpadRepo.getThinkpadsAlphaAscending(query))
                 .thenReturn(flowOf(firstItem))
-            whenever(dataStoreRepo.readSortOptionSetting)
+            whenever(prefDataStoreRepo.readSortOptionSetting)
                 .thenReturn(flowOf(0))
             viewModel.getNewThinkpadListFromDatabase(query)
             val state = viewModel.uiState
@@ -159,8 +155,8 @@ class ThinkpadListViewModelTest {
         val expected = listOf<Thinkpad>()
         coroutineRule.runBlockingTest {
             whenever(thinkpadRepo.getThinkpadsAlphaAscending(query))
-                .thenReturn(flowOf(listOf<ThinkpadDatabaseObject>()))
-            whenever(dataStoreRepo.readSortOptionSetting)
+                .thenReturn(flowOf(listOf()))
+            whenever(prefDataStoreRepo.readSortOptionSetting)
                 .thenReturn(flowOf(0))
             viewModel.getNewThinkpadListFromDatabase(query)
             val state = viewModel.uiState

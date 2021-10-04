@@ -7,8 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import work.racka.thinkrchive.data.database.ThinkpadDao
-import work.racka.thinkrchive.data.database.ThinkpadDatabase
+import work.racka.thinkrchive.data.local.database.ThinkpadDao
+import work.racka.thinkrchive.data.local.database.ThinkpadDatabase
 import work.racka.thinkrchive.utils.Constants.THINKPAD_LIST_TABLE
 import javax.inject.Singleton
 

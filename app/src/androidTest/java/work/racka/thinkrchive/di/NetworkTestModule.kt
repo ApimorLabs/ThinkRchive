@@ -4,9 +4,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
-import work.racka.thinkrchive.data.api.ThinkrchiveApi
-import work.racka.thinkrchive.data.database.ThinkpadDao
-import work.racka.thinkrchive.data.responses.ThinkpadResponse
+import work.racka.thinkrchive.data.remote.api.ThinkrchiveApi
+import work.racka.thinkrchive.data.local.database.ThinkpadDao
+import work.racka.thinkrchive.data.remote.responses.ThinkpadResponse
 import work.racka.thinkrchive.repository.ThinkpadRepository
 import work.racka.thinkrchive.testUtils.Constants
 import javax.inject.Singleton

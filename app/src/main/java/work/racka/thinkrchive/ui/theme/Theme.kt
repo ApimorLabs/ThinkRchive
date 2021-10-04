@@ -1,5 +1,6 @@
 package work.racka.thinkrchive.ui.theme
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
@@ -92,16 +93,16 @@ enum class Theme(
     FOLLOW_SYSTEM(
         themeName = "Follow System Settings",
         icon = Icons.Outlined.SettingsSuggest,
-        themeValue = -1
+        themeValue = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
     ),
     LIGHT_THEME(
         themeName = "Light Theme",
         icon = Icons.Outlined.LightMode,
-        themeValue = 1
+        themeValue = AppCompatDelegate.MODE_NIGHT_NO
     ),
     DARK_THEME(
         themeName = "Dark Theme",
         icon = Icons.Outlined.DarkMode,
-        themeValue = 2
+        themeValue = AppCompatDelegate.MODE_NIGHT_YES
     );
 }

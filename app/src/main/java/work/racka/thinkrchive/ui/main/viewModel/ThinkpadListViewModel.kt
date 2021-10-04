@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import work.racka.thinkrchive.data.dataTransferObjects.asDomainModel
 import work.racka.thinkrchive.domain.model.Thinkpad
-import work.racka.thinkrchive.repository.DataStoreRepository
+import work.racka.thinkrchive.data.local.dataStore.PrefDataStore
 import work.racka.thinkrchive.repository.ThinkpadRepository
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadListScreenState
 import work.racka.thinkrchive.utils.Resource
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ThinkpadListViewModel @Inject constructor(
     private val thinkpadRepository: ThinkpadRepository,
-    private val dataStoreRepository: DataStoreRepository
+    private val prefDataStore: PrefDataStore
 ) : ViewModel() {
 
     private val allThinkpads = MutableStateFlow<List<Thinkpad>>(listOf())
@@ -62,15 +62,21 @@ class ThinkpadListViewModel @Inject constructor(
     fun refreshThinkpadList() {
         viewModelScope.launch {
             networkLoading.value = true
+            val result = try {
+                val response = thinkpadRepository.getAllThinkpadsFromNetwork()
+                networkLoading.value = false
+                Resource.Success(data = response)
+            } catch (e: Exception) {
+                networkLoading.value = false
+                Resource.Error(message = "An error occurred: ${e.message}")
+            }
 
             Timber.d("loading ThinkpadList")
-            when (val result = thinkpadRepository.getAllThinkpadsFromNetwork()) {
+            when (result) {
                 is Resource.Success -> {
                     thinkpadRepository.refreshThinkpadList(result.data!!)
-                    networkLoading.value = false
                 }
                 is Resource.Error -> {
-                    networkLoading.value = false
                     networkError.value = result.message!!
                 }
             }
@@ -80,7 +86,7 @@ class ThinkpadListViewModel @Inject constructor(
     // Get the user's preferred Sorting option first the load data from the database
     private fun getUserSortOption() {
         viewModelScope.launch {
-            dataStoreRepository.readSortOptionSetting.collect { sortValue ->
+            prefDataStore.readSortOptionSetting.collect { sortValue ->
                 sortOption.value = sortValue
                 getNewThinkpadListFromDatabase()
             }

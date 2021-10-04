@@ -1,8 +1,8 @@
-package work.racka.thinkrchive.data.api
+package work.racka.thinkrchive.data.remote.api
 
 import com.github.theapache64.retrosheet.core.Read
 import retrofit2.http.GET
-import work.racka.thinkrchive.data.responses.ThinkpadResponse
+import work.racka.thinkrchive.data.remote.responses.ThinkpadResponse
 
 interface ThinkrchiveApi {
     @Read("SELECT *")

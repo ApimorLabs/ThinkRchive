@@ -6,13 +6,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import work.racka.thinkrchive.repository.DataStoreRepository
+import work.racka.thinkrchive.data.local.dataStore.PrefDataStore
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadSettingsScreenState
 import javax.inject.Inject
 
 @HiltViewModel
 class ThinkpadSettingsViewModel @Inject constructor(
-    private val dataStoreRepository: DataStoreRepository
+    private val prefDataStore: PrefDataStore
 ) : ViewModel() {
 
     private val themeOptionValue = MutableStateFlow(-1)
@@ -40,14 +40,14 @@ class ThinkpadSettingsViewModel @Inject constructor(
 
     fun saveThemeSetting(themeValue: Int) {
         viewModelScope.launch {
-            dataStoreRepository.saveThemeSetting(value = themeValue)
+            prefDataStore.saveThemeSetting(value = themeValue)
             Timber.d("Theme Data Saved $themeValue")
         }
     }
 
     fun saveSortOptionSetting(sortValue: Int) {
         viewModelScope.launch {
-            dataStoreRepository.saveSortOptionSetting(value = sortValue)
+            prefDataStore.saveSortOptionSetting(value = sortValue)
             Timber.d("Sort Data Saved: $sortValue")
         }
     }
@@ -64,13 +64,13 @@ class ThinkpadSettingsViewModel @Inject constructor(
         // Different Flows can't share the same CoroutineScope when data is being collected
         // They must run on different Scopes to collect the latest data
         viewModelScope.launch {
-            dataStoreRepository.readThemeSetting.collect { themeValue ->
+            prefDataStore.readThemeSetting.collect { themeValue ->
                 Timber.d("Theme Data Changed $themeValue")
                 themeOptionValue.value = themeValue
             }
         }
         viewModelScope.launch {
-            dataStoreRepository.readSortOptionSetting.collect { sortValue ->
+            prefDataStore.readSortOptionSetting.collect { sortValue ->
                 Timber.d("Sort Data Changed $sortValue")
                 sortOptionValue.value = sortValue
             }

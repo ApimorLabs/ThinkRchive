@@ -1,4 +1,4 @@
-package work.racka.thinkrchive.data.responses
+package work.racka.thinkrchive.data.remote.responses
 
 import com.squareup.moshi.Json
 

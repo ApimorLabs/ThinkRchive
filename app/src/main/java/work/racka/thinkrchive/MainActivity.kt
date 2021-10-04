@@ -14,7 +14,7 @@ import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import timber.log.Timber
-import work.racka.thinkrchive.repository.DataStoreRepository
+import work.racka.thinkrchive.data.local.dataStore.PrefDataStore
 import work.racka.thinkrchive.ui.navigation.ThinkrchiveApp
 import javax.inject.Inject
 
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var dataStoreRepository: DataStoreRepository
+    lateinit var prefDataStore: PrefDataStore
 
     @ExperimentalMaterialApi
     @ExperimentalAnimationApi
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 mutableStateOf(-1)
             }
             LaunchedEffect(key1 = themeValue) {
-                dataStoreRepository.readThemeSetting.collect {
+                prefDataStore.readThemeSetting.collect {
                     themeValue.value = it
                 }
             }

@@ -7,13 +7,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import work.racka.thinkrchive.data.api.ThinkrchiveApi
-import work.racka.thinkrchive.data.database.ThinkpadDao
-import work.racka.thinkrchive.repository.ThinkpadRepository
+import work.racka.thinkrchive.data.remote.api.ThinkrchiveApi
 import work.racka.thinkrchive.utils.Constants
 import javax.inject.Singleton
 
@@ -34,12 +31,34 @@ object NetworkModule {
         .addSheet(
             sheetName = "all_laptops",
             columns = arrayOf(
-                "model", "image_url", "release_date", "series",	"market_price_start", "market_price_end",
-                "processor_platforms", "processors",	"graphics",	"max_ram", "display_res",
-                "touch_screen",	"screen_size", "backlit_kb", "fingerprint_reader", "kb_type",
-                "dual_batt", "internal_batt", "external_batt", "psref_link", "bios_version",
-                "known_issues", "known_issues_links", "displays_supported",	"other_mods",
-                "other_mods_links",	"bios_lock_in", "ports"
+                "model",
+                "image_url",
+                "release_date",
+                "series",
+                "market_price_start",
+                "market_price_end",
+                "processor_platforms",
+                "processors",
+                "graphics",
+                "max_ram",
+                "display_res",
+                "touch_screen",
+                "screen_size",
+                "backlit_kb",
+                "fingerprint_reader",
+                "kb_type",
+                "dual_batt",
+                "internal_batt",
+                "external_batt",
+                "psref_link",
+                "bios_version",
+                "known_issues",
+                "known_issues_links",
+                "displays_supported",
+                "other_mods",
+                "other_mods_links",
+                "bios_lock_in",
+                "ports"
             )
         )
         .build()
@@ -59,15 +78,4 @@ object NetworkModule {
             .build()
             .create(ThinkrchiveApi::class.java)
 
-    @Singleton
-    @Provides
-    fun providesThinkpadRepository(
-        thinkrchiveApi: ThinkrchiveApi,
-        thinkpadDao: ThinkpadDao,
-        @IoDispatcher dbDispatcher: CoroutineDispatcher
-    ): ThinkpadRepository = ThinkpadRepository(
-        thinkrchiveApi,
-        thinkpadDao,
-        dbDispatcher
-    )
 }

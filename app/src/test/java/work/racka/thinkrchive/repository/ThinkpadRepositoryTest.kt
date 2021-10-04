@@ -12,13 +12,11 @@ import org.mockito.kotlin.clearInvocations
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import work.racka.thinkrchive.data.api.ThinkrchiveApi
 import work.racka.thinkrchive.data.dataTransferObjects.asDatabaseModel
-import work.racka.thinkrchive.data.database.ThinkpadDao
-import work.racka.thinkrchive.data.responses.ThinkpadResponse
+import work.racka.thinkrchive.data.local.database.ThinkpadDao
+import work.racka.thinkrchive.data.remote.api.ThinkrchiveApi
 import work.racka.thinkrchive.testUtils.FakeThinkpadData
 import work.racka.thinkrchive.testUtils.MainCoroutineRule
-import work.racka.thinkrchive.utils.Resource
 
 @ExperimentalCoroutinesApi
 class ThinkpadRepositoryTest {
@@ -34,7 +32,7 @@ class ThinkpadRepositoryTest {
 
     @Before
     fun setUp() {
-        repo = ThinkpadRepository(api, dao, coroutineRule.dispatcher)
+        repo = ThinkpadRepository(api, dao)
     }
 
     @After
@@ -43,34 +41,26 @@ class ThinkpadRepositoryTest {
     }
 
     @Test
-    fun getAllThinkpadsFromNetwork_WhenResponseSuccess_ReturnsSuccessResource() {
-        val expected = Resource.Success(
-            data = FakeThinkpadData.fakeResponseList
-        )
+    fun getAllThinkpadsFromNetwork_WhenResponseSuccess_ReturnsNonNullList() {
+        val expected = FakeThinkpadData.fakeResponseList
         coroutineRule.runBlockingTest {
             whenever(api.getThinkpads())
-                .thenReturn(expected.data)
+                .thenReturn(expected)
             val actual = repo.getAllThinkpadsFromNetwork()
-            assertNotNull(actual.data)
-            assertNull(actual.message)
-            assertSame(expected.data, actual.data)
+            assertNotNull(actual)
+            assertSame(expected, actual)
         }
     }
 
     @Test(expected = Exception::class)
-    fun getAllThinkpadsFromNetwork_WhenResponseException_ReturnsErrorResource() {
-        val expected = Resource.Error<List<ThinkpadResponse>>(
-            message = "An error occurred: "
-        )
+    fun getAllThinkpadsFromNetwork_WhenResponseException_ReturnsNullList() {
         coroutineRule.runBlockingTest {
             whenever(api.getThinkpads())
                 .thenThrow(Exception::class.java)
             val actual = repo.getAllThinkpadsFromNetwork()
             verify(api)
                 .getThinkpads()
-            assertNotNull(actual.message)
-            assertNull(actual.data)
-            assertEquals(expected.message, actual.message)
+            assertNull(actual)
         }
     }
 

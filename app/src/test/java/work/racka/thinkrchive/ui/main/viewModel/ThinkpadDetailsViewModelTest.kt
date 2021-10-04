@@ -11,7 +11,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.kotlin.clearInvocations
-import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import work.racka.thinkrchive.data.dataTransferObjects.asDatabaseModel
@@ -40,16 +39,13 @@ class ThinkpadDetailsViewModelTest {
         .first()
 
     @Before
-    fun setUp() = coroutineRule.runBlockingTest {
-        thinkpadRepo = mock {
-            on { getThinkpad(expectedThinkpad.model) }
-            doReturn(flowOf(expectedThinkpad))
-        }
-        savedStateHandle = SavedStateHandle(mapOf(Pair("thinkpad", "thinkpad")))
-//        whenever(savedStateHandle.get<String>(""))
-//            .thenReturn(expectedThinkpad.model)
-        println("Handle is null: ${savedStateHandle.equals(null)}")
-        println("Repo is null: ${thinkpadRepo.equals(null)}")
+    fun setUp() {
+        thinkpadRepo = mock()
+        whenever(thinkpadRepo.getThinkpad(expectedThinkpad.model))
+            .thenReturn(flowOf(expectedThinkpad))
+        savedStateHandle = mock()
+        whenever(savedStateHandle.get<String>("thinkpad"))
+            .thenReturn(expectedThinkpad.model)
         viewModel = ThinkpadDetailsViewModel(thinkpadRepo, savedStateHandle)
     }
 
@@ -60,12 +56,49 @@ class ThinkpadDetailsViewModelTest {
 
     @Test
     fun uIState_GetsLatestDetailsScreenUiState() {
+        val expected = ThinkpadDetailsScreenState.ThinkpadDetail(
+            expectedThinkpad.asThinkpad()
+        )
+        coroutineRule.runBlockingTest {
+            whenever(thinkpadRepo.getThinkpad(expectedThinkpad.model))
+                .thenReturn(flowOf(expectedThinkpad))
+            val state = viewModel.uiState
+            state.test {
+                val actual = expectMostRecentItem()
+                assertEquals(expected, actual)
+            }
+        }
+    }
+
+    @Test
+    fun getThinkpad_WhenThinkpadFoundInDb_PostsThinkpadToUiState() {
         val expected = expectedThinkpad.asThinkpad()
         coroutineRule.runBlockingTest {
+            whenever(savedStateHandle.get<String>("thinkpad"))
+                .thenReturn(expectedThinkpad.model)
+            whenever(thinkpadRepo.getThinkpad(expectedThinkpad.model))
+                .thenReturn(flowOf(expectedThinkpad))
             val state = viewModel.uiState
             state.test {
                 val actual = expectMostRecentItem() as ThinkpadDetailsScreenState.ThinkpadDetail
                 assertEquals(expected, actual.thinkpad)
+            }
+        }
+    }
+
+    @Test(expected = NullPointerException::class)
+    fun getThinkpad_WhenThinkpadNameIsNull_ThrowsNullPointerException_And_UiStateIsEmpty() {
+        val expectedState = ThinkpadDetailsScreenState.EmptyState
+        val nullString: String? = null
+        coroutineRule.runBlockingTest {
+            whenever(savedStateHandle.get<String>("thinkpad"))
+                .thenReturn(nullString)
+            whenever(thinkpadRepo.getThinkpad(nullString!!))
+                .thenThrow(NullPointerException::class.java)
+            val state = viewModel.uiState
+            state.test {
+                val actual = expectMostRecentItem()
+                assertEquals(expectedState, actual)
             }
         }
     }

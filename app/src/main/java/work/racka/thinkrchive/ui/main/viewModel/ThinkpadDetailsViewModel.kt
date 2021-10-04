@@ -19,7 +19,7 @@ class ThinkpadDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val thinkpadName = savedStateHandle.get<String>("thinkpad")!!
+    private val thinkpadName = savedStateHandle.get<String>("thinkpad")
 
     private val _uiState = MutableStateFlow<ThinkpadDetailsScreenState>(
         value = ThinkpadDetailsScreenState.EmptyState
@@ -28,12 +28,12 @@ class ThinkpadDetailsViewModel @Inject constructor(
         get() = _uiState
 
     init {
-        initializeThinkpad()
+        getThinkpad()
     }
 
-    private fun initializeThinkpad() {
+    private fun getThinkpad() {
         viewModelScope.launch {
-            thinkpadRepository.getThinkpad(thinkpadName).collect {
+            thinkpadRepository.getThinkpad(thinkpadName!!).collect {
                 _uiState.value = ThinkpadDetailsScreenState.ThinkpadDetail(it.asThinkpad())
             }
         }

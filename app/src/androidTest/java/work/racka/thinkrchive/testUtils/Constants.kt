@@ -1,6 +1,6 @@
 package work.racka.thinkrchive.testUtils
 
-import work.racka.thinkrchive.data.responses.ThinkpadResponse
+import work.racka.thinkrchive.data.remote.responses.ThinkpadResponse
 
 internal object Constants {
 
