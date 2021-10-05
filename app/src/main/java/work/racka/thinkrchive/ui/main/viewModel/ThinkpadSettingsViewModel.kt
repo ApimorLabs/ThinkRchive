@@ -26,8 +26,6 @@ class ThinkpadSettingsViewModel @Inject constructor(
         themeOptionValue,
         sortOptionValue
     ) { themeOptionValue, sortOptionValue ->
-        Timber.d("ThemeOption State: $themeOptionValue")
-        Timber.d("Sort Option: $sortOptionValue")
         ThinkpadSettingsScreenState.ThinkpadSettings(
             themeOption = themeOptionValue,
             sortOption = sortOptionValue
@@ -54,7 +52,6 @@ class ThinkpadSettingsViewModel @Inject constructor(
 
     init {
         readSettings()
-        Timber.i("SettingViewModel created")
     }
 
     // This is used retrieve the previous set values for settings and be displayed on the

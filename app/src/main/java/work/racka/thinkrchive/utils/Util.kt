@@ -1,17 +1,13 @@
 package work.racka.thinkrchive.utils
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import work.racka.thinkrchive.domain.model.Thinkpad
 
-suspend fun List<Thinkpad>.getChipNamesList(): List<String> {
-    return withContext(Dispatchers.Default) {
-        val collection = mutableSetOf<String>()
-        this@getChipNamesList.forEach { thinkpad ->
-            collection.add(thinkpad.series)
-        }
-        collection.toList()
+fun List<Thinkpad>.getChipNamesList(): List<String> {
+    val collection = mutableSetOf<String>()
+    this.forEach { thinkpad ->
+        collection.add(thinkpad.series)
     }
+    return collection.toList()
 }
 
 // An empty Thinkpad entry

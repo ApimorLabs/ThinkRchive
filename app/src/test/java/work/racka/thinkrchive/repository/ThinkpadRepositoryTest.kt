@@ -2,20 +2,16 @@ package work.racka.thinkrchive.repository
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.kotlin.clearInvocations
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
+import org.mockito.kotlin.*
 import work.racka.thinkrchive.data.dataTransferObjects.asDatabaseModel
 import work.racka.thinkrchive.data.local.database.ThinkpadDao
 import work.racka.thinkrchive.data.remote.api.ThinkrchiveApi
-import work.racka.thinkrchive.testUtils.FakeThinkpadData
+import work.racka.thinkrchive.testUtils.FakeData
 import work.racka.thinkrchive.testUtils.MainCoroutineRule
 
 @ExperimentalCoroutinesApi
@@ -26,7 +22,7 @@ class ThinkpadRepositoryTest {
     private val api: ThinkrchiveApi = mock()
     private val dao: ThinkpadDao = mock()
     private lateinit var repo: ThinkpadRepository
-    private val expectedList = FakeThinkpadData.fakeResponseList
+    private val expectedList = FakeData.fakeResponseList
         .asDatabaseModel()
         .toList()
 
@@ -42,8 +38,8 @@ class ThinkpadRepositoryTest {
 
     @Test
     fun getAllThinkpadsFromNetwork_WhenResponseSuccess_ReturnsNonNullList() {
-        val expected = FakeThinkpadData.fakeResponseList
-        coroutineRule.runBlockingTest {
+        val expected = FakeData.fakeResponseList
+        coroutineRule.runBlocking {
             whenever(api.getThinkpads())
                 .thenReturn(expected)
             val actual = repo.getAllThinkpadsFromNetwork()
@@ -54,7 +50,7 @@ class ThinkpadRepositoryTest {
 
     @Test(expected = Exception::class)
     fun getAllThinkpadsFromNetwork_WhenResponseException_ReturnsNullList() {
-        coroutineRule.runBlockingTest {
+        coroutineRule.runBlocking {
             whenever(api.getThinkpads())
                 .thenThrow(Exception::class.java)
             val actual = repo.getAllThinkpadsFromNetwork()
@@ -149,18 +145,13 @@ class ThinkpadRepositoryTest {
 
     @Test
     fun refreshThinkpadList_WhenNewThinkpadRetrievedFromNetwork_InsertsThinkpadObjectsToDb() {
-        coroutineRule.runBlockingTest {
-            val expected = FakeThinkpadData
-                .fakeResponseList
-            whenever(
-                dao.insertAllThinkpads(
-                    *expected.asDatabaseModel()
-                )
-            ).thenReturn(Unit)
-            repo.refreshThinkpadList(expected)
-            verify(dao)
-                .insertAllThinkpads(*expected.asDatabaseModel())
-        }
+        val expected = FakeData
+            .fakeResponseList
+        doNothing().`when`(dao)
+            .insertAllThinkpads(*expected.asDatabaseModel())
+        repo.refreshThinkpadList(expected)
+        verify(dao)
+            .insertAllThinkpads(*expected.asDatabaseModel())
     }
 
     /**

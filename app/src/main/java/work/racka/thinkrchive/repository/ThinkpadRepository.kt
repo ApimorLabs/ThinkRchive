@@ -53,7 +53,7 @@ class ThinkpadRepository @Inject constructor(
     }
 
     // Insert all Thinkpads obtained from the network to the database
-    suspend fun refreshThinkpadList(thinkpadList: List<ThinkpadResponse>) {
+    fun refreshThinkpadList(thinkpadList: List<ThinkpadResponse>) {
         thinkpadDao.insertAllThinkpads(*thinkpadList.asDatabaseModel())
     }
 

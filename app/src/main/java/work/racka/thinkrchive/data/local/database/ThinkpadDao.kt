@@ -38,7 +38,7 @@ interface ThinkpadDao {
 
     // Insert network data into the database upon update
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllThinkpads(vararg thinkpads: ThinkpadDatabaseObject)
+    fun insertAllThinkpads(vararg thinkpads: ThinkpadDatabaseObject)
 
     // Get a Thinkpad entry from it's name
     // We are searching the primary key so it should always match

@@ -60,10 +60,12 @@ class PrefDataStore @Inject constructor(
 
     // Theme Settings
     // See Theme enum class for data meaning
-    suspend fun saveThemeSetting(value: Int) = context.writePreference(
-        preferenceKey = PreferenceKeys.themeOption,
-        value = value
-    )
+    suspend fun saveThemeSetting(value: Int) {
+        context.writePreference(
+            preferenceKey = PreferenceKeys.themeOption,
+            value = value
+        )
+    }
 
     val readThemeSetting: Flow<Int> = context.readPreference(
         preferenceKey = PreferenceKeys.themeOption,
@@ -72,10 +74,12 @@ class PrefDataStore @Inject constructor(
 
     // Sort Option Settings
     // See Sort enum class for data meaning
-    suspend fun saveSortOptionSetting(value: Int) = context.writePreference(
-        preferenceKey = PreferenceKeys.sortOption,
-        value = value
-    )
+    suspend fun saveSortOptionSetting(value: Int) {
+        context.writePreference(
+            preferenceKey = PreferenceKeys.sortOption,
+            value = value
+        )
+    }
 
     val readSortOptionSetting: Flow<Int> = context.readPreference(
         preferenceKey = PreferenceKeys.sortOption,

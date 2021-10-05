@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -16,7 +15,7 @@ import org.mockito.kotlin.whenever
 import work.racka.thinkrchive.data.dataTransferObjects.asDatabaseModel
 import work.racka.thinkrchive.data.dataTransferObjects.asThinkpad
 import work.racka.thinkrchive.repository.ThinkpadRepository
-import work.racka.thinkrchive.testUtils.FakeThinkpadData
+import work.racka.thinkrchive.testUtils.FakeData
 import work.racka.thinkrchive.testUtils.MainCoroutineRule
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadDetailsScreenState
 import kotlin.time.ExperimentalTime
@@ -33,7 +32,7 @@ class ThinkpadDetailsViewModelTest {
     private lateinit var savedStateHandle: SavedStateHandle
     private lateinit var viewModel: ThinkpadDetailsViewModel
 
-    private val expectedThinkpad = FakeThinkpadData.fakeResponseList
+    private val expectedThinkpad = FakeData.fakeResponseList
         .asDatabaseModel()
         .toList()
         .first()
@@ -55,11 +54,11 @@ class ThinkpadDetailsViewModelTest {
     }
 
     @Test
-    fun uIState_GetsLatestDetailsScreenUiState() {
+    fun uiState_GetsLatestDetailsScreenUiState() {
         val expected = ThinkpadDetailsScreenState.ThinkpadDetail(
             expectedThinkpad.asThinkpad()
         )
-        coroutineRule.runBlockingTest {
+        coroutineRule.runBlocking {
             whenever(thinkpadRepo.getThinkpad(expectedThinkpad.model))
                 .thenReturn(flowOf(expectedThinkpad))
             val state = viewModel.uiState
@@ -73,7 +72,7 @@ class ThinkpadDetailsViewModelTest {
     @Test
     fun getThinkpad_WhenThinkpadFoundInDb_PostsThinkpadToUiState() {
         val expected = expectedThinkpad.asThinkpad()
-        coroutineRule.runBlockingTest {
+        coroutineRule.runBlocking {
             whenever(savedStateHandle.get<String>("thinkpad"))
                 .thenReturn(expectedThinkpad.model)
             whenever(thinkpadRepo.getThinkpad(expectedThinkpad.model))
@@ -90,7 +89,7 @@ class ThinkpadDetailsViewModelTest {
     fun getThinkpad_WhenThinkpadNameIsNull_ThrowsNullPointerException_And_UiStateIsEmpty() {
         val expectedState = ThinkpadDetailsScreenState.EmptyState
         val nullString: String? = null
-        coroutineRule.runBlockingTest {
+        coroutineRule.runBlocking {
             whenever(savedStateHandle.get<String>("thinkpad"))
                 .thenReturn(nullString)
             whenever(thinkpadRepo.getThinkpad(nullString!!))

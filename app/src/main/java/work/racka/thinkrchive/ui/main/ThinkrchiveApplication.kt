@@ -1,4 +1,4 @@
-package work.racka.thinkrchive
+package work.racka.thinkrchive.ui.main
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate

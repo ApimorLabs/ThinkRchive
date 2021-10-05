@@ -8,18 +8,15 @@ import app.cash.turbine.test
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import work.racka.thinkrchive.MainActivity
+import work.racka.thinkrchive.ui.main.MainActivity
 import work.racka.thinkrchive.data.dataTransferObjects.asDatabaseModel
 import work.racka.thinkrchive.data.dataTransferObjects.asDomainModel
-import work.racka.thinkrchive.testUtils.Constants
+import work.racka.thinkrchive.testUtils.TestData
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadListScreenState
 import kotlin.time.ExperimentalTime
 
@@ -51,7 +48,7 @@ class ThinkpadListViewModelTestIntergration {
     @Test
     fun checkDisplayedThinkpadList() = runBlockingTest {
         viewModel.refreshThinkpadList()
-        val expected = Constants.thinkpadResponseList
+        val expected = TestData.thinkpadResponseList
             .asDatabaseModel()
             .toList()
             .asDomainModel()

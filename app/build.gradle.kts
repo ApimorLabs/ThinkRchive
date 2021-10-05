@@ -71,6 +71,7 @@ dependencies {
     // Testing
     testImplementation(Deps.junit)
     testImplementation(Deps.testArchCore)
+    testImplementation(Deps.junitTest)
     testImplementation(Deps.testExtJUnitKtx)
     testImplementation(Deps.mockitoInline)
     testImplementation(Deps.mockitoKotlin)

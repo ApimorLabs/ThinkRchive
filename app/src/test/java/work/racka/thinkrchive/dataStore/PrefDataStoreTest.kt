@@ -5,7 +5,7 @@ import org.junit.runner.RunWith
 
 // Work in Progress
 // Need to find the correct way to test DataStore
-@RunWith(AndroidJUnit4::class)
+//@RunWith(AndroidJUnit4::class)
 class PrefDataStoreTest {
 //    @get:Rule
 //    val tempFolder = TemporaryFolder()
@@ -36,7 +36,7 @@ class PrefDataStoreTest {
 //    @Test
 //    fun saveThemeSetting() {
 //        val expected = 2
-//        coroutineRule.runBlockingTest {
+//        coroutineRule.runBlocking {
 //            repo.saveThemeSetting(expected)
 //            val flow = repo.readThemeSetting
 //            flow.test {

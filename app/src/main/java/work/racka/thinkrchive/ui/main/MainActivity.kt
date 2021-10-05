@@ -1,4 +1,4 @@
-package work.racka.thinkrchive
+package work.racka.thinkrchive.ui.main
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
