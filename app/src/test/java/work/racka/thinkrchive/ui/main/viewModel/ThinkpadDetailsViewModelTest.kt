@@ -70,7 +70,7 @@ class ThinkpadDetailsViewModelTest {
     }
 
     @Test
-    fun getThinkpad_WhenThinkpadFoundInDb_PostsThinkpadToUiState() {
+    fun getThinkpad_WhenThinkpadModelFoundInDb_PostsThinkpadToUiState() {
         val expected = expectedThinkpad.asThinkpad()
         coroutineRule.runBlocking {
             whenever(savedStateHandle.get<String>("thinkpad"))

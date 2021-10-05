@@ -7,12 +7,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -55,7 +51,7 @@ class ThinkpadDatabaseTest {
     }
 
     @Test
-    fun insertAllThinkpads_ProvidedArrayOfThinkpad_ShouldHaveThinkpadsInDb() {
+    fun readAndWriteToDb_ProvidedArrayOfThinkpad_ShouldReadAllThinkpadsInDb() {
         val expected = thinkpadArray.toList()
         coroutineRule.runBlocking {
             dao.insertAllThinkpads(*thinkpadArray)
@@ -99,8 +95,130 @@ class ThinkpadDatabaseTest {
     }
 
     @Test
-    fun getAllThinkpadsAlphaAscending_ReturnsThinkpadsSortedByAlphabeticalAscendingOrderOfModelName() {
+    fun getThinkpadsAlphaAscending_ReturnsThinkpadsSortedByAlphabeticalAscendingOrderOfModelName() {
+        val expected = TestData.ascendingOrderThinkpads.toList()
+        val emptyQuery = "%%"
+        val insertThinkpads = expected.shuffled().toTypedArray()
+        coroutineRule.runBlocking {
+            dao.insertAllThinkpads(*insertThinkpads)
+            val data = dao.getThinkpadsAlphaAscending(emptyQuery)
+            data.test {
+                val actual = expectMostRecentItem()
+                val checkModelAscending = actual.first().model < actual.last().model
+                assertEquals(expected, actual)
+                assertTrue(checkModelAscending)
+            }
+        }
+    }
 
+    @Test
+    fun getThinkpadsNewestFirst_ReturnsThinkpadsSortedByNewestReleaseDateFirst() {
+        val expected = TestData.thinkpadResponseList
+            .asDatabaseModel()
+            .toList()
+            .reversed()
+        val emptyQuery = "%%"
+        val insertThinkpads = expected.shuffled().toTypedArray()
+        coroutineRule.runBlocking {
+            dao.insertAllThinkpads(*insertThinkpads)
+            val data = dao.getThinkpadsNewestFirst(emptyQuery)
+            data.test {
+                val actual = expectMostRecentItem()
+                val checkNewReleaseDate = actual.first().releaseDate > actual.last().releaseDate
+                assertEquals(expected, actual)
+                assertTrue(checkNewReleaseDate)
+            }
+        }
+    }
+
+    @Test
+    fun getThinkpadsOldestFirst_ReturnsThinkpadsSortedByOldestReleaseDateFirst() {
+        val expected = TestData.thinkpadResponseList
+            .asDatabaseModel()
+            .toList()
+        val emptyQuery = "%%"
+        val insertThinkpads = expected.shuffled().toTypedArray()
+        coroutineRule.runBlocking {
+            dao.insertAllThinkpads(*insertThinkpads)
+            val data = dao.getThinkpadsOldestFirst(emptyQuery)
+            data.test {
+                val actual = expectMostRecentItem()
+                val checkOldReleaseDate = actual.first().releaseDate < actual.last().releaseDate
+                assertEquals(expected, actual)
+                assertTrue(checkOldReleaseDate)
+            }
+        }
+    }
+
+    @Test
+    fun getThinkpadsLowPriceFirst_ReturnsThinkpadsSortedByLowestPriceFirst() {
+        val expected = TestData.thinkpadResponseList
+            .asDatabaseModel()
+            .toList()
+        val emptyQuery = "%%"
+        val insertThinkpads = expected.shuffled().toTypedArray()
+        coroutineRule.runBlocking {
+            dao.insertAllThinkpads(*insertThinkpads)
+            val data = dao.getThinkpadsOldestFirst(emptyQuery)
+            data.test {
+                val actual = expectMostRecentItem()
+                val checkLowPrice = actual.first().marketPriceStart < actual.last().marketPriceStart
+                assertEquals(expected, actual)
+                assertTrue(checkLowPrice)
+            }
+        }
+    }
+
+    @Test
+    fun getThinkpadsHighPriceFirst_ReturnsThinkpadsSortedByHighestPriceFirst() {
+        val expected = TestData.thinkpadResponseList
+            .asDatabaseModel()
+            .toList()
+            .reversed()
+        val emptyQuery = "%%"
+        val insertThinkpads = expected.shuffled().toTypedArray()
+        coroutineRule.runBlocking {
+            dao.insertAllThinkpads(*insertThinkpads)
+            val data = dao.getThinkpadsNewestFirst(emptyQuery)
+            data.test {
+                val actual = expectMostRecentItem()
+                val checkHighPrice =
+                    actual.first().marketPriceStart > actual.last().marketPriceStart
+                assertEquals(expected, actual)
+                assertTrue(checkHighPrice)
+            }
+        }
+    }
+
+    @Test
+    fun getThinkpad_WhenThinkpadModelQueriedFound_ReturnsSingleThinkpadWithMatchingModel() {
+        val expected = TestData.smallThinkpadDataBaseObjectsArray.first()
+        val query = "Thinkpad T470"
+        val insertThinkpads = TestData.smallThinkpadDataBaseObjectsArray
+        coroutineRule.runBlocking {
+            dao.insertAllThinkpads(*insertThinkpads)
+            val data = dao.getThinkpad(query)
+            data.test {
+                val actual = expectMostRecentItem()
+                val matchingModel = expected.model == actual.model
+                assertEquals(expected, actual)
+                assertTrue(matchingModel)
+            }
+        }
+    }
+
+    @Test
+    fun getThinkpad_WhenThinkpadModelQueriedNotFound_ReturnsNull() {
+        val query = "Dell XPS 9360"
+        val insertThinkpads = TestData.smallThinkpadDataBaseObjectsArray
+        coroutineRule.runBlocking {
+            dao.insertAllThinkpads(*insertThinkpads)
+            val data = dao.getThinkpad(query)
+            data.test {
+                val actual = expectMostRecentItem()
+                assertNull(actual)
+            }
+        }
     }
 
 }

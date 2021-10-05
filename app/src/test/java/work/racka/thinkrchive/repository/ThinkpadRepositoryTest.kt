@@ -28,7 +28,7 @@ class ThinkpadRepositoryTest {
 
     @Before
     fun setUp() {
-        repo = ThinkpadRepository(api, dao)
+        repo = ThinkpadRepository(api, dao, coroutineRule.dispatcher)
     }
 
     @After
@@ -145,13 +145,15 @@ class ThinkpadRepositoryTest {
 
     @Test
     fun refreshThinkpadList_WhenNewThinkpadRetrievedFromNetwork_InsertsThinkpadObjectsToDb() {
-        val expected = FakeData
-            .fakeResponseList
-        doNothing().`when`(dao)
-            .insertAllThinkpads(*expected.asDatabaseModel())
-        repo.refreshThinkpadList(expected)
-        verify(dao)
-            .insertAllThinkpads(*expected.asDatabaseModel())
+        coroutineRule.runBlocking {
+            val expected = FakeData
+                .fakeResponseList
+            doNothing().`when`(dao)
+                .insertAllThinkpads(*expected.asDatabaseModel())
+            repo.refreshThinkpadList(expected)
+            verify(dao)
+                .insertAllThinkpads(*expected.asDatabaseModel())
+        }
     }
 
     /**

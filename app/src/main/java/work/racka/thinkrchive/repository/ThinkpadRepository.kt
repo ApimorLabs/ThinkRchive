@@ -2,6 +2,7 @@ package work.racka.thinkrchive.repository
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import work.racka.thinkrchive.data.dataTransferObjects.asDatabaseModel
 import work.racka.thinkrchive.data.local.database.ThinkpadDao
 import work.racka.thinkrchive.data.local.database.ThinkpadDatabaseObject
@@ -15,6 +16,7 @@ import javax.inject.Singleton
 class ThinkpadRepository @Inject constructor(
     private val thinkrchiveApi: ThinkrchiveApi,
     private val thinkpadDao: ThinkpadDao,
+    @IoDispatcher val dispatcher: CoroutineDispatcher
 ) {
 
     // Get all the Thinkpads from the network
@@ -53,8 +55,10 @@ class ThinkpadRepository @Inject constructor(
     }
 
     // Insert all Thinkpads obtained from the network to the database
-    fun refreshThinkpadList(thinkpadList: List<ThinkpadResponse>) {
-        thinkpadDao.insertAllThinkpads(*thinkpadList.asDatabaseModel())
+    suspend fun refreshThinkpadList(thinkpadList: List<ThinkpadResponse>) {
+        withContext(dispatcher) {
+            thinkpadDao.insertAllThinkpads(*thinkpadList.asDatabaseModel())
+        }
     }
 
     // Get a single Thinkpad entry from the DB

@@ -20,13 +20,6 @@ object NetworkTestModule {
 
     @Singleton
     @Provides
-    fun provideFakeThinkpadRepository(
-        thinkrchiveApi: ThinkrchiveApi,
-        thinkpadDao: ThinkpadDao
-    ): ThinkpadRepository = ThinkpadRepository(thinkrchiveApi, thinkpadDao)
-
-    @Singleton
-    @Provides
     fun providesFakeThinkrchiveApi(): ThinkrchiveApi = object : ThinkrchiveApi {
         override suspend fun getThinkpads(): List<ThinkpadResponse> {
             return TestData.thinkpadResponseList
