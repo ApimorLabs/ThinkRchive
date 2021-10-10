@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Splash Screen Theme for API level 30 and below. -->
+    <style name="Theme.AppSplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/cream_white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/app_logo_big</item>
+        <item name="windowSplashScreenAnimationDuration">500</item>
+        <item name="postSplashScreenTheme">@style/Theme.ThinkRchive</item>
+
+        <item name="android:statusBarColor" tools:targetApi="l">@color/cream_white</item>
+        <item name="android:navigationBarColor">@color/cream_white</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+    </style>
+</resources>

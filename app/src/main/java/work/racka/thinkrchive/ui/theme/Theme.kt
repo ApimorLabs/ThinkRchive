@@ -44,15 +44,15 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun ThinkRchiveTheme(
-    theme: Int = 0,
+    theme: Int = Theme.FOLLOW_SYSTEM.themeValue,
     content: @Composable () -> Unit
 ) {
-    val autColors = if (isSystemInDarkTheme()) DarkColorPalette else LightColorPalette
+    val autoColors = if (isSystemInDarkTheme()) DarkColorPalette else LightColorPalette
 
     val colors = when (theme) {
         1 -> LightColorPalette
         2 -> DarkColorPalette
-        else -> autColors
+        else -> autoColors
     }
 
     MaterialTheme(

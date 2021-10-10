@@ -13,8 +13,9 @@ import work.racka.thinkrchive.data.local.dataStore.PrefDataStore
 import javax.inject.Inject
 
 @HiltAndroidApp
-class ThinkrchiveApplication: Application() {
-    @Inject lateinit var prefDataStore: PrefDataStore
+class ThinkrchiveApplication : Application() {
+    @Inject
+    lateinit var prefDataStore: PrefDataStore
     override fun onCreate() {
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
         scope.launch {

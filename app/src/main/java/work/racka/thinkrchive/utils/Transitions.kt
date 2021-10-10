@@ -1,5 +1,12 @@
 package work.racka.thinkrchive.utils
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.os.Build
+import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.window.SplashScreen
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 
@@ -38,3 +45,39 @@ fun scaleOutPopExitTransition() = scaleOut(
 ) + fadeOut(
     animationSpec = tween(300)
 )
+
+// SplashScreen Dismiss transition
+@RequiresApi(Build.VERSION_CODES.S)
+fun dismissSplashScreen(splashScreen: SplashScreen) {
+    splashScreen.setOnExitAnimationListener { splashScreenView ->
+        val scaleOutX = ObjectAnimator.ofFloat(
+            splashScreenView.iconView,
+            View.SCALE_X,
+            splashScreenView.scaleX,
+            1.2f,
+            0.3f
+        )
+        val scaleOutY = ObjectAnimator.ofFloat(
+            splashScreenView.iconView,
+            View.SCALE_Y,
+            splashScreenView.scaleY,
+            1.2f,
+            0.3f
+        )
+        val fadeOut = ObjectAnimator.ofFloat(
+            splashScreenView,
+            View.ALPHA,
+            splashScreenView.alpha,
+            0f
+        )
+        fadeOut.startDelay = 250L
+
+        AnimatorSet().apply {
+            playTogether(scaleOutX, scaleOutY, fadeOut)
+            interpolator = AccelerateDecelerateInterpolator()
+            duration = 500L
+            start()
+        }
+
+    }
+}

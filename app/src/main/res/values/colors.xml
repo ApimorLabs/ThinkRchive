@@ -10,4 +10,7 @@
     <color name="cream_white">#F1F0F5</color>
     <color name="yellow_primary">#FFD977</color>
     <color name="dark">#121212</color>
+
+    <color name="animated_icon_color">#99dddddd</color>
+    <color name="branding_image_text_color">#1E1E1E</color>
 </resources>
