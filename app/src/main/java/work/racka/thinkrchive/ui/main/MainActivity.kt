@@ -1,6 +1,5 @@
 package work.racka.thinkrchive.ui.main
 
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +16,6 @@ import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 import work.racka.thinkrchive.data.local.dataStore.PrefDataStore
 import work.racka.thinkrchive.ui.navigation.ThinkrchiveApp
-import work.racka.thinkrchive.utils.dismissSplashScreen
 import javax.inject.Inject
 
 @AndroidEntryPoint

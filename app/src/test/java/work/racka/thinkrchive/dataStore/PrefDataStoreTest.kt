@@ -1,8 +1,5 @@
 package work.racka.thinkrchive.dataStore
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.runner.RunWith
-
 // Work in Progress
 // Need to find the correct way to test DataStore
 //@RunWith(AndroidJUnit4::class)
