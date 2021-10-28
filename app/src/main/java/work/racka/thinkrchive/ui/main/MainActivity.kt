@@ -5,6 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var prefDataStore: PrefDataStore
 
+    @ExperimentalMaterial3Api
     @ExperimentalMaterialApi
     @ExperimentalAnimationApi
     @ExperimentalComposeUiApi

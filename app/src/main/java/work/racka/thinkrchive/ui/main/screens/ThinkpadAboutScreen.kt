@@ -6,9 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +36,7 @@ import work.racka.thinkrchive.ui.components.CollapsingToolbarBase
 import work.racka.thinkrchive.ui.theme.Dimens
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
 
+@ExperimentalMaterial3Api
 @Composable
 fun ThinkpadAboutScreen(
     modifier: Modifier = Modifier,
@@ -86,7 +88,7 @@ fun ThinkpadAboutScreen(
                 style = TextStyle(
                     fontWeight = FontWeight.Normal,
                     fontSize = 16.sp,
-                    color = MaterialTheme.colors.onSurface
+                    color = MaterialTheme.colorScheme.onSurface
                 ),
                 textAlign = TextAlign.Center,
                 maxLines = 1,
@@ -105,6 +107,7 @@ fun ThinkpadAboutScreen(
     }
 }
 
+@ExperimentalMaterial3Api
 @Preview
 @Composable
 private fun AboutScreenPrev() {

@@ -5,8 +5,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -84,7 +84,7 @@ fun ThinkpadEntry(
         modifier = animatedModifier
             .fillMaxWidth()
             .clip(Shapes.large)
-            .background(color = MaterialTheme.colors.surface)
+            .background(color = MaterialTheme.colorScheme.surface)
             .clickable { onEntryClick() }
     ) {
         Row(
@@ -118,8 +118,8 @@ fun ThinkpadEntry(
             ) {
                 Text(
                     text = thinkpad.model,
-                    style = MaterialTheme.typography.subtitle1,
-                    color = MaterialTheme.colors.onBackground,
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onBackground,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -145,7 +145,7 @@ fun SubtitleText(
     verticalPadding: Dp = 4.dp,
     subtitleName: String,
     subtitleData: String,
-    style: TextStyle = MaterialTheme.typography.body2,
+    style: TextStyle = MaterialTheme.typography.bodyMedium,
     maxLines: Int = 1,
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically
 ) {
@@ -158,14 +158,14 @@ fun SubtitleText(
         Text(
             text = "$subtitleName:",
             style = style,
-            color = MaterialTheme.colors.onSurface,
+            color = MaterialTheme.colorScheme.onSurface,
             maxLines = 1
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = subtitleData,
             style = style,
-            color = MaterialTheme.colors.onSurface,
+            color = MaterialTheme.colorScheme.onSurface,
             maxLines = maxLines,
             overflow = TextOverflow.Ellipsis
         )
@@ -192,7 +192,7 @@ private fun LoadingImage(
     Box(
         modifier = modifier
             .background(
-                color = MaterialTheme.colors.onSurface
+                color = MaterialTheme.colorScheme.onSurface
                     .copy(alpha = alpha),
                 shape = Shapes.large
             )

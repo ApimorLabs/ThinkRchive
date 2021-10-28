@@ -9,9 +9,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -51,7 +54,7 @@ fun HomeBottomSheet(
 
     Surface(
         shape = BottomSheetShape,
-        color = MaterialTheme.colors.surface,
+        color = MaterialTheme.colorScheme.surface,
         modifier = modifier
             .fillMaxSize()
             .statusBarsPadding()
@@ -87,7 +90,7 @@ fun HomeBottomSheet(
                 items(Sort.values()) { item ->
                     val selectedColor by animateColorAsState(
                         targetValue = if (currentSortOption == item.sortValue) {
-                            MaterialTheme.colors.primary
+                            MaterialTheme.colorScheme.primary
                                 .copy(alpha = .6f)
                         } else Color.Transparent,
                         animationSpec = tween(
@@ -99,7 +102,7 @@ fun HomeBottomSheet(
                         targetValue = if (currentSortOption == item.sortValue) {
                             LightDark
                                 .copy(alpha = .9f)
-                        } else MaterialTheme.colors.onBackground,
+                        } else MaterialTheme.colorScheme.onBackground,
                         animationSpec = tween(
                             durationMillis = 500,
                             easing = LinearOutSlowInEasing
@@ -159,7 +162,7 @@ fun TopSheetSection(
             modifier = Modifier
                 .size(height = 5.dp, width = 32.dp)
                 .background(
-                    color = MaterialTheme.colors.onBackground
+                    color = MaterialTheme.colorScheme.onBackground
                         .copy(alpha = .1f),
                     shape = CircleShape
                 )
@@ -175,14 +178,14 @@ fun TopSheetSection(
                 Icon(
                     imageVector = Icons.Outlined.Close,
                     contentDescription = stringResource(id = R.string.close_icon),
-                    tint = MaterialTheme.colors.onBackground
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
 
             Text(
                 text = sheetTitle,
-                style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.onBackground,
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onBackground,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -196,7 +199,7 @@ fun TopSheetSection(
                     Icon(
                         imageVector = Icons.Outlined.Settings,
                         contentDescription = stringResource(id = R.string.settings_icon),
-                        tint = MaterialTheme.colors.onBackground
+                        tint = MaterialTheme.colorScheme.onBackground
                     )
                 }
             }
@@ -215,7 +218,7 @@ fun SheetOption(
     maxLines: Int = 1,
     iconDescription: String? = null,
     icon: ImageVector,
-    contentColor: Color = MaterialTheme.colors.onBackground,
+    contentColor: Color = MaterialTheme.colorScheme.onBackground,
     onOptionClicked: () -> Unit = { },
     selectedSortColor: Color = Color.Transparent
 ) {
@@ -268,14 +271,16 @@ private fun DonateAndAbout(
             onClick = onDonateClicked,
             shape = CircleShape,
             elevation = ButtonDefaults
-                .elevation(0.dp),
+                .buttonElevation(
+                    defaultElevation = 0.dp
+                ),
             modifier = Modifier
                 .weight(1f)
         ) {
             Icon(
                 imageVector = Icons.Outlined.VolunteerActivism,
                 contentDescription = null,
-                tint = MaterialTheme.colors.onPrimary
+                tint = MaterialTheme.colorScheme.onPrimary
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
@@ -299,14 +304,16 @@ private fun DonateAndAbout(
             onClick = onAboutClicked,
             shape = CircleShape,
             elevation = ButtonDefaults
-                .elevation(0.dp),
+                .buttonElevation(
+                    defaultElevation = 0.dp
+                ),
             modifier = Modifier
                 .weight(.7f)
         ) {
             Icon(
                 imageVector = Icons.Outlined.Info,
                 contentDescription = null,
-                tint = MaterialTheme.colors.onPrimary
+                tint = MaterialTheme.colorScheme.onPrimary
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(

@@ -11,12 +11,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -87,8 +87,8 @@ fun ThinkpadFeatures(
     ) {
         Text(
             text = "Other Features & Details",
-            color = MaterialTheme.colors.onBackground,
-            style = MaterialTheme.typography.h6,
+            color = MaterialTheme.colorScheme.onBackground,
+            style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
                 .padding(
                     bottom = Dimens.MediumPadding.size,
@@ -101,7 +101,7 @@ fun ThinkpadFeatures(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    color = MaterialTheme.colors.surface,
+                    color = MaterialTheme.colorScheme.surface,
                     shape = Shapes.large
                 )
                 .animateContentSize(
@@ -119,21 +119,21 @@ fun ThinkpadFeatures(
                 SubtitleTextWithIcon(
                     subtitleName = "Screen Size",
                     subtitleData = thinkpad.screenSize,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.AspectRatio,
                     maxLines = maxLines
                 )
                 SubtitleTextWithIcon(
                     subtitleName = "Touch Screen",
                     subtitleData = thinkpad.touchScreen,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.TouchApp,
                     maxLines = maxLines
                 )
                 SubtitleTextWithIcon(
                     subtitleName = "Dual Battery",
                     subtitleData = thinkpad.dualBatt,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.BatteryChargingFull,
                     maxLines = maxLines
                 )
@@ -141,7 +141,7 @@ fun ThinkpadFeatures(
                     SubtitleTextWithIcon(
                         subtitleName = "Internal Batt",
                         subtitleData = thinkpad.internalBatt,
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.bodyLarge,
                         icon = Icons.Outlined.BatterySaver,
                         maxLines = maxLines
                     )
@@ -149,49 +149,49 @@ fun ThinkpadFeatures(
                 SubtitleTextWithIcon(
                     subtitleName = "Main Batt",
                     subtitleData = thinkpad.externalBatt,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.BatteryStd,
                     maxLines = maxLines
                 )
                 SubtitleTextWithIcon(
                     subtitleName = "Fingerprint Reader",
                     subtitleData = thinkpad.fingerPrintReader,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.Fingerprint,
                     maxLines = maxLines
                 )
                 SubtitleTextWithIcon(
                     subtitleName = "Keyboard Type",
                     subtitleData = thinkpad.kbType,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.KeyboardAlt,
                     maxLines = maxLines
                 )
                 SubtitleTextWithIcon(
                     subtitleName = "Backlit Keyboard",
                     subtitleData = thinkpad.backlitKb,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.WbTwilight,
                     maxLines = maxLines
                 )
                 SubtitleTextWithIcon(
                     subtitleName = "Current BIOS",
                     subtitleData = thinkpad.biosVersion,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.SettingsApplications,
                     maxLines = maxLines
                 )
                 SubtitleTextWithIcon(
                     subtitleName = "BIOS Restrictions",
                     subtitleData = thinkpad.biosLockIn,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.Lock,
                     maxLines = maxLines
                 )
                 SubtitleTextWithIcon(
                     subtitleName = "Ports",
                     subtitleData = thinkpad.ports,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.SettingsInputHdmi,
                     maxLines = maxLines
                 )
@@ -217,7 +217,7 @@ fun ThinkpadFeatures(
                 Icon(
                     imageVector = Icons.Outlined.ExpandMore,
                     contentDescription = stringResource(id = R.string.expand_icon),
-                    tint = MaterialTheme.colors.onSurface,
+                    tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.rotate(angle)
                 )
             }

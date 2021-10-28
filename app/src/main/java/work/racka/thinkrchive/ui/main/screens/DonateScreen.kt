@@ -5,10 +5,14 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +28,7 @@ import work.racka.thinkrchive.ui.components.ClickableEntry
 import work.racka.thinkrchive.ui.components.CollapsingToolbarBase
 import work.racka.thinkrchive.ui.theme.Dimens
 
+@ExperimentalMaterial3Api
 @Composable
 fun DonateScreen(
     modifier: Modifier = Modifier,
@@ -47,7 +52,7 @@ fun DonateScreen(
             }
         }
     }
-    
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
@@ -60,8 +65,8 @@ fun DonateScreen(
             ) {
                 Text(
                     text = "Donate",
-                    color = MaterialTheme.colors.onSurface,
-                    style = MaterialTheme.typography.h3,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.headlineMedium,
                     modifier = Modifier
                         .padding(horizontal = Dimens.SmallPadding.size)
                         .animateContentSize(
@@ -94,7 +99,7 @@ fun DonateScreen(
                 )
             }
         }
-        
+
     }
 
 }

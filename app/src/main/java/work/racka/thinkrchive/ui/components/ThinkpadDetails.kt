@@ -8,12 +8,12 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -94,8 +94,8 @@ fun ThinkpadDetails(
         ) {
             Text(
                 text = thinkpad.model,
-                color = MaterialTheme.colors.onBackground,
-                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier
                     .padding(horizontal = Dimens.MediumPadding.size)
             )
@@ -115,7 +115,7 @@ fun ThinkpadDetails(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    color = MaterialTheme.colors.surface,
+                    color = MaterialTheme.colorScheme.surface,
                     shape = Shapes.large
                 )
                 .animateContentSize(
@@ -134,56 +134,56 @@ fun ThinkpadDetails(
                 SubtitleTextWithIcon(
                     subtitleName = "Series",
                     subtitleData = thinkpad.series,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.Category,
                     maxLines = maxLines
                 )
                 SubtitleTextWithIcon(
                     subtitleName = "Release Date",
                     subtitleData = thinkpad.releaseDate,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.Today,
                     maxLines = maxLines
                 )
                 SubtitleTextWithIcon(
                     subtitleName = "Market Value",
                     subtitleData = marketPrice,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.Loyalty,
                     maxLines = maxLines
                 )
                 SubtitleTextWithIcon(
                     subtitleName = "Platform",
                     subtitleData = thinkpad.processorPlatforms,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.DeveloperBoard,
                     maxLines = maxLines
                 )
                 SubtitleTextWithIcon(
                     subtitleName = "Processors",
                     subtitleData = thinkpad.processors,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.Memory,
                     maxLines = maxLines
                 )
                 SubtitleTextWithIcon(
                     subtitleName = "Graphics",
                     subtitleData = thinkpad.graphics,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.Dvr,
                     maxLines = maxLines
                 )
                 SubtitleTextWithIcon(
                     subtitleName = "Display Res",
                     subtitleData = thinkpad.displayRes,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.Laptop,
                     maxLines = maxLines
                 )
                 SubtitleTextWithIcon(
                     subtitleName = "Max RAM",
                     subtitleData = thinkpad.maxRam,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     icon = Icons.Outlined.ViewAgenda,
                     maxLines = maxLines
                 )
@@ -209,7 +209,7 @@ fun ThinkpadDetails(
                 Icon(
                     imageVector = Icons.Outlined.ExpandMore,
                     contentDescription = stringResource(id = R.string.expand_icon),
-                    tint = MaterialTheme.colors.onSurface,
+                    tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.rotate(angle)
                 )
             }
@@ -232,7 +232,7 @@ private fun ThinkpadFeaturesPreview() {
 fun SubtitleTextWithIcon(
     subtitleName: String,
     subtitleData: String,
-    style: TextStyle = MaterialTheme.typography.subtitle1,
+    style: TextStyle = MaterialTheme.typography.titleLarge,
     maxLines: Int = 1,
     iconDescription: String? = null,
     icon: ImageVector
@@ -245,7 +245,7 @@ fun SubtitleTextWithIcon(
         Icon(
             imageVector = icon,
             contentDescription = iconDescription,
-            tint = MaterialTheme.colors.onSurface,
+            tint = MaterialTheme.colorScheme.onSurface,
         )
         Spacer(modifier = Modifier.width(Dimens.MediumPadding.size))
         SubtitleText(

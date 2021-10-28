@@ -6,9 +6,9 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.SecurityUpdate
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,16 +54,16 @@ fun AboutTopSection(
 
         Text(
             text = appName,
-            color = MaterialTheme.colors.onSurface,
-            style = MaterialTheme.typography.h5,
+            color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
                 .padding(4.dp)
         )
 
         Text(
             text = "Version: $version",
-            color = MaterialTheme.colors.onSurface,
-            style = MaterialTheme.typography.subtitle2,
+            color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.titleMedium,
             modifier = Modifier
                 .padding(4.dp)
         )
@@ -75,12 +75,14 @@ fun AboutTopSection(
             onClick = onCheckUpdatesClicked,
             shape = CircleShape,
             elevation = ButtonDefaults
-                .elevation(0.dp)
+                .buttonElevation(
+                    defaultElevation = 0.dp
+                )
         ) {
             Icon(
                 imageVector = Icons.Outlined.SecurityUpdate,
                 contentDescription = null,
-                tint = MaterialTheme.colors.onPrimary
+                tint = MaterialTheme.colorScheme.onPrimary
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(

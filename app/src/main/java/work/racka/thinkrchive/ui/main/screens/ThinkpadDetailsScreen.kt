@@ -7,7 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +30,7 @@ import work.racka.thinkrchive.ui.components.ToolbarImage
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.utils.Constants
 
+@ExperimentalMaterial3Api
 @ExperimentalAnimationApi
 @Composable
 fun ThinkpadDetailsScreen(
@@ -93,6 +95,7 @@ fun ThinkpadDetailsScreen(
 }
 
 
+@ExperimentalMaterial3Api
 @ExperimentalAnimationApi
 @Preview(
     uiMode = Configuration.UI_MODE_TYPE_NORMAL,

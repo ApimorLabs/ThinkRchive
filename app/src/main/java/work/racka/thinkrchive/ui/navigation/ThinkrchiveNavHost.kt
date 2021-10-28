@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,7 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.compose.navArgument
+import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import timber.log.Timber
@@ -33,9 +34,11 @@ import work.racka.thinkrchive.utils.scaleInPopEnterTransition
 import work.racka.thinkrchive.utils.scaleOutExitTransition
 import work.racka.thinkrchive.utils.scaleOutPopExitTransition
 
+
+@ExperimentalMaterial3Api
+@ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
-@ExperimentalComposeUiApi
 @Composable
 fun ThinkrchiveNavHost(
     modifier: Modifier = Modifier,
@@ -44,7 +47,8 @@ fun ThinkrchiveNavHost(
 
     AnimatedNavHost(
         navController = navController,
-        startDestination = ThinkrchiveScreens.ThinkpadListScreen.name
+        startDestination = ThinkrchiveScreens.ThinkpadListScreen.name,
+        route = "MainNavHost"
     ) {
         Timber.d("thinkpadNavHost called")
         val thinkpadDetailsScreen = ThinkrchiveScreens.ThinkpadDetailsScreen.name

@@ -6,12 +6,12 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -55,8 +55,8 @@ fun CollapsingToolbarBase(
         bottomEnd = 10.dp,
         bottomStart = 10.dp
     ),
-    collapsedBackgroundColor: Color = MaterialTheme.colors.surface,
-    backgroundColor: Color = MaterialTheme.colors.background,
+    collapsedBackgroundColor: Color = MaterialTheme.colorScheme.surface,
+    backgroundColor: Color = MaterialTheme.colorScheme.background,
     toolbarHeight: Dp,
     minShrinkHeight: Dp = 100.dp,
     toolbarOffset: Float,
@@ -127,15 +127,15 @@ fun CollapsingToolbarBase(
                 Icon(
                     imageVector = Icons.Rounded.ArrowBack,
                     contentDescription = stringResource(id = R.string.back_icon),
-                    tint = MaterialTheme.colors.onSurface
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
             Text(
                 text = toolbarHeading,
-                color = MaterialTheme.colors.onSurface.copy(
+                color = MaterialTheme.colorScheme.onSurface.copy(
                     alpha = animatedTitleAlpha
                 ),
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier
                     .padding(horizontal = Dimens.SmallPadding.size)
             )
@@ -163,8 +163,8 @@ fun CollapsingToolbarPrev() {
             content = {
                 Text(
                     text = "Settings",
-                    color = MaterialTheme.colors.onSurface,
-                    style = MaterialTheme.typography.h3,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.headlineMedium,
                     modifier = Modifier
                         .padding(horizontal = Dimens.SmallPadding.size)
                         .animateContentSize(

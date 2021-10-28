@@ -2,6 +2,7 @@ package work.racka.thinkrchive.ui.main
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +21,11 @@ class ThinkrchiveApplication : Application() {
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
         scope.launch {
             prefDataStore.readThemeSetting.collect {
-                AppCompatDelegate.setDefaultNightMode(it)
+                if (it != 12) {
+                    AppCompatDelegate.setDefaultNightMode(it)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
+                }
             }
         }
         super.onCreate()

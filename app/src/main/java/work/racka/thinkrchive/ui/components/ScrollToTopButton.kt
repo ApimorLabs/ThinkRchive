@@ -8,12 +8,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowUpward
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,7 +54,7 @@ fun ScrollToTopButton(
                         listState.animateScrollToItem(0)
                     }
                 },
-                backgroundColor = MaterialTheme.colors.primary,
+                containerColor = MaterialTheme.colorScheme.primary,
                 shape = CircleShape
             ) {
                 Row(
@@ -70,8 +70,8 @@ fun ScrollToTopButton(
                     Spacer(modifier = Modifier.width(Dimens.SmallPadding.size))
                     Text(
                         text = "Scroll Up",
-                        color = MaterialTheme.colors.onPrimary,
-                        style = MaterialTheme.typography.button
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        style = MaterialTheme.typography.labelMedium
                     )
                 }
             }

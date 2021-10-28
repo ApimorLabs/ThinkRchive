@@ -1,21 +1,14 @@
 package work.racka.thinkrchive.ui.components
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,7 +30,7 @@ fun ClickableEntry(
         modifier = modifier
             .fillMaxWidth()
             .clip(Shapes.large)
-            .background(color = MaterialTheme.colors.surface)
+            .background(color = MaterialTheme.colorScheme.surface)
             .clickable { onEntryClick() }
     ) {
         Column(
@@ -49,16 +42,16 @@ fun ClickableEntry(
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.subtitle1,
-                color = MaterialTheme.colors.onBackground,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onBackground,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = description,
-                style = MaterialTheme.typography.subtitle2,
-                color = MaterialTheme.colors.onSurface,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.padding(horizontal = Dimens.SmallPadding.size)
@@ -72,8 +65,8 @@ fun ClickableEntry(
 //                )
                 Text(
                     text = subtitle,
-                    style = MaterialTheme.typography.subtitle2,
-                    color = MaterialTheme.colors.onSurface,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.padding(horizontal = Dimens.SmallPadding.size)

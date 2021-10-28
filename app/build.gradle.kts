@@ -112,6 +112,7 @@ dependencies {
     implementation(Deps.composeFoundation)
     implementation(Deps.composeFoundationLayout)
     implementation(Deps.composeConstraintLayout)
+    implementation(Deps.composeMaterial3)
 
     // Retrofit
     implementation(Deps.retrofit)

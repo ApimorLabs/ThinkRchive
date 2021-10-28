@@ -9,7 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -37,7 +42,7 @@ fun SettingSheetLayout(
 
     Surface(
         shape = BottomSheetShape,
-        color = MaterialTheme.colors.surface,
+        color = MaterialTheme.colorScheme.surface,
         modifier = modifier
             .fillMaxSize()
             .statusBarsPadding()
@@ -91,7 +96,7 @@ fun SettingEntrySheet(
                 items(Theme.values()) { item ->
                     val selectedColor by animateColorAsState(
                         targetValue = if (currentTheme == item.themeValue) {
-                            MaterialTheme.colors.primary
+                            MaterialTheme.colorScheme.primary
                                 .copy(alpha = .6f)
                         } else Color.Transparent,
                         animationSpec = tween(
@@ -103,7 +108,7 @@ fun SettingEntrySheet(
                         targetValue = if (currentTheme == item.themeValue) {
                             LightDark
                                 .copy(alpha = .9f)
-                        } else MaterialTheme.colors.onBackground,
+                        } else MaterialTheme.colorScheme.onBackground,
                         animationSpec = tween(
                             durationMillis = 500,
                             easing = LinearOutSlowInEasing
@@ -126,7 +131,7 @@ fun SettingEntrySheet(
                 items(Sort.values()) { item ->
                     val selectedColor by animateColorAsState(
                         targetValue = if (currentSortOption == item.sortValue) {
-                            MaterialTheme.colors.primary
+                            MaterialTheme.colorScheme.primary
                                 .copy(alpha = .6f)
                         } else Color.Transparent,
                         animationSpec = tween(
@@ -138,7 +143,7 @@ fun SettingEntrySheet(
                         targetValue = if (currentSortOption == item.sortValue) {
                             LightDark
                                 .copy(alpha = .9f)
-                        } else MaterialTheme.colors.onBackground,
+                        } else MaterialTheme.colorScheme.onBackground,
                         animationSpec = tween(
                             durationMillis = 500,
                             easing = LinearOutSlowInEasing

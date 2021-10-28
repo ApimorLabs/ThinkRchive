@@ -9,7 +9,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,6 +43,7 @@ import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
 import work.racka.thinkrchive.utils.Constants
 import work.racka.thinkrchive.utils.Sort
 
+@ExperimentalMaterial3Api
 @ExperimentalMaterialApi
 @Composable
 fun ThinkpadSettingsScreen(
@@ -104,8 +112,8 @@ fun ThinkpadSettingsScreen(
                     content = {
                         Text(
                             text = "Settings",
-                            color = MaterialTheme.colors.onSurface,
-                            style = MaterialTheme.typography.h3,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            style = MaterialTheme.typography.headlineLarge,
                             modifier = Modifier
                                 .padding(horizontal = Dimens.SmallPadding.size)
                                 .animateContentSize(
@@ -129,6 +137,7 @@ fun ThinkpadSettingsScreen(
                     val theme = when (currentTheme) {
                         1 -> Theme.LIGHT_THEME
                         2 -> Theme.DARK_THEME
+                        12 -> Theme.MATERIAL_YOU
                         else -> Theme.FOLLOW_SYSTEM
                     }
                     SettingsEntry(
@@ -177,6 +186,7 @@ fun ThinkpadSettingsScreen(
     }
 }
 
+@ExperimentalMaterial3Api
 @ExperimentalMaterialApi
 @Preview(
     uiMode = Configuration.UI_MODE_TYPE_NORMAL,
