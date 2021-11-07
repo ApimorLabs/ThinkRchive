@@ -88,7 +88,7 @@ fun ThinkpadFeatures(
         Text(
             text = "Other Features & Details",
             color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.headlineLarge,
+            style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier
                 .padding(
                     bottom = Dimens.MediumPadding.size,
@@ -101,7 +101,7 @@ fun ThinkpadFeatures(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    color = MaterialTheme.colorScheme.surface,
+                    color = MaterialTheme.colorScheme.secondaryContainer,
                     shape = Shapes.large
                 )
                 .animateContentSize(

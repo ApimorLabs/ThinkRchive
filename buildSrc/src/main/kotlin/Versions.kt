@@ -60,4 +60,7 @@ object Versions {
 
     // Billing
     const val gBilling = "4.0.0"
+
+    // Glance App Widget - Early Snapshot
+    const val glanceAppWidget = "1.0.0-SNAPSHOT"
 }

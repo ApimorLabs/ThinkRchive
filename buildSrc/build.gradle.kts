@@ -7,5 +7,4 @@ plugins {
 repositories {
     google()
     mavenCentral()
-    maven(url = "https://www.jitpack.io")
 }

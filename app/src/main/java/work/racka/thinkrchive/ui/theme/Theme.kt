@@ -3,13 +3,11 @@ package work.racka.thinkrchive.ui.theme
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.darkColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DarkMode
 import androidx.compose.material.icons.outlined.LightMode
 import androidx.compose.material.icons.outlined.SettingsSuggest
 import androidx.compose.material.icons.outlined.Wallpaper
-import androidx.compose.material.lightColors
 import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material.ripple.RippleAlpha
 import androidx.compose.material.ripple.RippleTheme
@@ -20,31 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorPalette = darkColors(
-    primary = YellowDefault,
-    onPrimary = YellowDefaultDarkerOn,
-    primaryVariant = YellowDefaultVariant,
-    secondary = YellowDefault,
-    onSecondary = YellowDefaultDarkerOn,
-    secondaryVariant = YellowDefaultVariant,
-    background = Color.Black,
-    onBackground = LightGrayBackground,
-    surface = LightDark,
-    onSurface = LightGrayTextDark
-)
-
-private val LightColorPalette = lightColors(
-    primary = YellowDefault,
-    onPrimary = YellowDefaultDarkerOn,
-    primaryVariant = YellowDefaultVariant,
-    secondary = YellowDefault,
-    onSecondary = YellowDefaultDarkerOn,
-    secondaryVariant = YellowDefaultVariant,
-    background = LightGrayBackground,
-    onBackground = LightDark,
-    onSurface = LightGrayText
-)
-
 private val AppLightColorScheme = lightColorScheme(
     primary = YellowDefault,
     onPrimary = YellowDefaultDarkerOn,
@@ -54,7 +27,10 @@ private val AppLightColorScheme = lightColorScheme(
     onSecondary = YellowDefaultDarkerOn,
     background = LightGrayBackground,
     onBackground = LightDark,
-    onSurface = LightGrayText
+    surface = Color.White,
+    onSurface = LightGrayText,
+    secondaryContainer = Color.White,
+    onSecondaryContainer = LightGrayText
 )
 
 private val AppDarkColorScheme = darkColorScheme(
@@ -67,7 +43,9 @@ private val AppDarkColorScheme = darkColorScheme(
     background = Color.Black,
     onBackground = LightGrayBackground,
     surface = LightDark,
-    onSurface = LightGrayTextDark
+    onSurface = LightGrayTextDark,
+    secondaryContainer = LightDark,
+    onSecondaryContainer = LightGrayTextDark
 )
 
 @Composable
@@ -79,7 +57,9 @@ fun ThinkRchiveTheme(
 
     val dynamicColors = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val context = LocalContext.current
-        if (isSystemInDarkTheme()) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        if (isSystemInDarkTheme()) dynamicDarkColorScheme(context) else dynamicLightColorScheme(
+            context
+        )
     } else autoColors
 
     val colors = when (theme) {
@@ -106,7 +86,7 @@ fun ThinkRchiveTheme(
  * To be used as a value in CompositionalLocalProvider
  * as LocalRippleTheme provides ThinkRchiveRippleTheme
  * */
-private object ThinkRchiveRippleTheme: RippleTheme {
+private object ThinkRchiveRippleTheme : RippleTheme {
     @Composable
     override fun defaultColor(): Color = MaterialTheme.colorScheme.primary
 

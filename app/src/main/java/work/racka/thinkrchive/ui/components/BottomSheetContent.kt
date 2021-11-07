@@ -90,7 +90,7 @@ fun HomeBottomSheet(
                 items(Sort.values()) { item ->
                     val selectedColor by animateColorAsState(
                         targetValue = if (currentSortOption == item.sortValue) {
-                            MaterialTheme.colorScheme.primary
+                            MaterialTheme.colorScheme.primaryContainer
                                 .copy(alpha = .6f)
                         } else Color.Transparent,
                         animationSpec = tween(

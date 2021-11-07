@@ -11,4 +11,7 @@
     <string name="close_icon">Close</string>
     <string name="app_logo">Application Logo</string>
     <string name="made_with_text">Made with ❤️ from Tanzania 🇹🇿</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
 </resources>

@@ -90,19 +90,22 @@ fun ThinkpadDetails(
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
             Text(
                 text = thinkpad.model,
                 color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier
                     .padding(horizontal = Dimens.MediumPadding.size)
+                    .padding(bottom = Dimens.MediumPadding.size)
             )
             IconButton(
                 onClick = onExternalLinkClick,
                 modifier = Modifier
                     .padding(horizontal = Dimens.SmallPadding.size)
+                    .padding(bottom = Dimens.MediumPadding.size)
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Launch,
@@ -115,7 +118,7 @@ fun ThinkpadDetails(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    color = MaterialTheme.colorScheme.surface,
+                    color = MaterialTheme.colorScheme.secondaryContainer,
                     shape = Shapes.large
                 )
                 .animateContentSize(
@@ -245,7 +248,7 @@ fun SubtitleTextWithIcon(
         Icon(
             imageVector = icon,
             contentDescription = iconDescription,
-            tint = MaterialTheme.colorScheme.onSurface,
+            tint = MaterialTheme.colorScheme.onSecondaryContainer,
         )
         Spacer(modifier = Modifier.width(Dimens.MediumPadding.size))
         SubtitleText(
@@ -253,6 +256,7 @@ fun SubtitleTextWithIcon(
             subtitleName = subtitleName,
             subtitleData = subtitleData,
             style = style,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
             maxLines = maxLines,
             verticalAlignment = Alignment.Top
         )

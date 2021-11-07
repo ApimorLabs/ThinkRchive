@@ -13,6 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppSplash">
+        <receiver
+            android:name=".ui.widgets.ThinkpadDetails"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/thinkpad_details_info" />
+        </receiver>
+
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"

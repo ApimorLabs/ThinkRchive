@@ -80,4 +80,7 @@ object Deps {
     // Billing
     val googleBilling by lazy { "com.android.billingclient:billing-ktx:${Versions.gBilling}" }
 
+    // Glance AppWidget - Early Snapshot
+    val glanceAppWidget by lazy { "androidx.glance:glance-appwidget:${Versions.glanceAppWidget}" }
+
 }

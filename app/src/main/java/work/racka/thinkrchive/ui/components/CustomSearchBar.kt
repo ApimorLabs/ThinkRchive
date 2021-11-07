@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -101,7 +102,7 @@ fun CustomSearchBar(
             .fillMaxWidth()
             .background(
                 color = MaterialTheme.colorScheme.secondaryContainer,
-                shape = Shapes.large
+                shape = CircleShape
             )
     ) {
         ConstraintLayout(Modifier.fillMaxWidth()) {
@@ -120,7 +121,7 @@ fun CustomSearchBar(
                     Icon(
                         imageVector = Icons.Rounded.Search,
                         contentDescription = stringResource(id = R.string.search_icon),
-                        tint = MaterialTheme.colorScheme.onSurface,
+                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
                         modifier = Modifier
                             .padding(Dimens.MediumPadding.size)
                             .rotate(searchAndOptionsAngle)
@@ -140,7 +141,7 @@ fun CustomSearchBar(
                         Icon(
                             imageVector = Icons.Rounded.ArrowBack,
                             contentDescription = stringResource(id = R.string.back_icon),
-                            tint = MaterialTheme.colorScheme.onSurface,
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
                             modifier = Modifier.rotate(angle)
                         )
                     }
@@ -163,7 +164,7 @@ fun CustomSearchBar(
                 if (!isTyping) {
                     Text(
                         text = hint,
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = MaterialTheme.colorScheme.onSecondaryContainer
                             .copy(alpha = hintAlpha),
                         style = MaterialTheme.typography.titleMedium
                     )
@@ -179,7 +180,7 @@ fun CustomSearchBar(
                     cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
                     singleLine = true,
                     textStyle = MaterialTheme.typography.titleMedium
-                        .copy(color = MaterialTheme.colorScheme.onSurface),
+                        .copy(color = MaterialTheme.colorScheme.onSecondaryContainer),
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Words,
                         imeAction = ImeAction.Search
@@ -222,7 +223,7 @@ fun CustomSearchBar(
                         Icon(
                             imageVector = Icons.Rounded.Close,
                             contentDescription = stringResource(id = R.string.clear_icon),
-                            tint = MaterialTheme.colorScheme.onSurface,
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
                             modifier = Modifier.rotate(angle)
                         )
                     }
@@ -240,7 +241,7 @@ fun CustomSearchBar(
                         Icon(
                             imageVector = Icons.Rounded.Sort,
                             contentDescription = stringResource(id = R.string.option_icon),
-                            tint = MaterialTheme.colorScheme.onSurface,
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
                             modifier = Modifier.rotate(searchAndOptionsAngle)
                         )
                     }

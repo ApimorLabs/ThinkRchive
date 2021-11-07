@@ -41,6 +41,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.compose
@@ -155,5 +156,8 @@ dependencies {
 
     // Billing
     implementation(Deps.googleBilling)
+
+    // Glance AppWidget - Early Snapshot
+    implementation(Deps.glanceAppWidget)
 
 }

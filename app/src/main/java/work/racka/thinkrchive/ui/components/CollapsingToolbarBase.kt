@@ -55,7 +55,7 @@ fun CollapsingToolbarBase(
         bottomEnd = 10.dp,
         bottomStart = 10.dp
     ),
-    collapsedBackgroundColor: Color = MaterialTheme.colorScheme.surface,
+    collapsedBackgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
     backgroundColor: Color = MaterialTheme.colorScheme.background,
     toolbarHeight: Dp,
     minShrinkHeight: Dp = 100.dp,
@@ -127,12 +127,12 @@ fun CollapsingToolbarBase(
                 Icon(
                     imageVector = Icons.Rounded.ArrowBack,
                     contentDescription = stringResource(id = R.string.back_icon),
-                    tint = MaterialTheme.colorScheme.onSurface
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer
                 )
             }
             Text(
                 text = toolbarHeading,
-                color = MaterialTheme.colorScheme.onSurface.copy(
+                color = MaterialTheme.colorScheme.onSecondaryContainer.copy(
                     alpha = animatedTitleAlpha
                 ),
                 style = MaterialTheme.typography.headlineLarge,
@@ -163,7 +163,7 @@ fun CollapsingToolbarPrev() {
             content = {
                 Text(
                     text = "Settings",
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
                     style = MaterialTheme.typography.headlineMedium,
                     modifier = Modifier
                         .padding(horizontal = Dimens.SmallPadding.size)

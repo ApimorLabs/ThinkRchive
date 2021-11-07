@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -146,6 +147,7 @@ fun SubtitleText(
     subtitleName: String,
     subtitleData: String,
     style: TextStyle = MaterialTheme.typography.bodyMedium,
+    color: Color = MaterialTheme.colorScheme.onSurface,
     maxLines: Int = 1,
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically
 ) {
@@ -158,14 +160,14 @@ fun SubtitleText(
         Text(
             text = "$subtitleName:",
             style = style,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = color,
             maxLines = 1
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = subtitleData,
             style = style,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = color,
             maxLines = maxLines,
             overflow = TextOverflow.Ellipsis
         )

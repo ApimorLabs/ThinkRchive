@@ -28,6 +28,14 @@
         <entry key="../../../../../layout/compose-model-1635446157777.xml" value="0.2963818321785989" />
         <entry key="../../../../../layout/compose-model-1635446380539.xml" value="0.3138888888888889" />
         <entry key="../../../../../layout/compose-model-1635446470731.xml" value="0.3138888888888889" />
+        <entry key="../../../../../layout/compose-model-1635592278395.xml" value="0.3138888888888889" />
+        <entry key="../../../../../layout/compose-model-1635592310249.xml" value="0.3138888888888889" />
+        <entry key="../../../../../layout/compose-model-1635593065380.xml" value="0.3138888888888889" />
+        <entry key="../../../../../layout/compose-model-1635593502682.xml" value="0.3138888888888889" />
+        <entry key="../../../../../layout/compose-model-1635594104446.xml" value="0.3138888888888889" />
+        <entry key="../../../../../layout/compose-model-1635594484628.xml" value="0.2963818321785989" />
+        <entry key="../../../../../layout/compose-model-1635615007195.xml" value="0.1" />
+        <entry key="../../../../../layout/compose-model-1635696423062.xml" value="0.30833333333333335" />
         <entry key="../../../../layout/compose-model-1627744294575.xml" value="1.7220216606498195" />
         <entry key="../../../../layout/compose-model-1628444816476.xml" value="1.4729241877256318" />
         <entry key="../../../../layout/compose-model-1628835675980.xml" value="0.1" />
@@ -172,6 +180,7 @@
         <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/icon_baclk.xml" value="0.36018518518518516" />
         <entry key="app/src/main/res/drawable/splash_screen.xml" value="0.3388888888888889" />
+        <entry key="app/src/main/res/layout/thinkpad_details.xml" value="0.17603850050658562" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.36018518518518516" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3388888888888889" />
       </map>
