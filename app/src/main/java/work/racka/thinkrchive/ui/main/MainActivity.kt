@@ -19,16 +19,16 @@ import work.racka.thinkrchive.data.local.dataStore.PrefDataStore
 import work.racka.thinkrchive.ui.navigation.ThinkrchiveApp
 import javax.inject.Inject
 
+@ExperimentalMaterial3Api
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
+@ExperimentalComposeUiApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var prefDataStore: PrefDataStore
 
-    @ExperimentalMaterial3Api
-    @ExperimentalMaterialApi
-    @ExperimentalAnimationApi
-    @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
