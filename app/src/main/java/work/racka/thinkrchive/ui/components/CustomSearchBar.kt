@@ -27,7 +27,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
@@ -44,7 +43,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import work.racka.thinkrchive.R
 import work.racka.thinkrchive.ui.theme.Dimens
-import work.racka.thinkrchive.ui.theme.Shapes
 import work.racka.thinkrchive.ui.theme.ThinkRchiveTheme
 
 @ExperimentalComposeUiApi
@@ -101,7 +99,8 @@ fun CustomSearchBar(
             .padding(horizontal = paddingSize)
             .fillMaxWidth()
             .background(
-                color = MaterialTheme.colorScheme.secondaryContainer,
+                color = MaterialTheme.colorScheme
+                    .secondaryContainer,
                 shape = CircleShape
             )
     ) {

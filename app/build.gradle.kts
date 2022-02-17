@@ -1,9 +1,11 @@
+import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
     id("com.android.application")
     kotlin("android")
     id("kotlin-parcelize")
     id("kotlin-kapt")
+    kotlin("plugin.serialization") version Versions.kotlin
     id("dagger.hilt.android.plugin")
 }
 
@@ -21,6 +23,17 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val properties = Properties()
+        properties.load(
+            project.rootProject.file("local.properties")
+                .reader()
+        )
+        buildConfigField(
+            "String",
+            "qonversion_key",
+            properties.getProperty("qonversion_key")
+        )
     }
 
     buildTypes {
@@ -118,6 +131,15 @@ dependencies {
     // Retrofit
     implementation(Deps.retrofit)
 
+    // Kotlin Json Serialization
+    implementation(Deps.kotlinJsonSerialization)
+
+    // Ktor
+    implementation(Deps.ktorCore)
+    implementation(Deps.ktorAndroidEngine)
+    implementation(Deps.ktorSerialization)
+    implementation(Deps.ktorLogging)
+
     // Retrosheet
     implementation(Deps.retrosheet)
 
@@ -156,6 +178,7 @@ dependencies {
 
     // Billing
     implementation(Deps.googleBilling)
+    implementation(Deps.qonversion)
 
     // Glance AppWidget - Early Snapshot
     implementation(Deps.glanceAppWidget)

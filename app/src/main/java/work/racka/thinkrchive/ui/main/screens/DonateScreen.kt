@@ -24,8 +24,11 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.android.billingclient.api.SkuDetails
+import com.qonversion.android.sdk.dto.offerings.QOffering
 import work.racka.thinkrchive.ui.components.ClickableEntry
 import work.racka.thinkrchive.ui.components.CollapsingToolbarBase
+import work.racka.thinkrchive.ui.components.qonversion.QonVersionEntries
+import work.racka.thinkrchive.ui.main.viewModel.QonversionViewModel
 import work.racka.thinkrchive.ui.theme.Dimens
 
 @ExperimentalMaterial3Api
@@ -34,8 +37,10 @@ fun DonateScreen(
     modifier: Modifier = Modifier,
     listState: LazyListState = rememberLazyListState(),
     skuList: List<SkuDetails>,
+    qonViewModel: QonversionViewModel,
     onDonateItemClicked: (SkuDetails) -> Unit = { },
-    onBackButtonPressed: () -> Unit = { }
+    onBackButtonPressed: () -> Unit = { },
+    onOfferingClicked: (QOffering) -> Unit = { }
 ) {
     // CollapsingToolbar Implementation
     val toolbarHeight = 250.dp
@@ -85,6 +90,15 @@ fun DonateScreen(
                 .nestedScroll(nestedScrollConnection),
             state = listState
         ) {
+
+            QonVersionEntries(
+                offerings = qonViewModel.offerings,
+                hasPremium = qonViewModel.hasPremium,
+                onOfferingClick = {
+                    onOfferingClicked(it)
+                }
+            )
+
             items(skuList) { item ->
                 ClickableEntry(
                     modifier = Modifier

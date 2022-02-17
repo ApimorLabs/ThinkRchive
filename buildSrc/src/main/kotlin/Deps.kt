@@ -1,4 +1,3 @@
-
 object Deps {
 
     // Essentials
@@ -43,6 +42,11 @@ object Deps {
     val composeMaterial3 by lazy { "androidx.compose.material3:material3:${Versions.composeMaterial3}" }
 
     // Networking & JSON
+    val kotlinJsonSerialization by lazy { "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinSerialization}" }
+    val ktorCore by lazy { "io.ktor:ktor-client-core:${Versions.ktor}" }
+    val ktorAndroidEngine by lazy { "io.ktor:ktor-client-android:${Versions.ktor}" }
+    val ktorSerialization by lazy { "io.ktor:ktor-client-serialization:${Versions.ktor}" }
+    val ktorLogging by lazy { "io.ktor:ktor-client-logging:${Versions.ktor}" }
     val retrofit by lazy { "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}" }
     val retrosheet by lazy { "com.github.theapache64:retrosheet:${Versions.retrosheet}" }
     val moshi by lazy { "com.squareup.moshi:moshi:${Versions.moshi}" }
@@ -55,6 +59,7 @@ object Deps {
     val hilt by lazy { "com.google.dagger:hilt-android:${Versions.hilt}" }
     val hiltNavigationCompose by lazy { "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}" }
     val hiltCompiler by lazy { "com.google.dagger:hilt-android-compiler:${Versions.hilt}" }
+
     // Hilt testing
     val hiltTest by lazy { "com.google.dagger:hilt-android-testing:${Versions.hilt}" }
 
@@ -79,6 +84,7 @@ object Deps {
 
     // Billing
     val googleBilling by lazy { "com.android.billingclient:billing-ktx:${Versions.gBilling}" }
+    val qonversion by lazy { "io.qonversion.android.sdk:sdk:${Versions.qonversion}" }
 
     // Glance AppWidget - Early Snapshot
     val glanceAppWidget by lazy { "androidx.glance:glance-appwidget:${Versions.glanceAppWidget}" }

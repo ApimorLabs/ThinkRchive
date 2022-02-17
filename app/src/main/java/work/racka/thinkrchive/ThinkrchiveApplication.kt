@@ -1,8 +1,9 @@
-package work.racka.thinkrchive.ui.main
+package work.racka.thinkrchive
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+import com.qonversion.android.sdk.Qonversion
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,5 +31,11 @@ class ThinkrchiveApplication : Application() {
         }
         super.onCreate()
         Timber.plant(Timber.DebugTree())
+        Qonversion.setDebugMode()
+        Qonversion.launch(
+            context = this,
+            key = BuildConfig.qonversion_key,
+            observeMode = false
+        )
     }
 }

@@ -20,15 +20,13 @@ import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import timber.log.Timber
+import work.racka.thinkrchive.billing.qonversion.qonPurchase
 import work.racka.thinkrchive.ui.main.screenStates.DonateScreenState
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadDetailsScreenState
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadListScreenState
 import work.racka.thinkrchive.ui.main.screenStates.ThinkpadSettingsScreenState
 import work.racka.thinkrchive.ui.main.screens.*
-import work.racka.thinkrchive.ui.main.viewModel.DonateViewModel
-import work.racka.thinkrchive.ui.main.viewModel.ThinkpadDetailsViewModel
-import work.racka.thinkrchive.ui.main.viewModel.ThinkpadListViewModel
-import work.racka.thinkrchive.ui.main.viewModel.ThinkpadSettingsViewModel
+import work.racka.thinkrchive.ui.main.viewModel.*
 import work.racka.thinkrchive.utils.scaleInEnterTransition
 import work.racka.thinkrchive.utils.scaleInPopEnterTransition
 import work.racka.thinkrchive.utils.scaleOutExitTransition
@@ -58,17 +56,17 @@ fun ThinkrchiveNavHost(
             route = ThinkrchiveScreens.ThinkpadListScreen.name,
 
             // Transition animations
-            enterTransition = { _, _ ->
+            enterTransition = {
                 scaleInEnterTransition()
             },
-            exitTransition = { _, _ ->
+            exitTransition = {
                 scaleOutExitTransition()
             },
             // popEnter and popExit default to enterTransition & exitTransition respectively
-            popEnterTransition = { _, _ ->
+            popEnterTransition = {
                 scaleInPopEnterTransition()
             },
-            popExitTransition = { _, _ ->
+            popExitTransition = {
                 scaleOutPopExitTransition()
             }
         ) {
@@ -123,16 +121,16 @@ fun ThinkrchiveNavHost(
                     type = NavType.StringType
                 }
             ),
-            enterTransition = { _, _ ->
+            enterTransition = {
                 scaleInEnterTransition()
             },
-            exitTransition = { _, _ ->
+            exitTransition = {
                 scaleOutExitTransition()
             },
-            popEnterTransition = { _, _ ->
+            popEnterTransition = {
                 scaleInPopEnterTransition()
             },
-            popExitTransition = { _, _ ->
+            popExitTransition = {
                 scaleOutPopExitTransition()
             }
         ) {
@@ -167,16 +165,16 @@ fun ThinkrchiveNavHost(
         // Settings Screen
         composable(
             route = ThinkrchiveScreens.ThinkpadSettingsScreen.name,
-            enterTransition = { _, _ ->
+            enterTransition = {
                 scaleInEnterTransition()
             },
-            exitTransition = { _, _ ->
+            exitTransition = {
                 scaleOutExitTransition()
             },
-            popEnterTransition = { _, _ ->
+            popEnterTransition = {
                 scaleInPopEnterTransition()
             },
-            popExitTransition = { _, _ ->
+            popExitTransition = {
                 scaleOutPopExitTransition()
             }
         ) {
@@ -205,16 +203,16 @@ fun ThinkrchiveNavHost(
         // About Screen
         composable(
             route = ThinkrchiveScreens.ThinkpadAboutScreen.name,
-            enterTransition = { _, _ ->
+            enterTransition = {
                 scaleInEnterTransition()
             },
-            exitTransition = { _, _ ->
+            exitTransition = {
                 scaleOutExitTransition()
             },
-            popEnterTransition = { _, _ ->
+            popEnterTransition = {
                 scaleInPopEnterTransition()
             },
-            popExitTransition = { _, _ ->
+            popExitTransition = {
                 scaleOutPopExitTransition()
             }
         ) {
@@ -231,16 +229,16 @@ fun ThinkrchiveNavHost(
         // Donate Screen
         composable(
             route = ThinkrchiveScreens.DonationScreen.name,
-            enterTransition = { _, _ ->
+            enterTransition = {
                 scaleInEnterTransition()
             },
-            exitTransition = { _, _ ->
+            exitTransition = {
                 scaleOutExitTransition()
             },
-            popEnterTransition = { _, _ ->
+            popEnterTransition = {
                 scaleInPopEnterTransition()
             },
-            popExitTransition = { _, _ ->
+            popExitTransition = {
                 scaleOutPopExitTransition()
             }
         ) {
@@ -249,6 +247,7 @@ fun ThinkrchiveNavHost(
             val donateScreenState by viewModel.uiState.collectAsState()
             val donateScreenData = donateScreenState as DonateScreenState.Donate
 
+            val qonViewModel = QonversionViewModel()
 
             DonateScreen(
                 skuList = donateScreenData.skuDetailsList,
@@ -257,6 +256,10 @@ fun ThinkrchiveNavHost(
                 },
                 onBackButtonPressed = {
                     navController.popBackStack()
+                },
+                qonViewModel = qonViewModel,
+                onOfferingClicked = {
+                    qonPurchase(currentActivity, it, qonViewModel)
                 }
             )
         }
