@@ -38,7 +38,7 @@ android {
 
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -128,24 +128,15 @@ dependencies {
     implementation(Deps.composeConstraintLayout)
     implementation(Deps.composeMaterial3)
 
-    // Retrofit
-    implementation(Deps.retrofit)
-
     // Kotlin Json Serialization
     implementation(Deps.kotlinJsonSerialization)
 
     // Ktor
     implementation(Deps.ktorCore)
     implementation(Deps.ktorAndroidEngine)
+    implementation(Deps.ktorOkHttpEngine)
     implementation(Deps.ktorSerialization)
     implementation(Deps.ktorLogging)
-
-    // Retrosheet
-    implementation(Deps.retrosheet)
-
-    // Moshi
-    implementation(Deps.moshi)
-    implementation(Deps.moshiKotlin)
 
     // Timber
     implementation(Deps.timber)

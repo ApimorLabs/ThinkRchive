@@ -50,9 +50,12 @@ object Versions {
     // Networking & JSON
     const val ktor = "1.6.7"
     const val kotlinSerialization = "1.3.2"
+
+    // * No longer in use * //
     const val moshi = "1.13.0"
     const val retrofit = "2.9.0"
-    const val retrosheet = "2.0.0-alpha05"
+    const val retrosheet = "2.0.0-beta03"
+    // ******************** //
 
     // Database
     const val room = "2.4.1"

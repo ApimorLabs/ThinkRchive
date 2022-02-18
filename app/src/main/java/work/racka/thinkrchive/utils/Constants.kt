@@ -3,7 +3,8 @@ package work.racka.thinkrchive.utils
 import work.racka.thinkrchive.domain.model.Thinkpad
 
 object Constants {
-    const val BASE_URL = "https://docs.google.com/spreadsheets/d/1cFrYzzAP7i3bzSLKuBMykz3ZNUbf-YPTqRSEAwINy_E/"
+    const val BASE_URL = "https://thinkrchive-server.herokuapp.com/v1"
+    const val ALL_LAPTOPS = "${BASE_URL}/all-laptops"
     const val THINKPAD_LIST_TABLE = "thinkpad_list"
     const val PREFERENCE_NAME = "settings_preference"
     const val THEME_OPTIONS = "Theme Options"

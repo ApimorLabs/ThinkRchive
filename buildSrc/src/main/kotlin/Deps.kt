@@ -45,8 +45,11 @@ object Deps {
     val kotlinJsonSerialization by lazy { "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinSerialization}" }
     val ktorCore by lazy { "io.ktor:ktor-client-core:${Versions.ktor}" }
     val ktorAndroidEngine by lazy { "io.ktor:ktor-client-android:${Versions.ktor}" }
+    val ktorOkHttpEngine by lazy { "io.ktor:ktor-client-okhttp:${Versions.ktor}" }
     val ktorSerialization by lazy { "io.ktor:ktor-client-serialization:${Versions.ktor}" }
     val ktorLogging by lazy { "io.ktor:ktor-client-logging:${Versions.ktor}" }
+
+    // Retrofit and Retrosheet no longer used, replaced with Ktor
     val retrofit by lazy { "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}" }
     val retrosheet by lazy { "com.github.theapache64:retrosheet:${Versions.retrosheet}" }
     val moshi by lazy { "com.squareup.moshi:moshi:${Versions.moshi}" }
