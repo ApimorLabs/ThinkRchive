@@ -25,9 +25,9 @@
 
 | Platform | Download | Status |
 |----------|----------|--------|
-| Android  |[![Download Button](https://img.shields.io/static/v1?label=Thinkrchive&message=v1.0.0-alpha05&color=yellow)](https://drive.google.com/file/d/1YKqpq6LUx0MNH5nFM-x5abcscgfoya2q/view?usp=sharing)| 🧪 Alpha |
+| Android  |[![Download Button](https://img.shields.io/static/v1?label=Thinkrchive&message=v1.0.0-beta01&color=blue)](https://drive.google.com/file/d/1S09YR-SSyazV9-Z3U89rKysXPX6LnMXL/view?usp=sharing)| 🧪 Beta |
 
-> ℹ️ Compose Debug apks are laggy as they contain a lot of debug code.
+> ℹ️ Compose Debug apks are sometimes laggy as they contain a lot of debug code.
 > 
 > ℹ️ The apk above is a signed release version and should perform as expected.
 
@@ -42,12 +42,12 @@
 |----------------	|------------------------------	|
 | 🎭  User Interface    | [Jetpack Compose](https://developer.android.com/jetpack/compose)                |
 | 🏗  Architecture    | [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel)                            |
-| 🧠  Backend    | [Retrosheet](https://github.com/theapache64/retrosheet)                            |
+| 🧠  Backend    | [Thinkrchive Ktor Server](https://github.com/racka98/Thinkrchive-Server)                            |
 | 💉  DI                | [Hilt](https://dagger.dev/hilt/)                        |
 | 🛣️  Navigation        | [Compose Navigation](https://developer.android.com/jetpack/compose/navigation)                        |
 | 🌊  Async            | [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) + [Flow + StateFlow + SharedFlow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/)                |
-| 🌐  Networking        | [Retrofit](https://github.com/square/retrofit)                        |
-| 📄  JSON            | [Moshi](https://github.com/square/moshi)                            |
+| 🌐  Networking        | [Ktor Client](https://ktor.io/docs/client.html)                        |
+| 📄  JSON            | [Kotlin Serialization](https://github.com/Kotlin/kotlinx.serialization)                            |
 | 💾  Persistance     | [Room](https://developer.android.com/training/data-storage/room) + [Preference DataStore](https://developer.android.com/topic/libraries/architecture/datastore)   |
 | ⌨️  Logging            | [Timber](https://github.com/JakeWharton/timber)                            |
 | 📸  Image Loading      | [Coil](https://coil-kt.github.io/coil/)                            |
@@ -57,8 +57,10 @@
 ## 🧐 Fun Facts
 
 - ThinkRchive
-  uses [a google sheet](https://docs.google.com/spreadsheets/d/1cFrYzzAP7i3bzSLKuBMykz3ZNUbf-YPTqRSEAwINy_E/edit?usp=sharing)
-  as the backend, thanks to [Retrosheet](https://github.com/theapache64/retrosheet)
+  originally used [a google sheet](https://docs.google.com/spreadsheets/d/1cFrYzzAP7i3bzSLKuBMykz3ZNUbf-YPTqRSEAwINy_E/edit?usp=sharing)
+  as the backend via [Retrosheet](https://github.com/theapache64/retrosheet)
+  
+- ThinkRchive now uses [a custom Ktor powered server client](https://github.com/racka98/Thinkrchive-Server) as the backend. The backend is hosted on [Heroku](https://www.heroku.com)
 
 - I mocked the designs for this app on Figma and the finished app looks better than my initial designs
 
