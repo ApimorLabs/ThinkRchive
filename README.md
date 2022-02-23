@@ -10,6 +10,8 @@
 
 > An app showing all details for various Lenovo Thinkpad models. Made to try out Jepack Compose for Android.
 
+# Kotlin Multiplaform version of this app can be found here: [Thinkrchive-Mutliplatform](https://github.com/racka98/Thinkrchive-Multiplatform)
+
 ### ✨ Demo
 
 - [Coming Soon]()
@@ -34,7 +36,7 @@
 ## 🏋 Dependency
 
 - Java 11 or above
-- Android Studio Arctic Fox | 2020.3+
+- Android Studio Bumblebee | 2021.1+
 
 ## 🏗️️ Built with
 
@@ -66,14 +68,15 @@
 
 ## ✅ TODO
 
+- ~Adapt project to KMP~ Found [here now](https://github.com/racka98/Thinkrchive-Multiplatform) ✅
+- ~Add Material You~ ✅
 - Add more Tests (Unit Tests, UI Tests, Integration Tests)
 - Add more features
 - Make a Compose for Desktop version
-- Adapt project to KMM
 
 ## 🙇 Credits
 
-- Special thanks to [@theapache64](https://github.com/theapache64) for [Retrosheet](https://github.com/theapache64/retrosheet) and [readgen](https://github.com/theapache64/readgen)
+- Special thanks to [@theapache64](https://github.com/theapache64) for [readgen](https://github.com/theapache64/readgen)
 - Thanks to all amazing people at Twitter for inspiring me to continue the development of this project.
 
 ## 🤝 Contributing
